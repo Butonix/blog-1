@@ -5,6 +5,8 @@
 import path from 'path'
 import webpack from 'webpack'
 import ProgressBarPlugin from 'progress-bar-webpack-plugin'
+import OpenBrowserPlugin from 'open-browser-webpack-plugin'
+import config from '../config'
 
 const baseConfig = {
     entry: {
@@ -28,13 +30,41 @@ const baseConfig = {
             },
             {
                 test: /\.(jpe?g|png|gif|svg)(\?v=\d+\.\d+\.\d+)?$/,
-                use: ['url-loader?limit=10240&name=img/[name].[hash:6].[ext]']
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10240,
+                            outputPath: '/img',
+                            name: '[name].[hash:3].[ext]'
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(woff2?|eot|ttf|otf)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10240,
+                            outputPath: '/fonts',
+                            name: '[name]-[hash:3].[ext]'
+                        }
+                    }
+                ]
             }
+
         ]
     },
     plugins: [
         new ProgressBarPlugin(),
-    ]
+        new OpenBrowserPlugin({
+            url: `http://${config.host}:${config.port}`
+        }),
+        new webpack.NoEmitOnErrorsPlugin(),//保证出错时页面不阻塞，且会在编译结束后报错
+        new webpack.HashedModuleIdsPlugin(),//实现 chunkhash 的稳定化
+    ],
 };
 
 export default baseConfig

@@ -6,7 +6,6 @@ import path from 'path'
 import webpack from 'webpack'
 import merge from 'webpack-merge'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-import BrowserSyncPlugin from 'browser-sync-webpack-plugin'
 import baseConfig from './webpack.base'
 
 const rootPath = path.resolve(__dirname,'..');
@@ -24,7 +23,7 @@ const devConfig = {
     },
     output: {
         filename: '[name].js',
-        publicPath: '/'
+        publicPath: '/', ///html src指向
     },
     module: {
         rules: [
@@ -45,6 +44,20 @@ const devConfig = {
             },
 
         ]
-    }
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(), //热更新
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('development')
+            }
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: path.join(entryPath, 'index.html')
+        }),
+    ]
 };
+
+export default merge(baseConfig,devConfig)
 

@@ -4,6 +4,7 @@
 
 import React from 'react'
 import {Route, Switch, Redirect} from 'react-router-dom'
+import '../styles/index.sass'
 import routes from './routes'
 
 
@@ -12,6 +13,9 @@ export default class App extends React.Component {
     constructor(args) {
         super(args)
 
+    }
+
+    componentDidMount() {
     }
 
     render() {
