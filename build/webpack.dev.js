@@ -8,9 +8,9 @@ import merge from 'webpack-merge'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import baseConfig from './webpack.base'
 
-const rootPath = path.resolve(__dirname,'..');
-const entryPath = path.join(rootPath,'app');
-const outputPath = path.join(rootPath,'docs');
+const rootPath = path.resolve(__dirname, '..');
+const entryPath = path.join(rootPath, 'app');
+const outputPath = path.join(rootPath, 'docs');
 
 const devConfig = {
     entry: {
@@ -18,7 +18,7 @@ const devConfig = {
             'babel-polyfill',
             'react-hot-loader/patch',
             'webpack-hot-middleware/client?reload=true',
-            path.join(entryPath,'index.js')
+            path.join(entryPath, 'index.js')
         ],
     },
     output: {
@@ -29,7 +29,7 @@ const devConfig = {
         rules: [
             {
                 test: /\.css$/,
-                use:[
+                use: [
                     'style-loader',
                     'css-loader'
                 ]
@@ -59,5 +59,5 @@ const devConfig = {
     ]
 };
 
-export default merge(baseConfig,devConfig)
+export default merge(baseConfig, devConfig)
 

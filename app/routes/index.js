@@ -5,7 +5,8 @@
 import React from 'react'
 import {Route, Switch, Redirect} from 'react-router-dom'
 import '../styles/index.sass'
-import routes from './routes'
+import Admin from './admin'
+import Visitor from './visitor'
 
 
 export default class App extends React.Component {
@@ -16,6 +17,7 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
+
     }
 
     render() {
@@ -23,17 +25,8 @@ export default class App extends React.Component {
         return (
             <div className="JAVASCRIPT">
                 <Switch>
-                    {
-                        routes.map((route) =>
-                            <Route
-                                key={route.path}
-                                exact={route.exact}
-                                path={route.path}
-                                component={route.component}
-                            />
-                        )
-                    }
-                    <Redirect to="/"/>
+                    <Route path="/admin" component={Admin}/>
+                    <Route path="/" component={Visitor}/>
                 </Switch>
             </div>
         )
