@@ -6,12 +6,12 @@ import React from 'react'
 import {observable} from 'mobx'
 import {observer} from 'mobx-react'
 
-export default class ManagerArticle extends React.Component {
+export default class Admin extends React.Component {
 
     render() {
         return (
-            <div className="admin-managerArticle">
-                admin-managerArticle
+            <div className="admin">
+                admin
             </div>
         )
     }

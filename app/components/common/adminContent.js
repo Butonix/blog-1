@@ -6,13 +6,13 @@ import React from 'react'
 import {observable} from 'mobx'
 import {observer} from 'mobx-react'
 
-export default class ManagerUser extends React.Component {
+export default class AdminContent extends React.Component {
 
     render() {
         return (
-            <div className="admin-managerUser">
-                admin-managerUser
-            </div>
+            <header className="css-adminContent">
+                {this.props.children}
+            </header>
         )
     }
 }

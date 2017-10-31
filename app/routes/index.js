@@ -5,8 +5,8 @@
 import React from 'react'
 import {Route, Switch, Redirect} from 'react-router-dom'
 import '../styles/index.sass'
-import Admin from './admin'
-import Visitor from './visitor'
+import AdminRoute from './adminRoute'
+import VisitorRoute from './visitorRoute'
 
 
 export default class App extends React.Component {
@@ -25,8 +25,8 @@ export default class App extends React.Component {
         return (
             <div className="JAVASCRIPT">
                 <Switch>
-                    <Route path="/admin" component={Admin}/>
-                    <Route path="/" component={Visitor}/>
+                    <Route path="/admin" component={AdminRoute}/>
+                    <Route path="/" component={VisitorRoute}/>
                 </Switch>
             </div>
         )
