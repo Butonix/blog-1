@@ -10,8 +10,8 @@ export default class Main extends React.Component {
 
     render() {
         return (
-            <main className="css-main">
-                <div className="css-main-inner">
+            <main className="com-main">
+                <div className="com-main-inner">
                     {this.props.children}
                 </div>
             </main>

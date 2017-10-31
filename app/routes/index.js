@@ -5,8 +5,9 @@
 import React from 'react'
 import {Route, Switch, Redirect} from 'react-router-dom'
 import '../styles/index.sass'
-import AdminRoute from './adminRoute'
-import VisitorRoute from './visitorRoute'
+import RouteAdmin from './routeAdmin'
+import RouteVisitor from './routeVisitor'
+import {Canvas} from '../components/common'
 
 
 export default class App extends React.Component {
@@ -24,9 +25,10 @@ export default class App extends React.Component {
 
         return (
             <div className="JAVASCRIPT">
+                <Canvas />
                 <Switch>
-                    <Route path="/admin" component={AdminRoute}/>
-                    <Route path="/" component={VisitorRoute}/>
+                    <Route path="/admin" component={RouteAdmin}/>
+                    <Route path="/" component={RouteVisitor}/>
                 </Switch>
             </div>
         )

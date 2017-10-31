@@ -10,7 +10,7 @@ import {Categories, CategoriesTag} from '../components/categories'
 import {Detail} from '../components/detail'
 
 
-export default class VisitorRoute extends React.Component {
+export default class RouteVisitor extends React.Component {
 
     constructor(args) {
         super(args)
@@ -25,7 +25,7 @@ export default class VisitorRoute extends React.Component {
         const {url} = this.props.match;
 
         return (
-            <div className="VISITOR">
+            <div className="route-visitor">
                 <Header />
                 <Main>
                     <Switch>

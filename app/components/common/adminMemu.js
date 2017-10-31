@@ -10,9 +10,9 @@ export default class AdminMenu extends React.Component {
 
     render() {
         return (
-            <header className="css-adminMenu">
+            <div className="com-adminMenu">
                 adminMenu
-            </header>
+            </div>
         )
     }
 }

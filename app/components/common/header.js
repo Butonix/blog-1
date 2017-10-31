@@ -10,7 +10,7 @@ export default class Header extends React.Component {
 
     render() {
         return (
-            <header className="css-header">
+            <header className="com-header">
                 header
             </header>
         )

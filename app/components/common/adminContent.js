@@ -10,9 +10,9 @@ export default class AdminContent extends React.Component {
 
     render() {
         return (
-            <header className="css-adminContent">
+            <div className="com-adminContent">
                 {this.props.children}
-            </header>
+            </div>
         )
     }
 }

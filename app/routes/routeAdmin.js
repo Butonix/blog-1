@@ -12,9 +12,10 @@ import {
     AdminNewArticle
 } from '../components/admin'
 import {AdminMenu,AdminContent} from '../components/common'
+import './routeAdmin.sass'
 
 
-export default class AdminRoute extends React.Component {
+export default class RouteAdmin extends React.Component {
 
     constructor(args) {
         super(args)
@@ -29,7 +30,7 @@ export default class AdminRoute extends React.Component {
         const {url} = this.props.match;
 
         return (
-            <div className="ADMIN">
+            <div className="route-admin" data-flex="dir:left box:first">
                 <AdminMenu />
                 <AdminContent>
                     <Switch>
