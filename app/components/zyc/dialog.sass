@@ -1,0 +1,32 @@
+.zyc-dialog
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    z-index: 1000
+    .dialog-bg
+        background: rgba(0, 0, 0, 0.1)
+        position: absolute
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+        z-index: -1
+    .dialog-content
+        border-radius: 8px
+        padding: 20px
+        animation: dialogShow 0.3s cubic-bezier(0.1, 0.1, 0.8, 1.2) 0s 1
+        -webkit-animation: dialogShow 0.3s cubic-bezier(0.1, 0.1, 0.8, 1.2) 0s 1
+        transform-origin: center
+        -webkit-transform-origin: center
+        @keyframes dialogShow
+            from
+                transform: scale(0)
+            to
+                transform: scale(1)
+        @-webkit-keyframes dialogShow
+            from
+                -webkit-transform: scale(0)
+            to
+                -webkit-transform: scale(1)

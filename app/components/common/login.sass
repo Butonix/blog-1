@@ -1,0 +1,29 @@
+@import "../../styles/theme"
+.com-login
+    .login-tab
+        font-size: 16px
+        text-align: center
+        margin-bottom: 20px
+        i
+            padding: 8px
+            display: inline-block
+        span
+            padding: 8px
+            cursor: pointer
+            display: inline-block  //行内元素父级高度无法撑开
+            &:hover
+                border-bottom: 2px solid $red
+            &.active
+                color: $red
+                border-bottom: 2px solid $red
+    .register-form,.login-form
+        li
+            width: 180px
+            input
+                padding: 0 6px
+                &:focus
+                    border-color: $red
+            &+li
+                margin-top: 10px
+
+
