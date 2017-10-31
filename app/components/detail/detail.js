@@ -10,9 +10,9 @@ export default class Detail extends React.Component {
 
     render() {
         return (
-            <main className="detail">
+            <div className="detail">
                 detail
-            </main>
+            </div>
         )
     }
 }
