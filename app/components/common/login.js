@@ -73,6 +73,9 @@ class LoginForm extends React.Component {
                 <li>
                     <input type="password" placeholder="password"/>
                 </li>
+                <li>
+                    <span>登录</span>
+                </li>
             </ul>
         )
     }
@@ -90,6 +93,9 @@ class RegisterForm extends React.Component {
                 </li>
                 <li>
                     <input type="password" placeholder="repeat password"/>
+                </li>
+                <li>
+                    <span>注册</span>
                 </li>
             </ul>
         )
