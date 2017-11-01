@@ -10,17 +10,24 @@
         span
             padding: 8px
             cursor: pointer
-            display: inline-block  //行内元素父级高度无法撑开
+            display: inline-block
+            //行内元素父级高度无法撑开
             &:hover
                 border-bottom: 2px solid $red
             &.active
                 color: $red
                 border-bottom: 2px solid $red
-    .register-form,.login-form
+    .register-form, .login-form
         li
             width: 180px
+            position: relative
+            i
+                position: absolute
+                left: 4px
+                top: 8px
+                font-size: 14px
             input
-                padding: 0 6px
+                padding-left: 22px
                 &:focus
                     border-color: $red
             span
@@ -35,7 +42,7 @@
                 cursor: pointer
                 &:hover
                     background: $red-9
-            &+li
+            & + li
                 margin-top: 10px
             &:last-of-type
                 margin-top: 20px

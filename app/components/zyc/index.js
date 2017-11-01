@@ -3,7 +3,9 @@
  */
 
 import Dialog from './dialog'
+import Message from './message'
 
 export {
-    Dialog
+    Dialog,
+    Message
 }

@@ -6,8 +6,9 @@ import React from 'react'
 import {observable} from 'mobx'
 import {observer} from 'mobx-react'
 import ReactDom from 'react-dom'
-import {Dialog} from '../zyc'
+import {Dialog, Message} from '../zyc'
 import './login.sass'
+import {Username, Password} from '../public/regular'
 
 
 @observer
@@ -68,9 +69,11 @@ class LoginForm extends React.Component {
         return (
             <ul className="login-form">
                 <li>
+                    <i className="iconfont icon-yonghuming">{null}</i>
                     <input type="text" placeholder="username"/>
                 </li>
                 <li>
+                    <i className="iconfont icon-mima">{null}</i>
                     <input type="password" placeholder="password"/>
                 </li>
                 <li>
@@ -81,24 +84,40 @@ class LoginForm extends React.Component {
     }
 }
 
+
+@observer
 class RegisterForm extends React.Component {
     render() {
         return (
             <ul className="register-form">
                 <li>
-                    <input type="text" placeholder="username"/>
+                    <i className="iconfont icon-yonghuming">{null}</i>
+                    <input type="text" placeholder="username" ref="username"/>
                 </li>
                 <li>
-                    <input type="password" placeholder="password"/>
+                    <i className="iconfont icon-mima">{null}</i>
+                    <input type="password" placeholder="password" ref="password"/>
                 </li>
                 <li>
-                    <input type="password" placeholder="repeat password"/>
+                    <i className="iconfont icon-mima">{null}</i>
+                    <input type="password" placeholder="repeat password" ref="passwordRe"/>
                 </li>
                 <li>
-                    <span>注册</span>
+                    <span onClick={this.handleRegister.bind(this)}>注册</span>
                 </li>
             </ul>
         )
+    }
+
+    handleRegister() {
+
+        let username = this.refs.username.value;
+        let password = this.refs.password.value;
+        let passwordRe = this.refs.passwordRe.value;
+
+        Message.success('hello!')
+
+
     }
 }
 
