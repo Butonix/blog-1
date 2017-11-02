@@ -4,7 +4,7 @@
 
 import React from 'react'
 import {observable} from 'mobx'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import ReactDom from 'react-dom'
 import {Dialog, Message} from '../zyc'
 import './login.sass'
@@ -32,7 +32,9 @@ class Login extends React.Component {
                 {
                     this.type ?
                         <LoginForm /> :
-                        <RegisterForm />
+                        <RegisterForm
+                            onClose={this.props.onClose}
+                        />
                 }
             </div>
         )
@@ -44,6 +46,8 @@ class Login extends React.Component {
     }
 }
 
+
+@observer
 class LoginTab extends React.Component {
     render() {
         let {type} = this.props;
@@ -64,6 +68,7 @@ class LoginTab extends React.Component {
 
 }
 
+@observer
 class LoginForm extends React.Component {
     render() {
         return (
@@ -85,8 +90,14 @@ class LoginForm extends React.Component {
 }
 
 
-@observer
+@inject('UserStore') @observer
 class RegisterForm extends React.Component {
+
+    constructor(args) {
+        super(args);
+        this.userStore = this.props.UserStore
+    }
+
     render() {
         return (
             <ul className="register-form">
@@ -115,18 +126,38 @@ class RegisterForm extends React.Component {
         let password = this.refs.password.value;
         let passwordRe = this.refs.passwordRe.value;
 
-        Message.success('hello!')
+        if (!Username.test(username)) {
+            Message.error('请输入6-16位字符!');
+            return false
+        }
 
+        if (!Password.test(password)) {
+            Message.error('请输入以字母开头的6-16位字符的密码!');
+            return false
+        }
+
+        if (password !== passwordRe) {
+
+            Message.error('两次输入密码不一致!');
+
+            return false
+        }
+
+        let body = {};
+        body.username = username;
+        body.password = password;
+
+        this.userStore.getRegister(body).then((data) => {
+            Message.success(data.message);
+            return this.userStore.getUserInfo()
+        }).then((data) => {
+            console.log(data)
+        }).catch((err) => {
+            Message.error(err.message);
+            console.log(err)
+        })
 
     }
 }
 
-function render(type) {
-    return ReactDom.render(
-        <Dialog>
-            <Login type={type}/>
-        </Dialog>, document.getElementById('dialog')
-    )
-}
-
-export default {render}
+export default Login

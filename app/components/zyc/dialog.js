@@ -5,25 +5,42 @@
 import React from 'react'
 import {observable} from 'mobx'
 import {observer} from 'mobx-react'
-import ReactDom from 'react-dom'
+import {createPortal} from 'react-dom'
 import './dialog.sass'
 
 export default class Dialog extends React.Component {
 
-    render() {
-        return (
-            <div className="zyc-dialog" data-flex="main:center cross:center">
-                <div className="dialog-bg" onClick={this.handleCloseDialog.bind(this)}>{null}</div>
-                <div className="dialog-content">
-                    {this.props.children}
-                </div>
-            </div>
-        )
+    constructor(args) {
+        super(args);
+
+        this.node = document.createElement('div');
+        document.body.appendChild(this.node);
     }
 
-    handleCloseDialog() {
+    componentWillUnmount() {
+        document.body.removeChild(this.node);
+    }
 
-        ReactDom.unmountComponentAtNode(document.getElementById('dialog'))
+    handleClose() {
+        this.props.onClose()
 
+    }
+
+    render() {
+        let {show} = this.props;
+
+        if (show) {
+            return (
+                createPortal(
+                    <div className="zyc-dialog" data-flex="main:center cross:center">
+                        <div className="dialog-bg" onClick={this.handleClose.bind(this)}>{null}</div>
+                        <div className="dialog-content">
+                            {this.props.children}
+                        </div>
+                    </div>, this.node)
+            )
+        } else {
+            return null
+        }
     }
 }

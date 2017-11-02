@@ -4,20 +4,26 @@
 
 import React from 'react'
 import {observable} from 'mobx'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import {NavLink} from 'react-router-dom'
 import './header.sass'
 import Login from './login'
+import {Dialog} from '../zyc'
 
-
+@inject('UserStore') @observer
 export default class Header extends React.Component {
+
+    @observable type;
 
     constructor(args) {
         super(args);
-
+        this.userStore = this.props.UserStore;
     }
 
     render() {
+
+        const {loginShow} = this.userStore;
+
         let nav = [
             {
                 text: '首页',
@@ -54,18 +60,27 @@ export default class Header extends React.Component {
                     </div>
                     <div className="right">
                         <div className="login">
-                            <span onClick={this.handleShowDialog.bind(this,0)}>注册</span>
-                            <span onClick={this.handleShowDialog.bind(this,1)}>登录</span>
+                            <span onClick={this.handleShowDialog.bind(this, 0)}>注册</span>
+                            <span onClick={this.handleShowDialog.bind(this, 1)}>登录</span>
                         </div>
                     </div>
                 </div>
+                <Dialog
+                    show={loginShow}
+                    onClose={this.handleClose.bind(this)}
+                >
+                    <Login type={this.type}/>
+                </Dialog>
             </header>
         )
     }
 
     handleShowDialog(type) {
+        this.type = type;
+        this.userStore.loginShow = true;
+    }
 
-        Login.render(type)
-
+    handleClose() {
+        this.userStore.loginShow = false
     }
 }
