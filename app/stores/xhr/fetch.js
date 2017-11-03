@@ -11,11 +11,17 @@ const xhr = (req = {}) => {
 
     let search = Object.entries(body).map((value, index) => `${value[0]}=${value[1]}`).join('&');
 
-    (method === 'get' || method === 'GET') && (url = `${url}?${search}`)
+    if (method === 'get' || method === 'GET') {
+        url = `${url}?${search}`
+    }
 
-    (method === 'post' || method === 'POST') && (options.body = search);
+    if (method === 'post' || method === 'POST') {
+        options.body = search
+    }
 
-    options.headers = {};
+    options.headers = {
+        'Content-Type': "application/x-www-form-urlencoded",
+    };
     options.method = method;
     options.mode = 'cors';
 
@@ -23,12 +29,20 @@ const xhr = (req = {}) => {
         .then(res => {
             if (res.ok) {
                 return res.json()
+
             } else {
-                throw new Error(JSON.stringify(res.body));
+                return Promise.reject({
+                    message: res.status,
+                    status: res.status
+                })
             }
         })
         .catch(e => {
-            console.log('error', e, e.status)
+            console.log('error', e, e.status);
+            if (!e.status) {
+                e.message = '网络连接失败!'
+            }
+            return Promise.reject(e)
         });
 };
 

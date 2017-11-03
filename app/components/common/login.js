@@ -32,9 +32,7 @@ class Login extends React.Component {
                 {
                     this.type ?
                         <LoginForm /> :
-                        <RegisterForm
-                            onClose={this.props.onClose}
-                        />
+                        <RegisterForm/>
                 }
             </div>
         )
@@ -147,14 +145,11 @@ class RegisterForm extends React.Component {
         body.username = username;
         body.password = password;
 
-        this.userStore.getRegister(body).then((data) => {
+        this.userStore.postRegister(body).then((data) => {
             Message.success(data.message);
-            return this.userStore.getUserInfo()
-        }).then((data) => {
-            console.log(data)
         }).catch((err) => {
             Message.error(err.message);
-            console.log(err)
+            console.log(err.message)
         })
 
     }

@@ -14,18 +14,17 @@ class UserStore {
         this.userInfoUrl = '/user/userInfo';
     }
 
-    @action getRegister(body) {
+    @action postRegister(body) {
 
         return xhr({
-            method: 'get',
+            method: 'post',
             url: this.registerUrl,
             body: body
         }).then(data => {
             if (data.result) {
-                this.loginShow = false;
-                Promise.resolve(data)
+                return Promise.resolve(data)
             } else {
-                Promise.reject(data)
+                return Promise.reject(data)
             }
         })
     }
