@@ -66,24 +66,54 @@ class LoginTab extends React.Component {
 
 }
 
-@observer
+@inject('UserStore') @observer
 class LoginForm extends React.Component {
+
+    constructor(args) {
+        super(args);
+        this.userStore = this.props.UserStore
+    }
+
     render() {
         return (
             <ul className="login-form">
                 <li>
                     <i className="iconfont icon-yonghuming">{null}</i>
-                    <input type="text" placeholder="username"/>
+                    <input type="text" placeholder="username" ref="username"/>
                 </li>
                 <li>
                     <i className="iconfont icon-mima">{null}</i>
-                    <input type="password" placeholder="password"/>
+                    <input type="password" placeholder="password" ref="password"/>
                 </li>
                 <li>
-                    <span>登录</span>
+                    <span onClick={this.handleLogin.bind(this)}>登录</span>
                 </li>
             </ul>
         )
+    }
+
+    handleLogin() {
+        let username = this.refs.username.value;
+        let password = this.refs.password.value;
+
+        if (!username) {
+            Message.error('用户名不能为空!');
+            return false
+        }
+        if (!password) {
+            Message.error('密码不能为空!');
+            return false
+        }
+
+        let body = {};
+        body.username = username;
+        body.password = password;
+
+        this.userStore.postLogin(body).then((data) => {
+            if(data){
+                this.userStore.getUserInfo()
+            }
+        })
     }
 }
 
@@ -145,13 +175,7 @@ class RegisterForm extends React.Component {
         body.username = username;
         body.password = password;
 
-        this.userStore.postRegister(body).then((data) => {
-            Message.success(data.message);
-        }).catch((err) => {
-            Message.error(err.message);
-            console.log(err.message)
-        })
-
+        this.userStore.postRegister(body)
     }
 }
 

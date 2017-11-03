@@ -7,20 +7,21 @@ import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import blueBird from 'bluebird'
-import {main} from '../server'
 import config from '../config'
-
+// import {main} from '../server'
 const app = express();
 
-app.use(bodyParser.json()); //application/json
-app.use(bodyParser.urlencoded({extended: false})); //application/x-www-form-urlencoded
 app.use(cookieParser('express_react_cookie'));
 app.use(session({
     secret: 'express_react_cookie',
-    resave: true,
+    resave: false,
     saveUninitialized: true,
     cookie: {maxAge: 60 * 1000 * 30}//过期时间
 }));
+app.use(bodyParser.json()); //application/json
+app.use(bodyParser.urlencoded({extended: false})); //application/x-www-form-urlencoded
+
+
 
 app.all('*', function (req, res, next) { //跨域
 
@@ -36,7 +37,7 @@ app.all('*', function (req, res, next) { //跨域
     }
 });
 
-app.use('/', main);//展示页面路由
+app.use('/', require('../server').main);//展示页面路由
 // app.use('/admin', admin); //管理页面路由
 
 mongoose.Promise = blueBird;

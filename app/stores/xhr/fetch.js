@@ -2,6 +2,7 @@
  * Created by scriptchao on 2017/11/2.
  */
 import {origin} from './config'
+import {Message} from '../../components/zyc'
 
 const xhr = (req = {}) => {
 
@@ -20,17 +21,17 @@ const xhr = (req = {}) => {
     }
 
     options.headers = {
-        'Content-Type': "application/x-www-form-urlencoded",
+        'Content-Type': "application/x-www-form-urlencoded", //application/json不行
     };
     options.method = method;
     options.mode = 'cors';
 
     return fetch(origin + url, options)
         .then(res => {
-            if (res.ok) {
+            if (res.ok) { //200-299 ok的条件
                 return res.json()
 
-            } else {
+            } else { //这步是没有必要的 自己控制status为200
                 return Promise.reject({
                     message: res.status,
                     status: res.status
@@ -42,7 +43,8 @@ const xhr = (req = {}) => {
             if (!e.status) {
                 e.message = '网络连接失败!'
             }
-            return Promise.reject(e)
+
+            Message.error(e.message);
         });
 };
 

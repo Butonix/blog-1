@@ -3,6 +3,7 @@
  */
 import {observable, action} from 'mobx'
 import xhr from './xhr'
+import {Message} from '../components/zyc'
 
 class UserStore {
 
@@ -11,6 +12,7 @@ class UserStore {
 
     constructor() {
         this.registerUrl = '/user/register';
+        this.loginUrl = '/user/login';
         this.userInfoUrl = '/user/userInfo';
     }
 
@@ -22,12 +24,31 @@ class UserStore {
             body: body
         }).then(data => {
             if (data.result) {
+                Message.success(data.message);
                 return Promise.resolve(data)
             } else {
-                return Promise.reject(data)
+                Message.error(data.message);
             }
         })
     }
+
+    @action postLogin(body) {
+
+        return xhr({
+            method: 'post',
+            url: this.loginUrl,
+            body: body
+        }).then(data => {
+            if (data.result) {
+                this.loginShow = false;
+                Message.success(data.message);
+                return Promise.resolve(data)
+            } else {
+                Message.error(data.message);
+            }
+        })
+    }
+
 
     @action getUserInfo() {
 
@@ -37,9 +58,9 @@ class UserStore {
         }).then(data => {
             if (data.result) {
                 this.userInfo = data;
-                Promise.resolve(data);
+                return Promise.resolve(data);
             } else {
-                Promise.reject(data)
+                console.log(data.message);
             }
         })
     }
