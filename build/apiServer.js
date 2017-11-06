@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import blueBird from 'bluebird'
 import config from '../config'
-// import {main} from '../server'
+import {main} from '../server'
 const app = express();
 
 app.use(cookieParser('express_react_cookie'));
@@ -22,11 +22,12 @@ app.use(bodyParser.json()); //application/json
 app.use(bodyParser.urlencoded({extended: false})); //application/x-www-form-urlencoded
 
 
-
 app.all('*', function (req, res, next) { //跨域
 
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With');
+    res.header('Access-Control-Allow-Origin', `http://127.0.0.1:${config.port}`); //支持的跨域请求地址
+    res.header('Access-Control-Allow-Credentials', true); //是否允许浏览器发送cookies
+    res.header('Access-Control-Allow-Headers', 'Cache-Control, Content-Language, Content-Type, Expires, Last-Modified,Pragma');
+    res.header('Access-Control-Expose-Headers', 'Content-Length, Authorization, Accept, X-Requested-With');
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 
     if (req.method === 'OPTIONS') {
@@ -37,7 +38,7 @@ app.all('*', function (req, res, next) { //跨域
     }
 });
 
-app.use('/', require('../server').main);//展示页面路由
+app.use('/', main);//展示页面路由
 // app.use('/admin', admin); //管理页面路由
 
 mongoose.Promise = blueBird;

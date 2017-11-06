@@ -13,7 +13,10 @@ const xhr = (req = {}) => {
     let search = Object.entries(body).map((value, index) => `${value[0]}=${value[1]}`).join('&');
 
     if (method === 'get' || method === 'GET') {
-        url = `${url}?${search}`
+        if(search){
+            url = `${url}?${search}`
+        }
+
     }
 
     if (method === 'post' || method === 'POST') {
@@ -21,10 +24,12 @@ const xhr = (req = {}) => {
     }
 
     options.headers = {
-        'Content-Type': "application/x-www-form-urlencoded", //application/json不行
+        'Content-Type': "application/x-www-form-urlencoded", // body 为a&b
+        // 'Content-Type': "application/json", //body 为JSON.Stringify({})
     };
     options.method = method;
     options.mode = 'cors';
+    options.credentials = 'include';
 
     return fetch(origin + url, options)
         .then(res => {
