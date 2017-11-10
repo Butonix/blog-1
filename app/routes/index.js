@@ -7,7 +7,7 @@ import {Route, Switch, Redirect} from 'react-router-dom'
 import '../styles/index.sass'
 import RouteAdmin from './routeAdmin'
 import RouteVisitor from './routeVisitor'
-import {Canvas} from '../components/common'
+import {Canvas} from '../components/zyc'
 
 
 export default class App extends React.Component {

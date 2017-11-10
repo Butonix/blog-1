@@ -5,6 +5,7 @@
 import React from 'react'
 import {observable} from 'mobx'
 import {observer} from 'mobx-react'
+import {createPortal} from 'react-dom'
 import './canvas.sass'
 
 export default class Canvas extends React.Component {
@@ -12,6 +13,11 @@ export default class Canvas extends React.Component {
     constructor(...args) {
         super(...args);
 
+    }
+
+    componentWillMount() {
+        this.node = document.createElement('div');
+        document.body.appendChild(this.node);
     }
 
     componentDidMount() {
@@ -124,7 +130,8 @@ export default class Canvas extends React.Component {
     render() {
 
         return (
-            <canvas id="canvas" className="com-canvas">{null}</canvas>
+            createPortal(<canvas id="canvas" className="com-canvas">{null}</canvas>,this.node)
+
         )
     }
 }

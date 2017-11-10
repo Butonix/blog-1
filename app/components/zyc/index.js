@@ -4,8 +4,10 @@
 
 import Dialog from './dialog'
 import Message from './message'
+import Canvas from './canvas'
 
 export {
     Dialog,
-    Message
+    Message,
+    Canvas
 }

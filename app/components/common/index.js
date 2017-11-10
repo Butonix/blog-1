@@ -7,7 +7,6 @@ import Main from './main'
 import Footer from './footer'
 import AdminMenu from './adminMemu'
 import AdminContent from './adminContent'
-import Canvas from './canvas'
 
 export {
     Header,
@@ -15,5 +14,4 @@ export {
     Footer,
     AdminMenu,
     AdminContent,
-    Canvas
 }
