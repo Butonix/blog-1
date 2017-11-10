@@ -2,8 +2,8 @@
  * Created by scriptchao on 2017/11/2.
  */
 import {observable, action} from 'mobx'
-import xhr from './xhr'
-import {Message} from '../components/zyc'
+import xhr from '../xhr'
+import {Message} from '../../components/zyc'
 
 class UserStore {
 
@@ -22,12 +22,12 @@ class UserStore {
             method: 'post',
             url: this.registerUrl,
             body: body
-        }).then(data => {
-            if (data.result) {
-                Message.success(data.message);
-                return Promise.resolve(data)
+        }).then(response => {
+            if (response.result) {
+                Message.success(response.message);
+                return Promise.resolve(response)
             } else {
-                Message.error(data.message);
+                Message.error(response.message);
             }
         })
     }
@@ -38,13 +38,13 @@ class UserStore {
             method: 'post',
             url: this.loginUrl,
             body: body
-        }).then(data => {
-            if (data.result) {
+        }).then(response => {
+            if (response.result) {
                 this.loginShow = false;
-                Message.success(data.message);
-                return Promise.resolve(data)
+                Message.success(response.message);
+                return Promise.resolve(response)
             } else {
-                Message.error(data.message);
+                Message.error(response.message);
             }
         })
     }
@@ -55,12 +55,12 @@ class UserStore {
         return xhr({
             method: 'get',
             url: this.userInfoUrl,
-        }).then(data => {
-            if (data.result) {
-                this.userInfo = data;
-                return Promise.resolve(data);
+        }).then(response => {
+            if (response.result) {
+                this.userInfo = response.data;
+                return Promise.resolve(response);
             } else {
-                console.log(data.message);
+                console.log(response.message);
             }
         })
     }

@@ -13,10 +13,9 @@ const xhr = (req = {}) => {
     let search = Object.entries(body).map((value, index) => `${value[0]}=${value[1]}`).join('&');
 
     if (method === 'get' || method === 'GET') {
-        if(search){
+        if (search) {
             url = `${url}?${search}`
         }
-
     }
 
     if (method === 'post' || method === 'POST') {
@@ -25,7 +24,7 @@ const xhr = (req = {}) => {
 
     options.headers = {
         'Content-Type': "application/x-www-form-urlencoded", // body 为a&b
-        // 'Content-Type': "application/json", //body 为JSON.Stringify({})
+        // 'Content-Type': "application/json", //body 为JSON.Stringify({}) //文件上传和formData不需要content-type
     };
     options.method = method;
     options.mode = 'cors';
