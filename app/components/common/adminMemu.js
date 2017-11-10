@@ -41,7 +41,7 @@ export default class AdminMenu extends React.Component {
         ];
 
         return (
-            <div className="com-adminMenu">
+            <div className="com-admin-menu">
                 {
                     menu.map((value) =>
                         <NavLink

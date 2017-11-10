@@ -35,8 +35,7 @@ const baseConfig = {
                         loader: 'url-loader',
                         options: {
                             limit: 10240,
-                            outputPath: '/img',
-                            name: '[name].[hash:3].[ext]'
+                            name: 'img/[name].[hash:3].[ext]'
                         }
                     }
                 ]
@@ -48,8 +47,7 @@ const baseConfig = {
                         loader: 'url-loader',
                         options: {
                             limit: 10240,
-                            outputPath: '/fonts',
-                            name: '[name]-[hash:3].[ext]'
+                            name: 'fonts/[name]-[hash:3].[ext]'
                         }
                     }
                 ]

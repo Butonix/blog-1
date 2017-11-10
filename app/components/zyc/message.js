@@ -15,7 +15,7 @@ class Message extends React.Component {
 
     render() {
         return (
-            <div className="zyc-message" data-flex="dir:top cross:center">
+            <div className="zyc-message">
                 {
                     this.content.map((item, index) =>
                         <Item

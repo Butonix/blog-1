@@ -5,9 +5,13 @@
 import Dialog from './dialog'
 import Message from './message'
 import Canvas from './canvas'
+import DropDown from './dropDown'
+import Menu from './menu'
 
 export {
     Dialog,
     Message,
-    Canvas
+    Canvas,
+    DropDown,
+    Menu
 }

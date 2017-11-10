@@ -8,7 +8,8 @@ import {observer, inject} from 'mobx-react'
 import {NavLink} from 'react-router-dom'
 import './header.sass'
 import Login from './login'
-import {Dialog} from '../zyc'
+import {Dialog, DropDown, Menu} from '../zyc'
+
 
 @inject('UserStore') @observer
 export default class Header extends React.Component {
@@ -22,9 +23,9 @@ export default class Header extends React.Component {
 
     render() {
 
-        const {loginShow} = this.userStore;
+        const {loginShow, userInfo} = this.userStore;
 
-        let nav = [
+        const nav = [
             {
                 text: '首页',
                 to: '/',
@@ -37,12 +38,23 @@ export default class Header extends React.Component {
             },
 
         ];
+
+        const menu = (
+            <Menu>
+                <Menu.Item>
+                    <i className="iconfont icon-tuichu">{null}</i>
+                    <span>退出登录</span>
+                </Menu.Item>
+            </Menu>
+        );
+
+
         return (
             <header className="com-header">
-                <div className="header-inner" data-flex="cross:center main:justify">
-                    <div className="left" data-flex="dir:left cross:center">
-                        <div className="logo">SCRIPTCHAO</div>
-                        <div className="nav">
+                <div className="nav" data-flex="cross:center main:justify">
+                    <div className="nav-left" data-flex="dir:left cross:center">
+                        <div className="nav-logo">SCRIPTCHAO</div>
+                        <div className="nav-menu">
                             {
                                 nav.map((value) =>
                                     <NavLink
@@ -58,11 +70,20 @@ export default class Header extends React.Component {
                             }
                         </div>
                     </div>
-                    <div className="right">
-                        <div className="login">
-                            <span onClick={this.handleShowDialog.bind(this, 0)}>注册</span>
-                            <span onClick={this.handleShowDialog.bind(this, 1)}>登录</span>
-                        </div>
+                    <div className="nav-right">
+                        {
+                            userInfo.userId ?
+                                <DropDown overlay={menu}>
+                                    <div className="login-ed" data-flex="cross:center">
+                                        <i>{null}</i>
+                                        <span>{`欢迎! ${userInfo.username}`}</span>
+                                    </div>
+                                </DropDown> :
+                                <div className="login">
+                                    <span onClick={this.handleShowDialog.bind(this, 0)}>注册</span>
+                                    <span onClick={this.handleShowDialog.bind(this, 1)}>登录</span>
+                                </div>
+                        }
                     </div>
                 </div>
                 <Dialog
