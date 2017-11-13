@@ -15,10 +15,14 @@ class MenuItem extends React.Component {
         super(args);
     }
 
+    handleClick() {
+        this.props.onClick()
+    }
+
     render() {
 
         return (
-            <div className="zyc-menu-item" data-flex="cross:center">
+            <div className="zyc-menu-item" data-flex="cross:center" onClick={this.handleClick.bind(this)}>
                 {this.props.children}
             </div>
         )

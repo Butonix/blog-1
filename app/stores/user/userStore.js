@@ -23,7 +23,6 @@ class UserStore {
             url: this.loginOutUrl,
         }).then(response => {
             if (response.result) {
-                this.userInfo = {};
                 Message.success(response.message);
                 return Promise.resolve(response)
             } else {
@@ -78,6 +77,7 @@ class UserStore {
                 this.userInfo = response.data;
                 return Promise.resolve(response);
             } else {
+                this.userInfo = {};
                 console.log(response.message);
             }
         })

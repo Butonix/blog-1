@@ -1,7 +1,7 @@
 /**
  * Created by scriptchao on 2017/11/2.
  */
-import {origin} from './config'
+import {origin, expiredTime} from './config'
 import {Message} from '../../components/zyc'
 
 const xhr = (req = {}) => {
@@ -29,6 +29,18 @@ const xhr = (req = {}) => {
     options.method = method;
     options.mode = 'cors';
     options.credentials = 'include';
+
+    if(localStorage.getItem('expired')){ //登录超时验证
+
+        let now = (new Date).getTime();
+
+        if(now - localStorage.getItem('expired') > expiredTime) {
+            localStorage.clear();
+            window.location.reload();
+        }
+    }
+
+
 
     return fetch(origin + url, options)
         .then(res => {

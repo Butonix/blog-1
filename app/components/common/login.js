@@ -109,8 +109,9 @@ class LoginForm extends React.Component {
         body.username = username;
         body.password = password;
 
-        this.userStore.postLogin(body).then((data) => {
-            if(data){
+        this.userStore.postLogin(body).then((response) => {
+            if(response){
+                localStorage.setItem('expired',(new Date).getTime());
                 this.userStore.getUserInfo()
             }
         })

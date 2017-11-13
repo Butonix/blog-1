@@ -41,9 +41,9 @@ export default class Header extends React.Component {
 
         const menu = (
             <Menu>
-                <Menu.Item>
+                <Menu.Item onClick={this.handleLoginOut.bind(this)}>
                     <i className="iconfont icon-tuichu">{null}</i>
-                    <span onClick={this.handleLoginOut.bind(this)}>退出登录</span>
+                    <span>退出登录</span>
                 </Menu.Item>
             </Menu>
         );
@@ -97,7 +97,12 @@ export default class Header extends React.Component {
     }
 
     handleLoginOut() {
-        this.userStore.getLoginOut()
+        this.userStore.getLoginOut().then(response => {
+            if (response) {
+                localStorage.clear();
+                this.userStore.getUserInfo()
+            }
+        })
     }
 
     handleShowDialog(type) {
