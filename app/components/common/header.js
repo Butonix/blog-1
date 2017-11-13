@@ -43,7 +43,7 @@ export default class Header extends React.Component {
             <Menu>
                 <Menu.Item>
                     <i className="iconfont icon-tuichu">{null}</i>
-                    <span>退出登录</span>
+                    <span onClick={this.handleLoginOut.bind(this)}>退出登录</span>
                 </Menu.Item>
             </Menu>
         );
@@ -94,6 +94,10 @@ export default class Header extends React.Component {
                 </Dialog>
             </header>
         )
+    }
+
+    handleLoginOut() {
+        this.userStore.getLoginOut()
     }
 
     handleShowDialog(type) {

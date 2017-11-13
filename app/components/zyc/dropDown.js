@@ -19,9 +19,24 @@ export default class DropDown extends React.Component {
 
     constructor(args) {
         super(args);
+
+        this.resize = this.resize.bind(this)
+    }
+
+    componentWillMount() {
+        window.addEventListener('resize', this.resize);
+    }
+
+    resize() {
+        this.direction = this.getDirection(this.refs.dropDown);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.resize)
     }
 
     componentDidMount() {
+
         this.direction = this.getDirection(this.refs.dropDown);
         this.node = document.createElement('div');
         document.body.appendChild(this.node);

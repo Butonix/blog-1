@@ -18,7 +18,7 @@ class MenuItem extends React.Component {
     render() {
 
         return (
-            <div className="zyc-menu-item">
+            <div className="zyc-menu-item" data-flex="cross:center">
                 {this.props.children}
             </div>
         )
@@ -44,7 +44,6 @@ class Menu extends React.Component {
 
     }
 }
-
 
 
 export default Menu

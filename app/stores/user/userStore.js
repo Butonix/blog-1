@@ -14,6 +14,24 @@ class UserStore {
         this.registerUrl = '/user/register';
         this.loginUrl = '/user/login';
         this.userInfoUrl = '/user/userInfo';
+        this.loginOutUrl = '/user/loginOut'
+    }
+
+    @action getLoginOut() {
+        return xhr({
+            method: 'get',
+            url: this.loginOutUrl,
+        }).then(response => {
+            if (response.result) {
+                this.userInfo = {};
+                Message.success(response.message);
+                return Promise.resolve(response)
+            } else {
+                Message.error(response.message);
+            }
+        })
+
+
     }
 
     @action postRegister(body) {

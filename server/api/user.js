@@ -47,7 +47,6 @@ router.post('/login', (req, res) => {
             userInfo.userId = data._id;
 
             req.session.userInfo = userInfo;
-            console.log('登录的时候', req.session.userInfo);
 
             responseClient(res, 200, 1, '登录成功!');
             return true
@@ -60,13 +59,18 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/userInfo', (req, res) => {
-    console.log('登录成功之后获取',req.session.userInfo);
     if (req.session.userInfo) {
         responseClient(res, 200, 1, '用户已登录!', req.session.userInfo)
 
     } else {
         responseClient(res, 200, 0, '用户未登录!')
     }
+});
+
+router.get('/loginOut', (req, res) => {
+    req.session.userInfo = undefined;
+    responseClient(res, 200, 1, '登出成功!')
+
 });
 
 export default router
