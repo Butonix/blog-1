@@ -8,23 +8,26 @@ import ReactDom from 'react-dom'
 import {BrowserRouter} from 'react-router-dom'
 import {AppContainer} from 'react-hot-loader'
 import {Provider} from 'mobx-react'
-import Store from './stores'
+import Stores from './stores'
 import App from './routes'
 
+window.stores = window.stores || Stores;
+
 ReactDom.render(
-    <AppContainer>
-        <Provider {...Store}>
+    <Provider {...stores}>
+        <AppContainer warnings={false}>
             <BrowserRouter>
                 <App />
             </BrowserRouter>
-        </Provider>
-    </AppContainer>,
+        </AppContainer>
+    </Provider>,
     document.getElementById('app')
 );
 
 if (module.hot) {
     module.hot.accept()
 }
+
 
 
 
