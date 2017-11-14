@@ -7,7 +7,7 @@ import {Message} from '../../components/zyc'
 
 class UserStore {
 
-    @observable userInfo = {};
+    @observable userInfo;
     @observable loginShow;
 
     constructor() {
@@ -78,7 +78,7 @@ class UserStore {
                 return Promise.resolve(response);
             } else {
                 this.userInfo = {};
-                console.log(response.message);
+                console.info(response.message);
             }
         })
     }

@@ -6,6 +6,7 @@ import React from 'react'
 import {observable} from 'mobx'
 import {observer} from 'mobx-react'
 
+@observer
 export default class Main extends React.Component {
 
     render() {

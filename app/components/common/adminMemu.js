@@ -8,6 +8,7 @@ import {observer} from 'mobx-react'
 import {NavLink} from 'react-router-dom'
 import './adminMenu.sass'
 
+@observer
 export default class AdminMenu extends React.Component {
 
     render() {

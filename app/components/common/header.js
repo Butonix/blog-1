@@ -5,7 +5,7 @@
 import React from 'react'
 import {observable} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import {NavLink} from 'react-router-dom'
+import {NavLink, Link} from 'react-router-dom'
 import './header.sass'
 import Login from './login'
 import {Dialog, DropDown, Menu} from '../zyc'
@@ -25,6 +25,8 @@ export default class Header extends React.Component {
 
         const {loginShow, userInfo} = this.userStore;
 
+        console.log('header');
+
         const nav = [
             {
                 text: '首页',
@@ -41,6 +43,10 @@ export default class Header extends React.Component {
 
         const menu = (
             <Menu>
+                <Menu.Item onClick={this.handleEntryManage.bind(this)}>
+                    <i className="iconfont icon-guanli">{null}</i>
+                    <span>后台管理</span>
+                </Menu.Item>
                 <Menu.Item onClick={this.handleLoginOut.bind(this)}>
                     <i className="iconfont icon-tuichu">{null}</i>
                     <span>退出登录</span>
@@ -94,6 +100,10 @@ export default class Header extends React.Component {
                 </Dialog>
             </header>
         )
+    }
+
+    handleEntryManage() {
+        this.props.history.push('/admin')
     }
 
     handleLoginOut() {

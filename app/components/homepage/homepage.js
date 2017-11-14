@@ -15,6 +15,7 @@ export default class Homepage extends React.Component {
     }
 
     render() {
+        console.log('homepage')
         return (
             <div className="homepage">
                 homepage

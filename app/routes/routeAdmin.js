@@ -3,6 +3,7 @@
  */
 
 import React from 'react'
+import {inject, observer} from 'mobx-react'
 import {Route, Switch, Redirect} from 'react-router-dom'
 import {
     Admin,
@@ -14,7 +15,7 @@ import {
 import {AdminMenu,AdminContent} from '../components/common'
 import './routeAdmin.sass'
 
-
+@observer
 export default class RouteAdmin extends React.Component {
 
     constructor(args) {
@@ -28,6 +29,8 @@ export default class RouteAdmin extends React.Component {
 
     render() {
         const {url} = this.props.match;
+
+        console.log('admin',url);
 
         return (
             <div className="route-admin" data-flex="dir:left box:first">

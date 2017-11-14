@@ -5,22 +5,19 @@
 import 'whatwg-fetch'
 import React from 'react'
 import ReactDom from 'react-dom'
-import {BrowserRouter} from 'react-router-dom'
 import {AppContainer} from 'react-hot-loader'
 import {Provider} from 'mobx-react'
-import Stores from './stores'
-import App from './routes'
+import Stores from './stores/index'
+import App from './routes/index'
 
 window.stores = window.stores || Stores;
 
 ReactDom.render(
-    <Provider {...stores}>
-        <AppContainer warnings={false}>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
-        </AppContainer>
-    </Provider>,
+    <AppContainer warnings={false}>
+        <Provider {...stores}>
+            <App />
+        </Provider>
+    </AppContainer>,
     document.getElementById('app')
 );
 

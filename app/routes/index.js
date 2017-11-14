@@ -4,14 +4,14 @@
 
 import React from 'react'
 import {inject, observer} from 'mobx-react'
-import {Route, Switch, Redirect} from 'react-router-dom'
+import {Route, Switch, Redirect, BrowserRouter} from 'react-router-dom'
 import '../styles/index.sass'
 import RouteAdmin from './routeAdmin'
 import RouteVisitor from './routeVisitor'
 import {Canvas} from '../components/zyc'
 
-@inject('UserStore')
-export default class App extends React.Component {
+@inject('UserStore') @observer
+class App extends React.Component {
 
     constructor(args) {
         super(args);
@@ -31,13 +31,18 @@ export default class App extends React.Component {
         return (
             <div className="JAVASCRIPT">
                 <Canvas />
-                <Switch>
-                    <Route path="/admin" component={RouteAdmin}/>
-                    <Route path="/" component={RouteVisitor}/>
-                </Switch>
+                <BrowserRouter>
+                    {
+                        this.userStore.userInfo ?
+                            <Switch>
+                                <Route path="/admin" component={RouteAdmin}/>
+                                <Route path="/" component={RouteVisitor}/>
+                            </Switch> : null
+                    }
+                </BrowserRouter>
             </div>
         )
     }
-
-
 }
+
+export default App

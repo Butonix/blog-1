@@ -6,9 +6,12 @@ import React from 'react'
 import {observable} from 'mobx'
 import {observer} from 'mobx-react'
 
+
+@observer
 export default class CategoriesTag extends React.Component {
 
     render() {
+        console.log('categoriesTag')
         return (
             <div className="categories-tag">
                 tags
