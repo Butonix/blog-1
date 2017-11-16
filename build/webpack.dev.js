@@ -31,7 +31,8 @@ const devConfig = {
                 test: /\.css$/,
                 use: [
                     'style-loader',
-                    'css-loader'
+                    'css-loader',
+                    'postcss-loader'
                 ]
             },
             {
@@ -39,10 +40,17 @@ const devConfig = {
                 use: [
                     'style-loader',
                     'css-loader',
-                    'sass-loader'
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            config: {
+                                path: 'postcss.config.js'
+                            }
+                        }
+                    },
+                    'sass-loader',
                 ]
             },
-
         ]
     },
     plugins: [

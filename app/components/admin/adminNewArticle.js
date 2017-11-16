@@ -5,6 +5,7 @@
 import React from 'react'
 import {observable} from 'mobx'
 import {observer} from 'mobx-react'
+import './adminNewArticle.sass'
 
 
 @observer
@@ -13,7 +14,7 @@ export default class AdminNewArticle extends React.Component {
     render() {
         return (
             <div className="admin-newArticle">
-                admin-newArticle
+                AdminNewArticle
             </div>
         )
     }

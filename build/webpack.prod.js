@@ -12,9 +12,9 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import baseConfig from './webpack.base'
 
 
-const rootPath = path.resolve(__dirname,'..');
-const entryPath = path.join(rootPath,'app');
-const outputPath = path.join(rootPath,'docs');
+const rootPath = path.resolve(__dirname, '..');
+const entryPath = path.join(rootPath, 'app');
+const outputPath = path.join(rootPath, 'docs');
 
 const prodConfig = {
     entry: {
@@ -34,7 +34,10 @@ const prodConfig = {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use: 'css-loader'
+                    use: [
+                        'css-loader',
+                        'postcss-loader'
+                    ]
                 })
             },
             {
@@ -42,7 +45,8 @@ const prodConfig = {
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader', use: [
                         'css-loader',
-                        'sass-loader'
+                        'postcss-loader',
+                        'sass-loader',
                     ]
                 })
             },
@@ -77,4 +81,4 @@ const prodConfig = {
     ]
 };
 
-export default merge(baseConfig,prodConfig)
+export default merge(baseConfig, prodConfig)
