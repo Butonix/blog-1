@@ -7,11 +7,15 @@ import Message from './message'
 import Canvas from './canvas'
 import DropDown from './dropDown'
 import Menu from './menu'
+import Button from './button'
+import Select from './select'
 
 export {
     Dialog,
     Message,
     Canvas,
     DropDown,
-    Menu
+    Menu,
+    Button,
+    Select
 }

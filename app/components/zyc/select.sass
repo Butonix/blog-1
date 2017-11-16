@@ -1,0 +1,27 @@
+@import "../../styles/theme"
+.zyc-select
+    height: 30px
+    border: 1px solid $color204
+    border-radius: 5px
+    cursor: text
+.zyc-select-portal
+    position: absolute
+    z-index: 1000
+    border: 1px solid $color204
+    border-radius: 5px
+.zyc-select-item
+    height: 30px
+    line-height: 30px
+    cursor: pointer
+    padding: 0 8px
+    &:hover
+        background: $red-1
+    &+.zyc-select-item
+        border-top: 1px solid $color204
+
+
+.zyc-select-placeholder
+    line-height: 28px
+    padding: 0 8px
+    color: $color153
+

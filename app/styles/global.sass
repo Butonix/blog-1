@@ -15,6 +15,11 @@ a
     text-decoration: none
     color: inherit
 
+h1, h2, h3, h4, h5, h6
+    margin: 0
+    padding: 0
+    font-weight: 500
+
 input
     background: transparent
     height: 30px
@@ -22,3 +27,32 @@ input
     border: 1px solid $color204
     width: 100%
     border-radius: 5px
+    &::-webkit-input-placeholder
+        color: $color153
+
+    &:-moz-placeholder
+        color: $color153
+
+    &::-moz-placeholder
+        color: $color153
+
+    &:-ms-input-placeholder
+        color: $color153
+textarea
+    background: transparent
+    outline: none
+    border: 1px solid $color204
+    width: 100%
+    border-radius: 5px
+    resize: none
+    &::-webkit-input-placeholder
+        color: $color153
+
+    &:-moz-placeholder
+        color: $color153
+
+    &::-moz-placeholder
+        color: $color153
+
+    &:-ms-input-placeholder
+        color: $color153
