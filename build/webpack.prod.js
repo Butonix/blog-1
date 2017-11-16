@@ -56,6 +56,11 @@ const prodConfig = {
         new CleanWebpackPlugin('docs', {
             root: rootPath
         }),
+        new CopyWebpackPlugin([
+            {
+                from: path.join(rootPath, 'static'),
+            }
+        ]),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false

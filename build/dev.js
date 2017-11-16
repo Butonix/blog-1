@@ -1,7 +1,7 @@
 /**
  * Created by scriptchao on 2017/10/26.
  */
-
+import path from 'path'
 import webpack from 'webpack'
 import express from 'express'
 import connectHistoryApiFallback from 'connect-history-api-fallback'
@@ -13,7 +13,9 @@ import webpackConfig from './webpack.dev'
 const app = express();
 const compiler = webpack(webpackConfig);
 
-app.use('/',connectHistoryApiFallback()); // 访问任何地址时指向根目录
+app.use('/', connectHistoryApiFallback()); // 访问任何地址时指向根目录
+
+app.use('/static', express.static(path.join(__dirname, '..', 'static'))); // 静态资源目录
 
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
@@ -22,10 +24,10 @@ app.use(webpackDevMiddleware(compiler, {
 
 app.use(webpackHotMiddleware(compiler));
 
-app.listen(config.port,config.host,(err) => {
-    if(err){
+app.listen(config.port, config.host, (err) => {
+    if (err) {
         console.log(err)
-    }else {
+    } else {
         console.log(`===>open http://${config.host}:${config.port} in a browser to view the app`);
     }
 
