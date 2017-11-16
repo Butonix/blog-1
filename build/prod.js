@@ -6,6 +6,7 @@ import path from 'path'
 import webpack from 'webpack'
 import express from 'express'
 import connectHistoryApiFallback from 'connect-history-api-fallback'
+import compression from 'compression'
 import webpackConfig from './webpack.prod'
 import config from '../config'
 
@@ -15,9 +16,13 @@ webpack(webpackConfig, (err, stats) =>
     console.log('the static files have been generated,please open browser for watch')
 );
 
+app.use(compression()); //gzip
+
 app.use('/', connectHistoryApiFallback());
 
 app.use('/', express.static(path.join(__dirname, '..', 'docs')));
+
+
 
 app.listen(config.port, config.host, (err) => {
     if (err) {
