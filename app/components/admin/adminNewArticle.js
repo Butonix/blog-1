@@ -25,13 +25,12 @@ export default class AdminNewArticle extends React.Component {
                     <span>分类</span>
                     <Select
                         className="select"
-                        onClick={this.handleSelectTags.bind(this)}
+                        onSelectTags={this.handleSelectTags.bind(this)}
                     >
                         {
                             tags.map(tag =>
                                 <Select.Item
                                     key={tag}
-
                                 >{tag}
                                 </Select.Item>
                             )
@@ -60,7 +59,8 @@ export default class AdminNewArticle extends React.Component {
         )
     }
 
-    handleSelectTags() {
+    handleSelectTags(tags) {
+        console.log(tags.length)
 
     }
 

@@ -4,11 +4,21 @@
     border: 1px solid $color204
     border-radius: 5px
     cursor: text
-.zyc-select-portal
-    position: absolute
-    z-index: 1000
-    border: 1px solid $color204
-    border-radius: 5px
+    display: flex
+    align-items: center
+.zyc-select-content
+    margin-left: 8px
+    padding: 2px 6px
+    background: $color233-8
+    border-radius: 4px
+    i
+        display: inline-block
+        font-size: 14px
+        cursor: pointer
+        position: relative
+        top: 1px
+        &:hover
+            color: $red
 .zyc-select-item
     height: 30px
     line-height: 30px
@@ -16,12 +26,10 @@
     padding: 0 8px
     &:hover
         background: $red-1
-    &+.zyc-select-item
+    & + .zyc-select-item
         border-top: 1px solid $color204
 
-
 .zyc-select-placeholder
-    line-height: 28px
     padding: 0 8px
     color: $color153
 
