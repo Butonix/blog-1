@@ -36,24 +36,26 @@ export default class AdminNewArticle extends React.Component {
                             )
                         }
                     </Select>
-                    <Button onClick={this.handlePublish.bind(this)}
-                            className="btn"
-                            type="primary"
-                    >
-                        <span>发布</span>
-                    </Button>
-                    <Button onClick={this.handleSaveArticle.bind(this)}
-                            className="btn"
-                            type="primary"
-                    >
-                        <span>保存</span>
-                    </Button>
-                    <Button onClick={this.handlePreView.bind(this)}
-                            className="btn"
-                            type="primary"
-                    >
-                        <span>预览</span>
-                    </Button>
+                    <div className="button">
+                        <Button onClick={this.handlePublish.bind(this)}
+                                className="btn"
+                                type="primary"
+                        >
+                            <span>发布</span>
+                        </Button>
+                        <Button onClick={this.handleSaveArticle.bind(this)}
+                                className="btn"
+                                type="primary"
+                        >
+                            <span>保存</span>
+                        </Button>
+                        <Button onClick={this.handlePreView.bind(this)}
+                                className="btn"
+                                type="primary"
+                        >
+                            <span>预览</span>
+                        </Button>
+                    </div>
                 </section>
             </div>
         )
