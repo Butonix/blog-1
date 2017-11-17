@@ -3,7 +3,7 @@
  */
 
 import express from 'express'
-import Article from '../models/article' //collection
+import Article from '../models/article'
 import {responseClient, md5, MD5_SUFFIX} from '../util'
 const router = express.Router();
 

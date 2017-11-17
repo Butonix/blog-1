@@ -3,7 +3,9 @@
  */
 
 import UserStore from './user/userStore'
+import TagStore from './tag/tagStore'
 
 export default {
-    UserStore
+    UserStore,
+    TagStore
 }

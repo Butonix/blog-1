@@ -69,7 +69,6 @@ export default class Portal extends React.Component {
                 width: width
             }}>
                 {this.props.children}
-            </div>
-            , this.node)
+            </div>, this.node)
     }
 }

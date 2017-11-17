@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import blueBird from 'bluebird'
 import config from '../config'
-import {main} from '../server'
+import {main,admin} from '../server'
 const app = express();
 
 app.use(cookieParser('express_react_cookie'));
@@ -38,8 +38,9 @@ app.all('*', function (req, res, next) { //跨域
     }
 });
 
-app.use('/', main);//展示页面路由
 // app.use('/admin', admin); //管理页面路由
+app.use('/', main);//展示页面路由
+
 
 mongoose.Promise = blueBird;
 

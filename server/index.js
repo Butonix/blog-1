@@ -3,9 +3,10 @@
  */
 
 import main from './api/main'
-// import admin from './api/admin'
+import admin from './api/admin'
 
 
 export {
     main,
+    admin
 }

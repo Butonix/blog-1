@@ -3,14 +3,14 @@
  */
 
 import express from 'express'
-import User from '../models/user' //collection
+import User from '../models/user'
 import {responseClient, md5, MD5_SUFFIX} from '../util'
 const router = express.Router();
 
 router.post('/register', (req, res) => {
     let {username, password} = req.body;
 
-    User.findOne({username: username})// 用户名区分
+    User.findOne({username: username})// 用户名区分 //collection
         .then(data => {
             if (data) {
                 responseClient(res, 200, 0, '用户名已存在!');

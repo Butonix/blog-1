@@ -9,6 +9,8 @@ import DropDown from './dropDown'
 import Menu from './menu'
 import Button from './button'
 import Select from './select'
+import Input from './input'
+import Tag from './tag'
 
 export {
     Dialog,
@@ -17,5 +19,7 @@ export {
     DropDown,
     Menu,
     Button,
-    Select
+    Select,
+    Input,
+    Tag
 }
