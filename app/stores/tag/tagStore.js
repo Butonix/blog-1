@@ -12,8 +12,24 @@ class TagStore {
 
     constructor() {
         this.tagAddUrl = '/tag/add';
-        this.tagListUrl = '/tag/list'
+        this.tagListUrl = '/tag/list';
+        this.tagDeleteUrl = '/tag/delete'
+    }
 
+    @action postTagDelete(body) {
+
+        return xhr({
+            method: 'post',
+            url: this.tagDeleteUrl,
+            body: body
+        }).then(response => {
+            if (response.result) {
+                Message.success(response.message);
+                return Promise.resolve(response)
+            } else {
+                Message.error(response.message);
+            }
+        })
     }
 
     @action postTagAdd(body) {

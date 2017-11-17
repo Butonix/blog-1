@@ -14,6 +14,10 @@ export default class Tag extends React.Component {
 
     }
 
+    handleClick() {
+        this.props.onClose()
+    }
+
 
     render() {
         let {className} = this.props;
@@ -21,7 +25,7 @@ export default class Tag extends React.Component {
         return (
             <div className={className ? `zyc-tag ${className}` : 'zyc-tag'}>
                 <span>{this.props.children}</span>
-                <i className="iconfont icon-guanbi">{null}</i>
+                <i className="iconfont icon-guanbi" onClick={this.handleClick.bind(this)}>{null}</i>
             </div>
         )
     }

@@ -27,6 +27,19 @@ router.post('/add', function (req, res) {
     })
 });
 
+router.post('/delete', function (req, res) {
+    let {name} = req.body;
+    Tag.remove({name}).then(data => {
+        if (data.result.n) {
+            responseClient(res, 200, 1, '标签删除成功!', data)
+        } else {
+            responseClient(res, 200, 0, '标签不存在!', data)
+        }
+    }).catch(err => {
+        responseClient(res)
+    })
+});
+
 router.get('/list', function (req, res) {
 
     Tag.find({}, 'name').then(data => {

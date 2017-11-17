@@ -32,7 +32,11 @@ export default class AdminManagerTags extends React.Component {
                 <h2>标签管理</h2>
                 {
                     tagList.map((tag, index) =>
-                        <Tag key={tag._id} className="tag">{tag.name}</Tag>
+                        <Tag
+                            key={tag._id}
+                            className="tag"
+                            onClose={this.handleCloseTag.bind(this, tag)}
+                        >{tag.name}</Tag>
                     )
                 }
                 {
@@ -55,6 +59,16 @@ export default class AdminManagerTags extends React.Component {
                 }
             </div>
         )
+    }
+
+    handleCloseTag(tag) {
+        let body = {};
+        body.name = tag.name;
+        this.tagStore.postTagDelete(body).then(response => {
+            if (response) {
+                this.tagStore.getTagList()
+            }
+        })
     }
 
     handleShowInput() {
