@@ -3,15 +3,15 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
+import {observable,toJS} from 'mobx'
 import {inject, observer} from 'mobx-react'
 import remark from 'remark'
 import reactRenderer from 'remark-react'
 import './adminNewArticle.sass'
-import {Button, Select, Input, Dialog} from '../zyc'
+import {Button, Select, Input, Dialog, Message} from '../zyc'
 
 
-@inject('TagStore') @observer
+@inject('TagStore', 'ArticleStore') @observer
 export default class AdminNewArticle extends React.Component {
 
     @observable title = '';
@@ -23,6 +23,7 @@ export default class AdminNewArticle extends React.Component {
         super(args);
 
         this.tagStore = this.props.TagStore;
+        this.articleStore = this.props.ArticleStore;
     }
 
     componentDidMount() {
@@ -119,7 +120,34 @@ export default class AdminNewArticle extends React.Component {
     }
 
     handleSaveArticle() {
+        if (!this.title) {
+            Message.error('请输入文章标题!');
+            return
+        }
 
+        if (!this.content) {
+            Message.error('请输入文章内容!');
+            return
+        }
+
+        if (!this.tags.length) {
+            Message.error('请选择分类!');
+            return
+        }
+
+
+        let body = {};
+        body.title = this.title;
+        body.content = this.content;
+        body.tags = toJS(this.tags);
+        body.isPublish = 0;
+
+        this.articleStore.postArticleAdd(body).then(response => {
+            if (response) {
+                this.title = '';
+                this.content = '';
+            }
+        })
     }
 
     handlePreView() {
