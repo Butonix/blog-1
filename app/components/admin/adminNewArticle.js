@@ -91,7 +91,9 @@ export default class AdminNewArticle extends React.Component {
                     onClose={this.handleViewClose.bind(this)}
                 >
                     <div className="dialog-view">
-                        {remark().use(reactRenderer).processSync(this.content).contents}
+                        <div className="markdown-body">
+                            {remark().use(reactRenderer).processSync(this.content).contents}
+                        </div>
                     </div>
                 </Dialog>
             </div>
