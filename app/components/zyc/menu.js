@@ -5,7 +5,6 @@
 import React from 'react'
 import {observable} from 'mobx'
 import {observer} from 'mobx-react'
-import {createPortal} from 'react-dom'
 import './menu.sass'
 
 
@@ -22,7 +21,7 @@ class MenuItem extends React.Component {
     render() {
 
         return (
-            <div className="zyc-menu-item" data-flex="cross:center" onClick={this.handleClick.bind(this)}>
+            <div className="zyc-menu-item" onClick={this.handleClick.bind(this)}>
                 {this.props.children}
             </div>
         )

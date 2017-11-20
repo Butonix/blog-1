@@ -43,7 +43,7 @@ export default class AdminManagerTags extends React.Component {
                     this.inputShow ?
                         <Input
                             className="ipt"
-                            style={{width: 100}}
+                            style={{width: 120}}
                             placeholder="请输入新标签"
                             value={this.inputValue} //给默认值 不然会有警告
                             onChange={this.handleInputChange.bind(this)}

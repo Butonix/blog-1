@@ -1,10 +1,12 @@
 *
     box-sizing: border-box
 
+// 非常重要!!!
 body
-    font-size: 12px
+    font-size: 14px
     min-width: 1200px
     max-width: 1920px
+    line-height: 1
 
 ul, li
     list-style: none
@@ -23,10 +25,10 @@ h1, h2, h3, h4, h5, h6
 input
     background: transparent
     height: 30px
-    outline: none
     border: 1px solid $color204
     width: 100%
     border-radius: 5px
+    outline: none
     &::-webkit-input-placeholder
         color: $color153
 
@@ -38,13 +40,14 @@ input
 
     &:-ms-input-placeholder
         color: $color153
+
 textarea
     background: transparent
-    outline: none
     border: 1px solid $color204
     width: 100%
     border-radius: 5px
     resize: none
+    outline: none
     &::-webkit-input-placeholder
         color: $color153
 
@@ -56,6 +59,7 @@ textarea
 
     &:-ms-input-placeholder
         color: $color153
+
 button
     &:focus
         outline: none

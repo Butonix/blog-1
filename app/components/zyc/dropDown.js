@@ -6,7 +6,6 @@ import React from 'react'
 import ReactDom from 'react-dom'
 import {observable} from 'mobx'
 import {observer} from 'mobx-react'
-import {createPortal} from 'react-dom'
 import Portal from './portal'
 import './dropDown.sass'
 
