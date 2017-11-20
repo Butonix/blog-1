@@ -17,6 +17,10 @@ export default class Dialog extends React.Component {
         document.body.appendChild(this.node);
     }
 
+    static defaultProps = {
+        header: true
+    };
+
     componentWillUnmount() {
         document.body.removeChild(this.node);
     }
@@ -27,14 +31,28 @@ export default class Dialog extends React.Component {
     }
 
     render() {
-        let {show} = this.props;
+        let {show, title, header, width} = this.props;
 
         if (show) {
             return (
                 createPortal(
                     <div className="zyc-dialog" data-flex="main:center cross:center">
                         <div className="dialog-bg" onClick={this.handleClose.bind(this)}>{null}</div>
-                        <div className="dialog-content">
+                        <div className="dialog-content"
+                             style={{
+                                 width: width ? width : null
+                             }}
+                        >
+                            {
+                                header ?
+                                    <div className="header" data-flex="main:justify dir:right">
+                                        <i className="iconfont icon-guanbi"
+                                           onClick={this.handleClose.bind(this)}>{null}</i>
+                                        {
+                                            title ? <span>{title}</span> : null
+                                        }
+                                    </div> : null
+                            }
                             {this.props.children}
                         </div>
                     </div>, this.node)

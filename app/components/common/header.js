@@ -94,6 +94,7 @@ export default class Header extends React.Component {
                 </div>
                 <Dialog
                     show={loginShow}
+                    header={false}
                     onClose={this.handleClose.bind(this)}
                 >
                     <Login type={this.type}/>

@@ -19,11 +19,11 @@ export default class Input extends React.Component {
     };
 
     handleChange(e) {
-        this.props.onChange(e)
+        this.props.onChange && this.props.onChange(e)
     }
 
     handleBlur() {
-        this.props.onBlur()
+        this.props.onBlur && this.props.onBlur()
     }
 
 

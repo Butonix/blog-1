@@ -15,7 +15,7 @@ export default class Tag extends React.Component {
     }
 
     handleClick() {
-        this.props.onClose()
+        this.props.onClose && this.props.onClose()
     }
 
 

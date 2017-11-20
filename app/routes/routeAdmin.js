@@ -34,7 +34,7 @@ export default class RouteAdmin extends React.Component {
 
         return (
             <div className="route-admin" data-flex="dir:left box:first">
-                <AdminMenu />
+                <Route path={url} component={AdminMenu} />
                 <AdminContent>
                     <Switch>
                         <Route exact path={url} component={Admin}/>

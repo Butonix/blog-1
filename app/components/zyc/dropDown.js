@@ -7,6 +7,7 @@ import ReactDom from 'react-dom'
 import {observable} from 'mobx'
 import {observer} from 'mobx-react'
 import {createPortal} from 'react-dom'
+import Portal from './portal'
 import './dropDown.sass'
 
 
@@ -14,32 +15,10 @@ import './dropDown.sass'
 export default class DropDown extends React.Component {
 
     @observable show;
-    @observable direction = {};
     @observable timer;
 
     constructor(args) {
         super(args);
-
-        this.resize = this.resize.bind(this)
-    }
-
-    componentWillMount() {
-        window.addEventListener('resize', this.resize);
-    }
-
-    resize() {
-        this.direction = this.getDirection(this.refs.dropDown);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.resize)
-    }
-
-    componentDidMount() {
-
-        this.direction = this.getDirection(this.refs.dropDown);
-        this.node = document.createElement('div');
-        document.body.appendChild(this.node);
     }
 
     handleEnter() {
@@ -53,27 +32,7 @@ export default class DropDown extends React.Component {
         }, 100)
     }
 
-
-    getDirection(target) {
-        let l = 0, t = 0, w = 0, h = 0;
-
-        if (target) {
-            h = target.offsetHeight;
-            w = target.offsetWidth;
-        }
-
-        while (target) {
-            l += target.offsetLeft;
-            t += target.offsetTop;
-            target = target.offsetParent
-        }
-
-        return {left: l, top: t, width: w, height: h}
-    }
-
-
     render() {
-        let {top, left, height} = this.direction;
         return (
             <div className="zyc-dropDown" ref="dropDown"
                  onMouseEnter={this.handleEnter.bind(this)}
@@ -81,15 +40,12 @@ export default class DropDown extends React.Component {
             >
                 {this.props.children}
                 {
-                    this.show ? createPortal(
-                        <div className="zyc-dropDown-portal"
-                             style={{
-                                 top: top + height + 5,
-                                 left: left
-                             }}>
+                    this.show ?
+                        <Portal
+                            target={this.refs.dropDown}
+                        >
                             {this.props.overlay}
-                        </div>, this.node
-                    ) : null
+                        </Portal> : null
                 }
             </div>
         )
