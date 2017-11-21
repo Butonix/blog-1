@@ -29,7 +29,6 @@ class Select extends React.Component {
 
     @observable show;
     @observable portal;
-    @observable list = [];
 
     static Item = SelectItem;
 
@@ -72,20 +71,20 @@ class Select extends React.Component {
 
     manageTags(tag) {
 
-        if (this.list.includes(tag)) {
-            this.list.splice(this.list.indexOf(tag), 1)
+        if (this.props.value.includes(tag)) {
+            this.props.value.splice(this.props.value.indexOf(tag), 1)
 
         } else {
-            this.list.push(tag)
+            this.props.value.push(tag)
         }
-        this.props.onSelectTags(this.list)
+        this.props.onSelectTags(this.props.value)
 
     }
 
     handleDelText(index) {
 
-        this.list.splice(index, 1);
-        this.props.onSelectTags(this.list)
+        this.props.value.splice(index, 1);
+        this.props.onSelectTags(this.props.value)
     }
 
     showPortal() {
@@ -97,7 +96,7 @@ class Select extends React.Component {
     }
 
     render() {
-        let {className} = this.props;
+        let {className, value = []} = this.props;
 
         return (
             <div
@@ -106,7 +105,7 @@ class Select extends React.Component {
                 ref="select"
             >
                 {
-                    this.list.length ? this.list.map((value, index) =>
+                    value.length ? value.map((value, index) =>
                         <div className="zyc-select-content" key={value}>
                             <span>{value}</span>
                             <i className="iconfont icon-guanbi"

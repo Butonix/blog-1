@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import {observable,toJS} from 'mobx'
+import {observable, toJS} from 'mobx'
 import {inject, observer} from 'mobx-react'
 import remark from 'remark'
 import reactRenderer from 'remark-react'
@@ -54,6 +54,7 @@ export default class AdminNewArticle extends React.Component {
                     <Select
                         className="select"
                         onSelectTags={this.handleSelectTags.bind(this)}
+                        value={this.tags}
                     >
                         {
                             tagList.map(tag =>
@@ -144,8 +145,7 @@ export default class AdminNewArticle extends React.Component {
 
         this.articleStore.postArticleAdd(body).then(response => {
             if (response) {
-                this.title = '';
-                this.content = '';
+                this.props.history.push('/admin/managerArticle')
             }
         })
     }
