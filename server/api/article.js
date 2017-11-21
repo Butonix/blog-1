@@ -27,7 +27,7 @@ router.post('/add', function (req, res) {
                 content,
                 readCount,
                 author,
-                tags,
+                tags: tags.split(','),
                 isPublish,
             });
 
@@ -37,6 +37,49 @@ router.post('/add', function (req, res) {
                 responseClient(res)
             })
         }
+    })
+});
+
+router.post('/list', function (req, res) {
+    let {
+        tags,
+        isPublish,
+        page,
+        size
+    } = req.body;
+    page = parseInt(page);
+    size = parseInt(size);
+    let searchContent = {};
+
+    if (tags) {
+        searchContent.tags = tags.split(',')
+    }
+
+    if (isPublish) {
+        searchContent.isPublish = isPublish
+    }
+
+    let skip = (page - 1) * size;
+    let responseData = {
+        total: 0,
+        list: []
+    };
+
+    Article.count(searchContent)
+        .then(count => {
+            responseData.total = count;
+            Article.find(searchContent, '_id title isPublish author readCount createTime', {
+                skip: skip,
+                limit: size
+            }).then(data => {
+                responseData.list = data;
+                responseClient(res, 200, 1, '获取文章列表成功!', responseData)
+            }).catch(err => {
+                throw err
+            })
+
+        }).catch(err => {
+        responseClient(res)
     })
 });
 

@@ -69,21 +69,15 @@ export default class AdminNewArticle extends React.Component {
                         <Button onClick={this.handlePublish.bind(this)}
                                 className="btn"
                                 type="primary"
-                        >
-                            <span>发布</span>
-                        </Button>
+                        >发布</Button>
                         <Button onClick={this.handleSaveArticle.bind(this)}
                                 className="btn"
                                 type="primary"
-                        >
-                            <span>保存</span>
-                        </Button>
+                        >保存</Button>
                         <Button onClick={this.handlePreView.bind(this)}
                                 className="btn"
                                 type="primary"
-                        >
-                            <span>预览</span>
-                        </Button>
+                        >预览</Button>
                     </div>
                 </section>
                 <Dialog
@@ -141,7 +135,7 @@ export default class AdminNewArticle extends React.Component {
         body.title = this.title;
         body.content = this.content;
         body.tags = toJS(this.tags);
-        body.isPublish = 0;
+        body.isPublish = false;
 
         this.articleStore.postArticleAdd(body).then(response => {
             if (response) {
