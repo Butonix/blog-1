@@ -12,11 +12,11 @@ export default new mongoose.Schema({
     tags: Array,//类型
     isPublish: Boolean,//是否发布
     createTime: {
-        type: Number,
+        type: Date,
         default: Date.now // 创建时间
     },
     updateTime: {
-        type: Number,
+        type: Date,
         default: Date.now // 更新时间
     }
 }, {

@@ -11,7 +11,26 @@ class ArticleStore {
 
     constructor() {
         this.articleAddUrl = '/article/add';
-        this.articleListUrl = '/article/list'
+        this.articleListUrl = '/article/list';
+        this.articleDeleteUrl = '/article/delete';
+        this.articleEditUrl = '/article/edit';
+        this.articleUpdateUrl = '/article/update'
+    }
+
+    @action postArticleUpdate(body) {
+
+        return xhr({
+            method: 'post',
+            url: this.articleUpdateUrl,
+            body: body
+        }).then(response => {
+            if (response.result) {
+                Message.success(response.message);
+                return Promise.resolve(response)
+            } else {
+                Message.error(response.message);
+            }
+        })
     }
 
     @action postArticleAdd(body) {
@@ -45,6 +64,38 @@ class ArticleStore {
             }
         })
     }
+
+    @action postArticleDelete(body) {
+
+        return xhr({
+            method: 'post',
+            url: this.articleDeleteUrl,
+            body: body
+        }).then(response => {
+            if (response.result) {
+                Message.success(response.message);
+                return Promise.resolve(response)
+            } else {
+                Message.error(response.message);
+            }
+        })
+    }
+
+    @action postArticleEdit(body) {
+
+        return xhr({
+            method: 'post',
+            url: this.articleEditUrl,
+            body: body
+        }).then(response => {
+            if (response.result) {
+                return Promise.resolve(response)
+            } else {
+                Message.error(response.message);
+            }
+        })
+    }
+
 
 }
 

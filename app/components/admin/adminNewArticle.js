@@ -9,6 +9,7 @@ import remark from 'remark'
 import reactRenderer from 'remark-react'
 import './adminNewArticle.sass'
 import {Button, Select, Input, Dialog, Message} from '../zyc'
+import {splitLocation} from '../public/location'
 
 
 @inject('TagStore', 'ArticleStore') @observer
@@ -26,10 +27,28 @@ export default class AdminNewArticle extends React.Component {
         this.articleStore = this.props.ArticleStore;
     }
 
-    componentDidMount() {
-        this.tagStore.getTagList()
+    componentWillMount() {
+        let {articleId} = splitLocation(location);
 
+        this.articleId = articleId
     }
+
+    componentDidMount() {
+        this.tagStore.getTagList();
+
+        if (this.articleId) {
+            let body = {};
+            body.id = this.articleId;
+            this.articleStore.postArticleEdit(body).then(response => {
+                if (response) {
+                    this.title = response.data.title;
+                    this.content = response.data.content;
+                    this.tags = response.data.tags;
+                }
+            })
+        }
+    }
+
 
     render() {
         let {tagList} = this.tagStore;
@@ -66,14 +85,10 @@ export default class AdminNewArticle extends React.Component {
                         }
                     </Select>
                     <div className="button">
-                        <Button onClick={this.handlePublish.bind(this)}
+                        <Button onClick={this.handleArticle.bind(this)}
                                 className="btn"
                                 type="primary"
-                        >发布</Button>
-                        <Button onClick={this.handleSaveArticle.bind(this)}
-                                className="btn"
-                                type="primary"
-                        >保存</Button>
+                        >{this.articleId ? '更新' : '保存'}</Button>
                         <Button onClick={this.handlePreView.bind(this)}
                                 className="btn"
                                 type="primary"
@@ -110,11 +125,7 @@ export default class AdminNewArticle extends React.Component {
 
     }
 
-    handlePublish() {
-
-    }
-
-    handleSaveArticle() {
+    handleArticle() {
         if (!this.title) {
             Message.error('请输入文章标题!');
             return
@@ -130,7 +141,31 @@ export default class AdminNewArticle extends React.Component {
             return
         }
 
+        if (this.articleId) {
+            this.updateArticle()
+        } else {
+            this.saveArticle()
+        }
 
+
+    }
+
+    updateArticle() {
+        let body = {};
+        body.title = this.title;
+        body.content = this.content;
+        body.tags = toJS(this.tags);
+        body.id = this.articleId;
+
+        this.articleStore.postArticleUpdate(body).then(response => {
+            if (response) {
+                this.props.history.push('/admin/managerArticle')
+
+            }
+        })
+    }
+
+    saveArticle() {
         let body = {};
         body.title = this.title;
         body.content = this.content;

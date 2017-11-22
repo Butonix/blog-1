@@ -83,4 +83,47 @@ router.post('/list', function (req, res) {
     })
 });
 
+router.post('/delete', function (req, res) {
+    let {id} = req.body;
+    Article.remove({_id: id}).then(data => {
+        if (data.result.n) {
+            responseClient(res, 200, 1, '文章删除成功!')
+        } else {
+            responseClient(res, 200, 0, '文章删除失败!')
+        }
+    }).catch(err => {
+        responseClient(res)
+    })
+});
+
+router.post('/edit', function (req, res) {
+    let {id} = req.body;
+
+    Article.findOne({_id: id}, '_id title content tags').then(data => {
+        if (data) {
+            responseClient(res, 200, 1, '文章查找成功!', data)
+        } else {
+            responseClient(res, 200, 0, '未找到该文章!')
+        }
+    }).catch(err => {
+        responseClient(res)
+    })
+});
+
+router.post('/update', function (req, res) {
+    let {id, title, content, tags} = req.body;
+
+    Article.update({_id: id}, {title, content, tags: tags.split(',')})
+        .then(data => {
+            if (data.n) {
+                responseClient(res, 200, 1, '文章更新成功!', data)
+            } else {
+                responseClient(res, 200, 0, '文章更新失败!')
+            }
+
+        }).catch(err => {
+        responseClient(res)
+    })
+});
+
 export default router

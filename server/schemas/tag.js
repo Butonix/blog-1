@@ -7,11 +7,11 @@ import mongoose from 'mongoose'
 export default new mongoose.Schema({
         name: String, //标签名
         createTime: {
-            type: Number,
+            type: Date,
             default: Date.now
         },
         updateTime: {
-            type: Number,
+            type: Date,
             default: Date.now
         }
     }, {
