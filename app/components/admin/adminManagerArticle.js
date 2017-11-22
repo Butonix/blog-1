@@ -51,7 +51,17 @@ export default class AdminManagerArticle extends React.Component {
                 this.getArticleList()
             }
         })
+    }
 
+    handlePublish(id, isPublish) {
+        let body = {};
+        body.id = id;
+        body.isPublish = isPublish;
+        this.articleStore.postArticleUpdate(body).then(response => {
+            if (response) {
+                this.getArticleList()
+            }
+        })
     }
 
     render() {
@@ -66,6 +76,7 @@ export default class AdminManagerArticle extends React.Component {
                                 data={item}
                                 key={item._id}
                                 onDelete={this.handleDelete.bind(this)}
+                                onPublish={this.handlePublish.bind(this)}
                                 history={this.props.history}
                             />
                         )
@@ -109,7 +120,15 @@ class ArticleCell extends React.Component {
                     <Button className="btn" onClick={() => {
                         this.props.onDelete(data._id)
                     }}>删除</Button>
-                    <Button className="btn">发布</Button>
+                    {
+                        data.isPublish ?
+                            <Button className="btn" onClick={() => {
+                                this.props.onPublish(data._id, false)
+                            }}>撤回</Button> :
+                            <Button className="btn" onClick={() => {
+                                this.props.onPublish(data._id, true)
+                            }}>发布</Button>
+                    }
                 </div>
             </div>
 

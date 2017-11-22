@@ -111,14 +111,39 @@ router.post('/edit', function (req, res) {
 });
 
 router.post('/update', function (req, res) {
-    let {id, title, content, tags} = req.body;
+    let {id, title, content, tags, isPublish} = req.body;
+    let successMessage = '文章更新成功!';
+    let failMessage = '文章更新失败!';
+    let searchContent = {};
+    if (title) {
+        searchContent.title = title;
+    }
+    if (content) {
+        searchContent.content = content
+    }
+    if (tags) {
+        searchContent.tags = tags.split(',')
+    }
+    if (isPublish) {
 
-    Article.update({_id: id}, {title, content, tags: tags.split(',')})
+        searchContent.isPublish = isPublish;
+        if (isPublish === 'true') {
+            successMessage = '文章发布成功!';
+            failMessage = '文章发布失败!'
+        } else {
+            successMessage = '文章撤回成功!';
+            failMessage = '文章撤回失败!'
+        }
+    }
+
+
+    Article.update({_id: id}, searchContent)
         .then(data => {
             if (data.n) {
-                responseClient(res, 200, 1, '文章更新成功!', data)
+                responseClient(res, 200, 1, successMessage, data)
+
             } else {
-                responseClient(res, 200, 0, '文章更新失败!')
+                responseClient(res, 200, 0, failMessage)
             }
 
         }).catch(err => {
