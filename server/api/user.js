@@ -73,4 +73,76 @@ router.get('/loginOut', (req, res) => {
 
 });
 
+router.post('/list', (req, res) => {
+    let {page, size} = req.body;
+    page = parseInt(page);
+    size = parseInt(size);
+    let responseData = {
+        total: 0,
+        list: []
+    };
+
+    let skip = (page - 1) * size;
+
+    User.count()
+        .then(count => {
+            responseData.total = count;
+            User.find({}, '_id username userType password isUsed', {
+                skip: skip,
+                limit: size
+            }).then(data => {
+                if (data) {
+                    responseData.list = data;
+                    responseClient(res, 200, 1, '获取用户列表成功!', responseData)
+                } else {
+                    responseClient(res, 200, 0, '获取用户列表失败!')
+                }
+            })
+        }).catch(err => {
+        responseClient(res)
+    })
+});
+
+router.post('/update', (req, res) => {
+    let {id, isUsed} = req.body;
+    let successMessage;
+    let failMessage;
+    let searchContent = {};
+
+    if (isUsed) {
+        searchContent.isUsed = isUsed;
+        if (isUsed === 'true') {
+            successMessage = '启用成功!';
+            failMessage = '启用失败!'
+        } else {
+            successMessage = '禁用成功!';
+            failMessage = '禁用失败!'
+        }
+    }
+    User.update({_id: id}, searchContent)
+        .then(data => {
+            if (data.n) {
+                responseClient(res, 200, 1, successMessage)
+            } else {
+                responseClient(res, 200, 0, failMessage)
+            }
+        }).catch(err => {
+        responseClient(res)
+    })
+});
+
+router.post('/delete', (req, res) => {
+    let {id} = req.body;
+
+    User.remove({_id: id}).then(data => {
+        if (data.result.n) {
+            responseClient(res, 200, 1, '删除成功!')
+        } else {
+            responseClient(res, 200, 0, '删除失败!')
+        }
+    }).catch(err => {
+        responseClient(res)
+    })
+});
+
 export default router

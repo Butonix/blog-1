@@ -9,12 +9,64 @@ class UserStore {
 
     @observable userInfo;
     @observable loginShow;
+    @observable userList = [];
 
     constructor() {
         this.registerUrl = '/user/register';
         this.loginUrl = '/user/login';
         this.userInfoUrl = '/user/userInfo';
-        this.loginOutUrl = '/user/loginOut'
+        this.loginOutUrl = '/user/loginOut';
+        this.userListUrl = '/user/list';
+        this.userUpdateUrl = '/user/update';
+        this.userDeleteUrl = '/user/delete'
+    }
+
+    @action postUserDelete(body) {
+
+        return xhr({
+            method: 'post',
+            url: this.userDeleteUrl,
+            body: body
+        }).then(response => {
+            if (response.result) {
+                Message.success(response.message);
+                return Promise.resolve(response)
+            } else {
+                Message.error(response.message);
+            }
+        })
+    }
+
+    @action postUserUpdate(body) {
+
+        return xhr({
+            method: 'post',
+            url: this.userUpdateUrl,
+            body: body
+        }).then(response => {
+            if (response.result) {
+                Message.success(response.message);
+                return Promise.resolve(response)
+            } else {
+                Message.error(response.message);
+            }
+        })
+    }
+
+    @action postUserList(body) {
+
+        return xhr({
+            method: 'post',
+            url: this.userListUrl,
+            body: body
+        }).then(response => {
+            if (response.result) {
+                this.userList = response.data.list;
+                return Promise.resolve(response)
+            } else {
+                Message.error(response.message);
+            }
+        })
     }
 
     @action getLoginOut() {

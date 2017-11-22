@@ -7,6 +7,10 @@ import mongoose from 'mongoose'
 export default new mongoose.Schema({
     username: String,
     password: String,
-    userType: String //管理员 、普通用户
+    userType: String, //管理员 、普通用户
+    isUsed: {
+        type: Boolean,
+        default: true
+    }
 })
 

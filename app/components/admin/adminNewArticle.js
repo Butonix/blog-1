@@ -146,8 +146,6 @@ export default class AdminNewArticle extends React.Component {
         } else {
             this.saveArticle()
         }
-
-
     }
 
     updateArticle() {

@@ -13,7 +13,7 @@ export default class Admin extends React.Component {
     render() {
         return (
             <div className="admin">
-                admin
+                <h1>Welcome to my blog</h1>
             </div>
         )
     }
