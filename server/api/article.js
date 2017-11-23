@@ -68,9 +68,12 @@ router.post('/list', function (req, res) {
     Article.count(searchContent)
         .then(count => {
             responseData.total = count;
-            Article.find(searchContent, '_id title isPublish author readCount createTime', {
+            Article.find(searchContent, '_id title isPublish author readCount createTime updateTime', {
                 skip: skip,
-                limit: size
+                limit: size,
+                sort: {
+                    updateTime: -1
+                }
             }).then(data => {
                 responseData.list = data;
                 responseClient(res, 200, 1, '获取文章列表成功!', responseData)
@@ -96,7 +99,7 @@ router.post('/delete', function (req, res) {
     })
 });
 
-router.post('/edit', function (req, res) {
+router.post('/detail', function (req, res) {
     let {id} = req.body;
 
     Article.findOne({_id: id}, '_id title content tags').then(data => {

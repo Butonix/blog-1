@@ -40,21 +40,24 @@ router.post('/login', (req, res) => {
         password: md5(password + MD5_SUFFIX)
     }).then(data => {
         if (data) {
+            if (data.isUsed) {
+                let userInfo = {};
+                userInfo.username = data.username;
+                userInfo.userType = data.userType;
+                userInfo.userId = data._id;
 
-            let userInfo = {};
-            userInfo.username = data.username;
-            userInfo.userType = data.userType;
-            userInfo.userId = data._id;
+                req.session.userInfo = userInfo;
 
-            req.session.userInfo = userInfo;
-
-            responseClient(res, 200, 1, '登录成功!');
-            return true
+                responseClient(res, 200, 1, '登录成功!');
+            } else {
+                responseClient(res, 200, 0, '该账户已禁用,请联系管理员!')
+            }
+        } else {
+            responseClient(res, 200, 0, '用户名或密码错误!');
         }
-        responseClient(res, 200, 0, '用户名或密码错误!');
+
     }).catch(err => {
         responseClient(res);
-        return false;
     })
 });
 

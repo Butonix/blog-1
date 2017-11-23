@@ -107,7 +107,7 @@ class ArticleCell extends React.Component {
                     <p className="info">
                         <span>{`作者 : ${data.author}`}</span>
                         <span>{`阅读数 : ${data.readCount}`}</span>
-                        <span>{`发表时间 : ${dateFormat(data.createTime, 'yyyy-mm-dd HH:MM:ss')}`}</span>
+                        <span>{`更新时间 : ${dateFormat(data.updateTime, 'yyyy-mm-dd HH:MM:ss')}`}</span>
                     </p>
                 </div>
                 <div className="state">

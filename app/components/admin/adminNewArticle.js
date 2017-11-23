@@ -39,7 +39,7 @@ export default class AdminNewArticle extends React.Component {
         if (this.articleId) {
             let body = {};
             body.id = this.articleId;
-            this.articleStore.postArticleEdit(body).then(response => {
+            this.articleStore.postArticleDetail(body).then(response => {
                 if (response) {
                     this.title = response.data.title;
                     this.content = response.data.content;

@@ -13,7 +13,7 @@ class ArticleStore {
         this.articleAddUrl = '/article/add';
         this.articleListUrl = '/article/list';
         this.articleDeleteUrl = '/article/delete';
-        this.articleEditUrl = '/article/edit';
+        this.articleDetailUrl = '/article/detail';
         this.articleUpdateUrl = '/article/update'
     }
 
@@ -81,11 +81,11 @@ class ArticleStore {
         })
     }
 
-    @action postArticleEdit(body) {
+    @action postArticleDetail(body) {
 
         return xhr({
             method: 'post',
-            url: this.articleEditUrl,
+            url: this.articleDetailUrl,
             body: body
         }).then(response => {
             if (response.result) {
