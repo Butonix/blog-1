@@ -4,7 +4,7 @@
 
 import mongoose from 'mongoose'
 
-export default new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     username: String,
     password: String,
     userType: String, //管理员 、普通用户
@@ -12,5 +12,7 @@ export default new mongoose.Schema({
         type: Boolean,
         default: true
     }
-})
+});
+
+export default userSchema
 

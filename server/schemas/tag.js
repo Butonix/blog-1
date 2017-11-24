@@ -4,7 +4,7 @@
 
 import mongoose from 'mongoose'
 
-export default new mongoose.Schema({
+const tagSchema = new mongoose.Schema({
         name: String, //标签名
         createTime: {
             type: Date,
@@ -18,4 +18,6 @@ export default new mongoose.Schema({
         // timestamps: true
         timestamps: {createdAt: 'createTime', updatedAt: 'updateTime'}
     }
-)
+);
+
+export default tagSchema

@@ -4,7 +4,7 @@
 
 import mongoose from 'mongoose'
 
-export default new mongoose.Schema({
+const articleSchema = new mongoose.Schema({
     title: String,//文章标题
     content: String,//文章内容
     readCount: Number,//阅读次数
@@ -21,4 +21,6 @@ export default new mongoose.Schema({
     }
 }, {
     timestamps: {createdAt: 'createTime', updatedAt: 'updateTime'}
-})
+});
+
+export default articleSchema

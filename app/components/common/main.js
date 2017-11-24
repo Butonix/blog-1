@@ -5,6 +5,7 @@
 import React from 'react'
 import {observable} from 'mobx'
 import {observer} from 'mobx-react'
+import './main.sass'
 
 @observer
 export default class Main extends React.Component {

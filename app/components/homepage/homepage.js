@@ -4,18 +4,23 @@
 
 import React from 'react'
 import {observable} from 'mobx'
-import {observer} from 'mobx-react'
+import {inject, observer} from 'mobx-react'
 import './homepage.sass'
 
-@observer
+@inject('ArticleStore') @observer
 export default class Homepage extends React.Component {
+
+    constructor(args) {
+        super(args);
+        this.articleStore = this.props.ArticleStore;
+
+    }
 
     componentDidMount() {
         // console.log(this.props.history)
     }
 
     render() {
-        console.log('homepage')
         return (
             <div className="homepage">
                 homepage
