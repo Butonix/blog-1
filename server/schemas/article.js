@@ -7,7 +7,10 @@ import mongoose from 'mongoose'
 const articleSchema = new mongoose.Schema({
     title: String,//文章标题
     content: String,//文章内容
-    readCount: Number,//阅读次数
+    readCount: {
+        type: Number,
+        default: 0 //阅读次数
+    },
     author: String,//作者
     tags: Array,//类型
     isPublish: Boolean,//是否发布

@@ -16,7 +16,6 @@ router.post('/add', function (req, res) {
     } = req.body;
 
     let author = req.session.userInfo.username;
-    let readCount = 0;
 
     Article.findOne({title})
         .then(data => {
@@ -26,7 +25,6 @@ router.post('/add', function (req, res) {
                 let article = new Article({
                     title,
                     content,
-                    readCount,
                     author,
                     tags: tags.split(','),
                     isPublish,
@@ -71,7 +69,7 @@ router.post('/list', function (req, res) {
     Article.count(searchContent)
         .then(count => {
             responseData.total = count;
-            return Article.find(searchContent, '_id title isPublish author readCount createTime updateTime', {
+            return Article.find(searchContent, '_id title isPublish author tags readCount createTime updateTime', {
                 skip: skip,
                 limit: size,
                 sort: {

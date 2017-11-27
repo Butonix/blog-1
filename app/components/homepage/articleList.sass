@@ -1,0 +1,54 @@
+@import "../../styles/theme"
+.homepage-article
+    margin-top: 80px
+    margin-bottom: 80px
+    .homepage-article-list
+        & + .homepage-article-list
+            margin-top: 100px
+        h1
+            font-size: 22px
+            font-weight: 500
+        .meta
+            margin: 20px 0 20px
+            font-size: 12px
+            color: $color153
+            i
+                font-size: 12px
+                margin-right: 5px
+            .tip
+                margin-right: 5px
+            .categories
+                a
+                    border-bottom: 1px solid $color153
+                    &:hover
+                        color: $red
+                        border-color: $red
+                    & + a
+                        margin-left: 5px
+    .link-hover
+        position: relative
+        &:before
+            content: ''
+            position: absolute
+            height: 2px
+            width: 0
+            left: 50%
+            background: $color102
+            bottom: -3px
+            transition: left 0.2s linear, width 0.2s linear
+        &:hover
+            &:before
+                width: 100%
+                left: 0
+    .area-line
+        padding-right: 10px
+        position: relative
+        margin-right: 10px
+        &:after
+            content: ''
+            background: $color153
+            width: 1px
+            height: 80%
+            position: absolute
+            right: 0
+
