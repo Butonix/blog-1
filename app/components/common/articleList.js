@@ -9,7 +9,7 @@ import {Link} from 'react-router-dom'
 import dateFormat from 'dateformat'
 import './articleList.sass'
 
-export default class ArticleList extends React.Component {
+class ArticleList extends React.Component {
     render() {
         let {data} = this.props;
         return (
@@ -29,11 +29,11 @@ export default class ArticleList extends React.Component {
 
 class ArticleCell extends React.Component {
     render() {
-        let {data} = this.props;
+        let {data, detail} = this.props;
         return (
-            <div className="homepage-article-list">
+            <div className={detail ? 'homepage-article-list detail' : 'homepage-article-list'}>
                 <h1>
-                    <Link to="#" className="link-hover">{data.title}</Link>
+                    <Link to={`/detail?articleId=${data._id}`} className="link-hover">{data.title}</Link>
                 </h1>
                 <div className="meta">
                     <span className="area-line">
@@ -45,7 +45,7 @@ class ArticleCell extends React.Component {
                         <i className="iconfont icon-wenjianjia">{null}</i>
                         <span className="tip">分类于</span>
                         {
-                            data.tags.map((tag, index) =>
+                            data.tags && data.tags.map((tag, index) =>
                                 <Link to="#" key={tag}>{tag}</Link>
                             )
                         }
@@ -56,10 +56,16 @@ class ArticleCell extends React.Component {
                         <span>{data.readCount}</span>
                     </span>
                 </div>
-                <div className="link">
-                    <Link to="#" className="link-hover">阅读全文 »</Link>
-                </div>
+                {
+                    !detail ?
+                        <div className="link">
+                            <Link to={`/detail?articleId=${data._id}`} className="link-hover">阅读全文 »</Link>
+                        </div> : null
+                }
             </div>
         )
     }
 }
+
+export {ArticleCell}
+export default ArticleList

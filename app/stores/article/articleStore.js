@@ -8,6 +8,7 @@ import {Message} from '../../components/zyc'
 
 class ArticleStore {
     @observable articleList = [];
+    @observable articleDetail = {};
 
     constructor() {
         this.articleAddUrl = '/article/add';
@@ -89,14 +90,13 @@ class ArticleStore {
             body: body
         }).then(response => {
             if (response.result) {
+                this.articleDetail = response.data;
                 return Promise.resolve(response)
             } else {
                 Message.error(response.message);
             }
         })
     }
-
-
 }
 
 export default new ArticleStore
