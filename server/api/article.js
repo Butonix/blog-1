@@ -106,7 +106,7 @@ router.post('/list', function (req, res) {
     Article.count(searchContent)
         .then(count => {
             responseData.total = count;
-            return Article.find(searchContent, 'title isPublish author tags readCount createTime updateTime articleId', {
+            return Article.find(searchContent, 'articleId title isPublish author tags readCount createTime updateTime', {
                 skip: skip,
                 limit: size,
                 sort: searchSort
@@ -135,7 +135,7 @@ router.post('/delete', function (req, res) {
 router.post('/detail', function (req, res) {
     let {articleId} = req.body;
 
-    Article.findOne({articleId}, 'title content tags readCount updateTime').then(data => {
+    Article.findOne({articleId}, 'articleId title content tags readCount updateTime').then(data => {
         if (data) {
             responseClient(res, 200, 1, '文章查找成功!', data)
         } else {
@@ -144,6 +144,40 @@ router.post('/detail', function (req, res) {
     }).catch(err => {
         responseClient(res)
     })
+});
+
+router.post('/detail/title', function (req, res) {
+    let {articleId, prev, next} = req.body;
+
+    if (prev) {
+        Article.findOne({articleId: {$lt: articleId}}, 'articleId title', {
+            sort: {
+                articleId: -1
+            }
+        }).then(data => {
+            if (data) {
+                responseClient(res, 200, 1, '文章查找成功!', data)
+            } else {
+                responseClient(res, 200, 1, '未找到该文章!')
+            }
+
+        })
+    }
+
+    if (next) {
+        Article.findOne({articleId: {$gt: articleId}}, 'articleId title', {
+            sort: {
+                articleId: 1
+            }
+        }).then(data => {
+            if (data) {
+                responseClient(res, 200, 1, '文章查找成功!', data)
+            } else {
+                responseClient(res, 200, 1, '未找到该文章!')
+            }
+
+        })
+    }
 });
 
 router.post('/update', function (req, res) {

@@ -16,7 +16,23 @@ class ArticleStore {
         this.articleDeleteUrl = '/article/delete';
         this.articleDetailUrl = '/article/detail';
         this.articleUpdateUrl = '/article/update';
-        this.articleUpdateReadCountUrl = '/article/update/readCount'
+        this.articleUpdateReadCountUrl = '/article/update/readCount';
+        this.articleDetailTitleUrl = '/article/detail/title'
+    }
+
+    @action postArticleDetailTitle(body) {
+
+        return xhr({
+            method: 'post',
+            url: this.articleDetailTitleUrl,
+            body: body
+        }).then(response => {
+            if (response.result) {
+                return Promise.resolve(response)
+            } else {
+                Message.error(response.message);
+            }
+        })
     }
 
     @action postArticleUpdateReadCount(body) {
