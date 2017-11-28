@@ -14,6 +14,11 @@ const articleSchema = new mongoose.Schema({
     author: String,//作者
     tags: Array,//类型
     isPublish: Boolean,//是否发布
+    articleId: { //文章id
+        type: Number,
+        default: 0,
+        index: true
+    },
     createTime: {
         type: Date,
         default: Date.now // 创建时间

@@ -44,9 +44,9 @@ export default class AdminManagerArticle extends React.Component {
 
     }
 
-    handleDelete(id) {
+    handleDelete(articleId) {
         let body = {};
-        body.id = id;
+        body.articleId = articleId;
         this.articleStore.postArticleDelete(body).then(response => {
             if (response) {
                 this.getArticleList()
@@ -54,9 +54,9 @@ export default class AdminManagerArticle extends React.Component {
         })
     }
 
-    handlePublish(id, isPublish) {
+    handlePublish(articleId, isPublish) {
         let body = {};
-        body.id = id;
+        body.articleId = articleId;
         body.isPublish = isPublish;
         this.articleStore.postArticleUpdate(body).then(response => {
             if (response) {
@@ -75,7 +75,7 @@ export default class AdminManagerArticle extends React.Component {
                         articleList.map((item, index) =>
                             <ArticleCell
                                 data={item}
-                                key={item._id}
+                                key={item.articleId}
                                 onDelete={this.handleDelete.bind(this)}
                                 onPublish={this.handlePublish.bind(this)}
                                 history={this.props.history}
@@ -116,18 +116,18 @@ class ArticleCell extends React.Component {
                 </div>
                 <div className="operation">
                     <Button className="btn" onClick={() => {
-                        this.props.history.push(`/admin/newArticle?articleId=${data._id}`)
+                        this.props.history.push(`/admin/newArticle?articleId=${data.articleId}`)
                     }}>编辑</Button>
                     <Button className="btn" onClick={() => {
-                        this.props.onDelete(data._id)
+                        this.props.onDelete(data.articleId)
                     }}>删除</Button>
                     {
                         data.isPublish ?
                             <Button className="btn" onClick={() => {
-                                this.props.onPublish(data._id, false)
+                                this.props.onPublish(data.articleId, false)
                             }}>撤回</Button> :
                             <Button className="btn" onClick={() => {
-                                this.props.onPublish(data._id, true)
+                                this.props.onPublish(data.articleId, true)
                             }}>发布</Button>
                     }
                 </div>

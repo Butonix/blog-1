@@ -18,7 +18,7 @@ class ArticleList extends React.Component {
                     data.map((item, index) =>
                         <ArticleCell
                             data={item}
-                            key={item._id}
+                            key={item.articleId}
                         />
                     )
                 }
@@ -33,7 +33,7 @@ class ArticleCell extends React.Component {
         return (
             <div className={detail ? 'homepage-article-list detail' : 'homepage-article-list'}>
                 <h1>
-                    <Link to={`/detail?articleId=${data._id}`} className="link-hover">{data.title}</Link>
+                    <Link to={`/detail?articleId=${data.articleId}`} className="link-hover">{data.title}</Link>
                 </h1>
                 <div className="meta">
                     <span className="area-line">
@@ -59,7 +59,7 @@ class ArticleCell extends React.Component {
                 {
                     !detail ?
                         <div className="link">
-                            <Link to={`/detail?articleId=${data._id}`} className="link-hover">阅读全文 »</Link>
+                            <Link to={`/detail?articleId=${data.articleId}`} className="link-hover">阅读全文 »</Link>
                         </div> : null
                 }
             </div>

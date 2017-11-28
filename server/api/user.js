@@ -4,38 +4,44 @@
 
 import express from 'express'
 import User from '../models/user'
+import Id from '../models/id'
 import {responseClient, md5, MD5_SUFFIX} from '../util'
 const router = express.Router();
 
 router.post('/register', (req, res) => {
     let {username, password} = req.body;
 
-    User.findOne({username: username})// 用户名区分 //collection
+    User.findOne({username})// 用户名区分 //collection
         .then(data => {
             if (data) {
                 responseClient(res, 200, 0, '用户名已存在!');
-                return false
-            }
+            } else {
+                return Id.findOneAndUpdate({_id: 'userId'}, {
+                    $inc: {
+                        seq: 1
+                    }
+                }).then(data => {
+                    let user = new User({
+                        username: username,
+                        password: md5(password + MD5_SUFFIX),
+                        userType: 'user',
+                        userId: data.seq
+                    });
 
-            let user = new User({
-                username: username,
-                password: md5(password + MD5_SUFFIX),
-                userType: 'user'
-            });
-            return user.save()
-                .then(() => {
-                    responseClient(res, 200, 1, '注册成功!');
+                    return user.save().then(() => {
+                        responseClient(res, 200, 1, '注册成功!');
+                    })
                 })
+            }
         }).catch(err => {
         responseClient(res);
-        return false;
     })
 });
 
 router.post('/login', (req, res) => {
     let {username, password} = req.body;
     User.findOne({
-        username: username,
+        username,
         password: md5(password + MD5_SUFFIX)
     }).then(data => {
         if (data) {
@@ -43,7 +49,7 @@ router.post('/login', (req, res) => {
                 let userInfo = {};
                 userInfo.username = data.username;
                 userInfo.userType = data.userType;
-                userInfo.userId = data._id;
+                userInfo.userId = data.userId;
 
                 req.session.userInfo = userInfo;
 
@@ -89,7 +95,7 @@ router.post('/list', (req, res) => {
     User.count()
         .then(count => {
             responseData.total = count;
-            return User.find({}, '_id username userType password isUsed', {
+            return User.find({}, 'userId username userType password isUsed', {
                 skip: skip,
                 limit: size
             }).then(data => {
@@ -106,7 +112,7 @@ router.post('/list', (req, res) => {
 });
 
 router.post('/update', (req, res) => {
-    let {id, isUsed} = req.body;
+    let {userId, isUsed} = req.body;
     let successMessage;
     let failMessage;
     let searchContent = {};
@@ -121,7 +127,7 @@ router.post('/update', (req, res) => {
             failMessage = '禁用失败!'
         }
     }
-    User.update({_id: id}, searchContent)
+    User.update({userId}, searchContent)
         .then(data => {
             if (data.n) {
                 responseClient(res, 200, 1, successMessage)
@@ -134,9 +140,9 @@ router.post('/update', (req, res) => {
 });
 
 router.post('/delete', (req, res) => {
-    let {id} = req.body;
+    let {userId} = req.body;
 
-    User.remove({_id: id}).then(data => {
+    User.remove({userId}).then(data => {
         if (data.result.n) {
             responseClient(res, 200, 1, '删除成功!')
         } else {

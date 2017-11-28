@@ -4,6 +4,7 @@
 
 import express from 'express'
 import Article from '../models/article'
+import Id from '../models/id'
 import {responseClient, md5, MD5_SUFFIX} from '../util'
 const router = express.Router();
 
@@ -20,19 +21,30 @@ router.post('/add', function (req, res) {
     Article.findOne({title})
         .then(data => {
             if (data) {
+
                 responseClient(res, 200, 0, '文章已存在,请更换标题!')
             } else {
-                let article = new Article({
-                    title,
-                    content,
-                    author,
-                    tags: tags.split(','),
-                    isPublish,
-                });
+                return Id.findOneAndUpdate({_id: 'articleId'}, {
+                    $inc: {
+                        seq: 1
+                    }
+                }).then(data => {
 
-                return article.save().then(data => {
-                    responseClient(res, 200, 1, '文章保存成功!', data)
-                })
+                    if (data) {
+                        let article = new Article({
+                            title,
+                            content,
+                            author,
+                            tags: tags.split(','),
+                            isPublish,
+                            articleId: data.seq
+                        });
+
+                        return article.save().then(data => {
+                            responseClient(res, 200, 1, '文章保存成功!', data)
+                        })
+                    }
+                });
             }
         }).catch(err => {
         responseClient(res)
@@ -94,7 +106,7 @@ router.post('/list', function (req, res) {
     Article.count(searchContent)
         .then(count => {
             responseData.total = count;
-            return Article.find(searchContent, '_id title isPublish author tags readCount createTime updateTime', {
+            return Article.find(searchContent, 'title isPublish author tags readCount createTime updateTime articleId', {
                 skip: skip,
                 limit: size,
                 sort: searchSort
@@ -108,8 +120,8 @@ router.post('/list', function (req, res) {
 });
 
 router.post('/delete', function (req, res) {
-    let {id} = req.body;
-    Article.remove({_id: id}).then(data => {
+    let {articleId} = req.body;
+    Article.remove({articleId}).then(data => {
         if (data.result.n) {
             responseClient(res, 200, 1, '文章删除成功!')
         } else {
@@ -121,9 +133,9 @@ router.post('/delete', function (req, res) {
 });
 
 router.post('/detail', function (req, res) {
-    let {id} = req.body;
+    let {articleId} = req.body;
 
-    Article.findOne({_id: id}, '_id title content tags readCount updateTime').then(data => {
+    Article.findOne({articleId}, 'title content tags readCount updateTime').then(data => {
         if (data) {
             responseClient(res, 200, 1, '文章查找成功!', data)
         } else {
@@ -135,7 +147,7 @@ router.post('/detail', function (req, res) {
 });
 
 router.post('/update', function (req, res) {
-    let {id, title, content, tags, isPublish} = req.body;
+    let {articleId, title, content, tags, isPublish} = req.body;
     let successMessage = '文章更新成功!';
     let failMessage = '文章更新失败!';
     let searchContent = {};
@@ -161,7 +173,7 @@ router.post('/update', function (req, res) {
     }
 
 
-    Article.update({_id: id}, searchContent)
+    Article.update({articleId}, searchContent)
         .then(data => {
             if (data.n) {
                 responseClient(res, 200, 1, successMessage, data)
@@ -176,9 +188,9 @@ router.post('/update', function (req, res) {
 });
 
 router.post('/update/readCount', function (req, res) {
-    let {id} = req.body;
+    let {articleId} = req.body;
 
-    Article.update({_id: id}, {
+    Article.update({articleId}, {
         $inc: {
             readCount: 1
         }

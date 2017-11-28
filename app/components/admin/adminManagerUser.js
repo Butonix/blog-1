@@ -41,9 +41,9 @@ export default class AdminManagerUser extends React.Component {
         this.getUserList()
     }
 
-    handleUse(id, isUsed) {
+    handleUse(userId, isUsed) {
         let body = {};
-        body.id = id;
+        body.userId = userId;
         body.isUsed = isUsed;
         this.userStore.postUserUpdate(body).then(response => {
             if (response) {
@@ -52,9 +52,9 @@ export default class AdminManagerUser extends React.Component {
         })
     }
 
-    handleDelete(id) {
+    handleDelete(userId) {
         let body = {};
-        body.id = id;
+        body.userId = userId;
         this.userStore.postUserDelete(body).then(response => {
             if (response) {
                 this.getUserList()
@@ -70,8 +70,8 @@ export default class AdminManagerUser extends React.Component {
             dataIndex: 'username',
             width: '15%'
         }, {
-            title: 'ID',
-            dataIndex: '_id',
+            title: 'userId',
+            dataIndex: 'userId',
             width: '25%'
         }, {
             title: '密码(加密后)',
@@ -89,10 +89,10 @@ export default class AdminManagerUser extends React.Component {
                 <div className="managerUser-operation">
                     {
                         row.isUsed ?
-                            <a className="zyc-text-green" onClick={this.handleUse.bind(this, row._id, false)}>启用中</a> :
-                            <a className="zyc-text-red" onClick={this.handleUse.bind(this, row._id, true)}>禁用中</a>
+                            <a className="zyc-text-green" onClick={this.handleUse.bind(this, row.userId, false)}>启用中</a> :
+                            <a className="zyc-text-red" onClick={this.handleUse.bind(this, row.userId, true)}>禁用中</a>
                     }
-                    <a onClick={this.handleDelete.bind(this, row._id)}>删除</a>
+                    <a onClick={this.handleDelete.bind(this, row.userId)}>删除</a>
                 </div>
         }];
 
@@ -103,7 +103,7 @@ export default class AdminManagerUser extends React.Component {
                     <Table
                         columns={columns}
                         data={toJS(userList)}
-                        rowKey="_id"
+                        rowKey="userId"
                     />
                 </section>
                 <div className="zyc-pager">

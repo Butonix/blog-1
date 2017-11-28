@@ -38,7 +38,7 @@ export default class AdminNewArticle extends React.Component {
 
         if (this.articleId) {
             let body = {};
-            body.id = this.articleId;
+            body.articleId = this.articleId;
             this.articleStore.postArticleDetail(body).then(response => {
                 if (response) {
                     this.title = response.data.title;
@@ -78,7 +78,7 @@ export default class AdminNewArticle extends React.Component {
                         {
                             tagList.map(tag =>
                                 <Select.Item
-                                    key={tag._id}
+                                    key={tag.tagId}
                                 >{tag.name}
                                 </Select.Item>
                             )
@@ -153,7 +153,7 @@ export default class AdminNewArticle extends React.Component {
         body.title = this.title;
         body.content = this.content;
         body.tags = toJS(this.tags);
-        body.id = this.articleId;
+        body.articleId = this.articleId;
 
         this.articleStore.postArticleUpdate(body).then(response => {
             if (response) {

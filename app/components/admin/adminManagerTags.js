@@ -33,7 +33,7 @@ export default class AdminManagerTags extends React.Component {
                 {
                     tagList.map((tag, index) =>
                         <Tag
-                            key={tag._id}
+                            key={tag.tagId}
                             className="tag"
                             onClose={this.handleCloseTag.bind(this, tag)}
                         >{tag.name}</Tag>

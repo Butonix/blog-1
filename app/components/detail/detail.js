@@ -26,7 +26,7 @@ export default class Detail extends React.Component {
 
     componentDidMount() {
         let body = {};
-        body.id = this.articleId;
+        body.articleId = this.articleId;
         this.articleStore.postArticleUpdateReadCount(body).then(response => {
             if (response) {
                 this.articleStore.postArticleDetail(body)
