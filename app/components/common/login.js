@@ -156,12 +156,12 @@ class RegisterForm extends React.Component {
         let passwordRe = this.refs.passwordRe.value;
 
         if (!Username.test(username)) {
-            Message.error('请输入6-16位字符!');
+            Message.error('请输入5-16位字符!');
             return false
         }
 
         if (!Password.test(password)) {
-            Message.error('请输入以字母开头的6-16位字符的密码!');
+            Message.error('请输入以字母开头的5-16位字符的密码!');
             return false
         }
 

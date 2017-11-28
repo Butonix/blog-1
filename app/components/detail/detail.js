@@ -5,8 +5,11 @@
 import React from 'react'
 import {observable} from 'mobx'
 import {inject, observer} from 'mobx-react'
+import remark from 'remark'
+import reactRenderer from 'remark-react'
 import {ArticleCell} from '../common/articleList'
 import {splitLocation} from '../public/location'
+import './detail.sass'
 
 @inject('ArticleStore') @observer
 export default class Detail extends React.Component {
@@ -24,7 +27,12 @@ export default class Detail extends React.Component {
     componentDidMount() {
         let body = {};
         body.id = this.articleId;
-        this.articleStore.postArticleDetail(body)
+        this.articleStore.postArticleUpdateReadCount(body).then(response => {
+            if (response) {
+                this.articleStore.postArticleDetail(body)
+            }
+        })
+
     }
 
     render() {
@@ -32,10 +40,17 @@ export default class Detail extends React.Component {
 
         return (
             <div className="detail">
-                <ArticleCell
-                    detail={true}
-                    data={articleDetail}
-                />
+                <div className="detail-title">
+                    <ArticleCell
+                        detail={true}
+                        data={articleDetail}
+                    />
+                </div>
+                <div className="detail-content">
+                    <div className="markdown-body">
+                        {remark().use(reactRenderer).processSync(articleDetail.content).contents}
+                    </div>
+                </div>
             </div>
         )
     }

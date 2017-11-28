@@ -22,10 +22,9 @@ router.post('/register', (req, res) => {
                 password: md5(password + MD5_SUFFIX),
                 userType: 'user'
             });
-            user.save()
+            return user.save()
                 .then(() => {
                     responseClient(res, 200, 1, '注册成功!');
-                    return true;
                 })
         }).catch(err => {
         responseClient(res);
@@ -90,7 +89,7 @@ router.post('/list', (req, res) => {
     User.count()
         .then(count => {
             responseData.total = count;
-            User.find({}, '_id username userType password isUsed', {
+            return User.find({}, '_id username userType password isUsed', {
                 skip: skip,
                 limit: size
             }).then(data => {

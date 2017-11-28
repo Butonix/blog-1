@@ -30,27 +30,52 @@ router.post('/add', function (req, res) {
                     isPublish,
                 });
 
-                return article.save()
+                return article.save().then(data => {
+                    responseClient(res, 200, 1, '文章保存成功!', data)
+                })
             }
-        })
-        .then(data => {
-            responseClient(res, 200, 1, '文章保存成功!', data)
-        })
-        .catch(err => {
-            responseClient(res)
-        })
+        }).catch(err => {
+        responseClient(res)
+    })
 });
 
 router.post('/list', function (req, res) {
     let {
-        tags,
-        isPublish,
         page,
-        size
+        size,
+        isPublish,
+        tags,
+        sort
     } = req.body;
     page = parseInt(page);
     size = parseInt(size);
     let searchContent = {};
+    let searchSort = {
+        createTime: -1
+    };
+
+    if (sort) {
+        if (sort == 'createTime,1') {
+            searchSort = {
+                createTime: 1
+            }
+        }
+        if (sort == 'createTime,-1') {
+            searchSort = {
+                createTime: -1
+            }
+        }
+        if (sort == 'updateTime,1') {
+            searchSort = {
+                updateTime: 1
+            }
+        }
+        if (sort == 'updateTime,-1') {
+            searchSort = {
+                updateTime: -1
+            }
+        }
+    }
 
     if (tags) {
         searchContent.tags = tags.split(',')
@@ -72,18 +97,14 @@ router.post('/list', function (req, res) {
             return Article.find(searchContent, '_id title isPublish author tags readCount createTime updateTime', {
                 skip: skip,
                 limit: size,
-                sort: {
-                    updateTime: -1
-                }
+                sort: searchSort
+            }).then(data => {
+                responseData.list = data;
+                responseClient(res, 200, 1, '获取文章列表成功!', responseData)
             })
-        })
-        .then(data => {
-            responseData.list = data;
-            responseClient(res, 200, 1, '获取文章列表成功!', responseData)
-        })
-        .catch(err => {
-            responseClient(res)
-        })
+        }).catch(err => {
+        responseClient(res)
+    })
 });
 
 router.post('/delete', function (req, res) {
@@ -151,6 +172,22 @@ router.post('/update', function (req, res) {
 
         }).catch(err => {
         responseClient(res)
+    })
+});
+
+router.post('/update/readCount', function (req, res) {
+    let {id} = req.body;
+
+    Article.update({_id: id}, {
+        $inc: {
+            readCount: 1
+        }
+    }).then(data => {
+        if (data.n) {
+            responseClient(res, 200, 1, '阅读量更新成功!')
+        } else {
+            responseClient(res, 200, 0, '阅读量更新失败!')
+        }
     })
 });
 

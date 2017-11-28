@@ -15,7 +15,7 @@ router.post('/add', function (req, res) {
         if (!data) {
             let tag = new Tag({name});
 
-            tag.save().then(data => {
+            return tag.save().then(data => {
                 responseClient(res, 200, 1, '标签添加成功!', data)
 
             })

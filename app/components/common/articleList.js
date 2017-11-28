@@ -39,7 +39,7 @@ class ArticleCell extends React.Component {
                     <span className="area-line">
                         <i className="iconfont icon-riqi">{null}</i>
                         <span className="tip">发表于</span>
-                        <span>{dateFormat(data.updateTime, 'yyyy-mm-dd')}</span>
+                        <span>{dateFormat(data.createTime, 'yyyy-mm-dd HH:MM:ss')}</span>
                     </span>
                     <span className="area-line categories">
                         <i className="iconfont icon-wenjianjia">{null}</i>

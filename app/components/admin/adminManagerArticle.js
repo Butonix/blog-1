@@ -30,6 +30,7 @@ export default class AdminManagerArticle extends React.Component {
         let body = {};
         body.page = this.page;
         body.size = this.size;
+        body.sort = 'updateTime,-1';
         this.articleStore.postArticleList(body).then(response => {
             if (response) {
                 this.total = response.data.total
