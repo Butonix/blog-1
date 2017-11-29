@@ -54,8 +54,41 @@ router.post('/delete', function (req, res) {
 
 router.get('/list', function (req, res) {
 
-    Tag.find({}, {name: 1, tagId: 1, _id: 0}).then(data => {
-        responseClient(res, 200, 1, '获取标签成功!', data)
+    let responseData = {
+        total: 0,
+        list: []
+    };
+
+    Tag.count({})
+        .then(count => {
+            responseData.total = count;
+            return Tag.find({}, {name: 1, tagId: 1, count: 1, _id: 0}).then(data => {
+                if (data) {
+                    responseData.list = data;
+                    responseClient(res, 200, 1, '获取标签成功!', responseData)
+                } else {
+                    responseClient(res, 200, 0, '获取标签失败!')
+                }
+
+            })
+        }).catch(err => {
+        responseClient(res)
+    })
+});
+
+router.post('/count', function (req, res) {
+    let {tags} = req.body;
+
+    Tag.update({name: {$in: tags.split(',')}}, {
+        $inc: {
+            count: 1
+        }
+    }, {multi: true}).then(data => {
+        if (data.n) {
+            responseClient(res, 200, 1, '标签数量更新成功!', data)
+        } else {
+            responseClient(res, 200, 0, '标签数量更新失败!')
+        }
     }).catch(err => {
         responseClient(res)
     })

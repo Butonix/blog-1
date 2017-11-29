@@ -172,7 +172,13 @@ export default class AdminNewArticle extends React.Component {
 
         this.articleStore.postArticleAdd(body).then(response => {
             if (response) {
-                this.props.history.push('/admin/managerArticle')
+                let body = {};
+                body.tags = toJS(this.tags);
+                this.tagStore.postTagCount(body).then(response => {
+                    if (response) {
+                        this.props.history.push('/admin/managerArticle')
+                    }
+                })
             }
         })
     }

@@ -9,11 +9,28 @@ import {Message} from '../../components/zyc'
 class TagStore {
 
     @observable tagList = [];
+    @observable tagCount = 0;
 
     constructor() {
         this.tagAddUrl = '/tag/add';
         this.tagListUrl = '/tag/list';
-        this.tagDeleteUrl = '/tag/delete'
+        this.tagDeleteUrl = '/tag/delete';
+        this.tagCountUrl = '/tag/count'
+    }
+
+    @action postTagCount(body) {
+
+        return xhr({
+            method: 'post',
+            url: this.tagCountUrl,
+            body: body
+        }).then(response => {
+            if (response.result) {
+                return Promise.resolve(response)
+            } else {
+                Message.error(response.message);
+            }
+        })
     }
 
     @action postTagDelete(body) {
@@ -55,7 +72,8 @@ class TagStore {
             url: this.tagListUrl,
         }).then(response => {
             if (response.result) {
-                this.tagList = response.data;
+                this.tagList = response.data.list;
+                this.tagCount = response.data.total;
                 return Promise.resolve(response)
             } else {
                 Message.error(response.message);

@@ -10,6 +10,10 @@ const tagSchema = new mongoose.Schema({
             type: Number,
             default: 0
         },
+        count: {
+            type: Number,
+            default: 0
+        },
         createTime: {
             type: Date,
             default: Date.now
