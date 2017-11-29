@@ -25,8 +25,6 @@ export default class Header extends React.Component {
 
         const {loginShow, userInfo} = this.userStore;
 
-        console.log('header');
-
         const nav = [
             {
                 text: '首页',

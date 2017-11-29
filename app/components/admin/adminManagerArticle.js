@@ -14,7 +14,6 @@ import {Button} from '../zyc'
 export default class AdminManagerArticle extends React.Component {
     @observable page = 1;
     @observable size = 5;
-    @observable total = 0;
 
     constructor(args) {
         super(args);
@@ -31,11 +30,7 @@ export default class AdminManagerArticle extends React.Component {
         body.page = this.page;
         body.size = this.size;
         body.sort = 'updateTime,-1';
-        this.articleStore.postArticleList(body).then(response => {
-            if (response) {
-                this.total = response.data.total
-            }
-        });
+        this.articleStore.postArticleList(body);
     }
 
     handlePageChange(current) {
@@ -66,7 +61,7 @@ export default class AdminManagerArticle extends React.Component {
     }
 
     render() {
-        let {articleList} = this.articleStore;
+        let {articleList,articleCount} = this.articleStore;
         return (
             <div className="admin-managerArticle">
                 <h2>文章管理</h2>
@@ -87,7 +82,7 @@ export default class AdminManagerArticle extends React.Component {
                     <Pagination
                         current={this.page}
                         pageSize={this.size}
-                        total={this.total}
+                        total={articleCount}
                         onChange={this.handlePageChange.bind(this)}
                     />
                 </div>

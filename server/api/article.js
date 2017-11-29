@@ -90,7 +90,7 @@ router.post('/list', function (req, res) {
     }
 
     if (tags) {
-        searchContent.tags = tags.split(',')
+        searchContent.tags = {$all: tags.split(',')}
     }
 
     if (isPublish) {

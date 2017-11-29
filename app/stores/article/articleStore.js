@@ -8,6 +8,7 @@ import {Message} from '../../components/zyc'
 
 class ArticleStore {
     @observable articleList = [];
+    @observable articleCount = 0;
     @observable articleDetail = {};
 
     constructor() {
@@ -91,6 +92,7 @@ class ArticleStore {
         }).then(response => {
             if (response.result) {
                 this.articleList = response.data.list;
+                this.articleCount = response.data.total;
                 return Promise.resolve(response)
             } else {
                 Message.error(response.message);

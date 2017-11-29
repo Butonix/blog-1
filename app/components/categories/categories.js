@@ -6,6 +6,7 @@ import React from 'react'
 import {observable} from 'mobx'
 import {Link} from 'react-router-dom'
 import {inject, observer} from 'mobx-react'
+import './categories.sass'
 
 
 @inject('TagStore') @observer
@@ -25,11 +26,11 @@ export default class Categories extends React.Component {
             <div className="categories">
                 <h1>categories</h1>
                 <div className="categories-count">{`目前共计${tagCount}个分类`}</div>
-                <ul className="categorise-list">
+                <ul className="categories-list">
                     {
                         tagList.map((tag, index) =>
                             <li key={tag.tagId}>
-                                <Link to="#">{tag.name}</Link>
+                                <Link to={`/categories/${tag.name}`} className="zyc-link-hover">{tag.name}</Link>
                                 <span>{`(${tag.count})`}</span>
                             </li>
                         )
