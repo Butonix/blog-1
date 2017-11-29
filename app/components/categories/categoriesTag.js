@@ -40,7 +40,6 @@ export default class CategoriesTag extends React.Component {
     handlePageChange(current) {
         this.page = current;
         this.getArticleList()
-
     }
 
     render() {
@@ -63,14 +62,18 @@ export default class CategoriesTag extends React.Component {
                         }
                     </ul>
                 </section>
-                <div className="zyc-pager">
-                    <Pagination
-                        current={this.page}
-                        pageSize={this.size}
-                        total={articleCount}
-                        onChange={this.handlePageChange.bind(this)}
-                    />
-                </div>
+                {
+                    articleCount ?
+                        <div className="zyc-pager">
+                            <Pagination
+                                current={this.page}
+                                pageSize={this.size}
+                                total={articleCount}
+                                onChange={this.handlePageChange.bind(this)}
+                            />
+                        </div> : null
+                }
+
             </div>
         )
     }

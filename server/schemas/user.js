@@ -15,7 +15,17 @@ const userSchema = new mongoose.Schema({
     isUsed: {
         type: Boolean,
         default: true
+    },
+    createTime: {
+        type: Date,
+        default: Date.now
+    },
+    updateTime: {
+        type: Date,
+        default: Date.now
     }
+}, {
+    timestamps: {createdAt: 'createTime', updatedAt: 'updateTime'}
 });
 
 export default userSchema

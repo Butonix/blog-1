@@ -15,22 +15,6 @@ class TagStore {
         this.tagAddUrl = '/tag/add';
         this.tagListUrl = '/tag/list';
         this.tagDeleteUrl = '/tag/delete';
-        this.tagCountUrl = '/tag/count'
-    }
-
-    @action postTagCount(body) {
-
-        return xhr({
-            method: 'post',
-            url: this.tagCountUrl,
-            body: body
-        }).then(response => {
-            if (response.result) {
-                return Promise.resolve(response)
-            } else {
-                Message.error(response.message);
-            }
-        })
     }
 
     @action postTagDelete(body) {

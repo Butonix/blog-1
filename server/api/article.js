@@ -6,6 +6,7 @@ import express from 'express'
 import Article from '../models/article'
 import Id from '../models/id'
 import {responseClient, md5, MD5_SUFFIX} from '../util'
+import {getCount} from './util'
 const router = express.Router();
 
 router.post('/add', function (req, res) {
@@ -21,7 +22,6 @@ router.post('/add', function (req, res) {
     Article.findOne({title})
         .then(data => {
             if (data) {
-
                 responseClient(res, 200, 0, '文章已存在,请更换标题!')
             } else {
                 return Id.findOneAndUpdate({_id: 'articleId'}, {
@@ -41,7 +41,8 @@ router.post('/add', function (req, res) {
                         });
 
                         return article.save().then(data => {
-                            responseClient(res, 200, 1, '文章保存成功!', data)
+                            responseClient(res, 200, 1, '文章保存成功!', data);
+                            getCount()
                         })
                     }
                 });
@@ -123,7 +124,8 @@ router.post('/delete', function (req, res) {
     let {articleId} = req.body;
     Article.remove({articleId}).then(data => {
         if (data.result.n) {
-            responseClient(res, 200, 1, '文章删除成功!')
+            responseClient(res, 200, 1, '文章删除成功!');
+            getCount()
         } else {
             responseClient(res, 200, 0, '文章删除失败!')
         }
@@ -210,7 +212,8 @@ router.post('/update', function (req, res) {
     Article.update({articleId}, searchContent)
         .then(data => {
             if (data.n) {
-                responseClient(res, 200, 1, successMessage, data)
+                responseClient(res, 200, 1, successMessage, data);
+                getCount()
 
             } else {
                 responseClient(res, 200, 0, failMessage)

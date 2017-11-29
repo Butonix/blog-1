@@ -5,6 +5,7 @@
 import express from 'express'
 import Tag from '../models/tag'
 import Id from '../models/id'
+import {getCount} from './util'
 import {responseClient, md5, MD5_SUFFIX} from '../util'
 
 const router = express.Router();
@@ -26,7 +27,8 @@ router.post('/add', function (req, res) {
                     });
 
                     return tag.save().then(data => {
-                        responseClient(res, 200, 1, '标签添加成功!', data)
+                        responseClient(res, 200, 1, '标签添加成功!', data);
+                        getCount()
                     })
                 }
             })
@@ -69,30 +71,10 @@ router.get('/list', function (req, res) {
                 } else {
                     responseClient(res, 200, 0, '获取标签失败!')
                 }
-
             })
         }).catch(err => {
         responseClient(res)
     })
 });
-
-router.post('/count', function (req, res) {
-    let {tags} = req.body;
-
-    Tag.update({name: {$in: tags.split(',')}}, {
-        $inc: {
-            count: 1
-        }
-    }, {multi: true}).then(data => {
-        if (data.n) {
-            responseClient(res, 200, 1, '标签数量更新成功!', data)
-        } else {
-            responseClient(res, 200, 0, '标签数量更新失败!')
-        }
-    }).catch(err => {
-        responseClient(res)
-    })
-});
-
 
 export default router

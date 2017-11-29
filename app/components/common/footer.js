@@ -13,7 +13,6 @@ export default class Footer extends React.Component {
     render() {
         return (
             <footer className="com-footer">
-                footer
             </footer>
         )
     }

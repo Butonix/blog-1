@@ -29,6 +29,7 @@ export default class Categories extends React.Component {
                 <ul className="categories-list">
                     {
                         tagList.map((tag, index) =>
+
                             <li key={tag.tagId}>
                                 <Link to={`/categories/${tag.name}`} className="zyc-link-hover">{tag.name}</Link>
                                 <span>{`(${tag.count})`}</span>

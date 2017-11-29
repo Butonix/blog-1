@@ -29,7 +29,6 @@ export default class AdminManagerArticle extends React.Component {
         let body = {};
         body.page = this.page;
         body.size = this.size;
-        body.sort = 'updateTime,-1';
         this.articleStore.postArticleList(body);
     }
 
@@ -101,13 +100,17 @@ class ArticleCell extends React.Component {
                 <div className="aboutArticle">
                     <p className="title">{data.title}</p>
                     <p className="info">
-                        <span>{`作者 : ${data.author}`}</span>
-                        <span>{`阅读数 : ${data.readCount}`}</span>
-                        <span>{`更新时间 : ${dateFormat(data.updateTime, 'yyyy-mm-dd HH:MM:ss')}`}</span>
+                        <span className="author">{`作者 : ${data.author}`}</span>
+                        <span className="readCount">{`阅读数 : ${data.readCount}`}</span>
+                        <span>{`创作时间 : ${dateFormat(data.createTime, 'yyyy-mm-dd HH:MM:ss')}`}</span>
                     </p>
                 </div>
                 <div className="state">
-                    <span>{data.isPublish ? '已发布' : '草稿'}</span>
+                    {
+                        data.isPublish ?
+                            <span className="zyc-text-green">已发布</span> :
+                            <span>草稿</span>
+                    }
                 </div>
                 <div className="operation">
                     <Button className="btn" onClick={() => {
