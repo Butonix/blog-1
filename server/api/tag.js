@@ -62,18 +62,17 @@ router.get('/list', function (req, res) {
             list: []
         };
 
-        return Tag.count({})
-            .then(count => {
-                responseData.total = count;
-                return Tag.find({}, 'name tagId count -_id').then(data => {
-                    if (data) {
-                        responseData.list = data;
-                        responseClient(res, 200, 1, '获取标签成功!', responseData)
-                    } else {
-                        responseClient(res, 200, 0, '获取标签失败!')
-                    }
-                })
+        return Tag.count({}).then(count => {
+            responseData.total = count;
+            return Tag.find({}, 'name tagId count -_id').then(data => {
+                if (data) {
+                    responseData.list = data;
+                    responseClient(res, 200, 1, '获取标签成功!', responseData)
+                } else {
+                    responseClient(res, 200, 0, '获取标签失败!')
+                }
             })
+        })
     }).catch(err => {
         responseClient(res)
     })

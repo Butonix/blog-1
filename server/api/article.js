@@ -56,6 +56,7 @@ router.post('/list', function (req, res) {
         size,
         isPublish,
         tags,
+        author,
         sort
     } = req.body;
     page = parseInt(page);
@@ -96,6 +97,12 @@ router.post('/list', function (req, res) {
         searchContent.isPublish = isPublish
     }
 
+    if (author) {
+        if (req.session.userInfo.userType !== 1) {
+            searchContent.author = req.session.userInfo.username
+        }
+    }
+
     let skip = (page - 1) * size;
     let responseData = {
         total: 0,
@@ -105,7 +112,7 @@ router.post('/list', function (req, res) {
     Article.count(searchContent)
         .then(count => {
             responseData.total = count;
-            return Article.find(searchContent, 'articleId title isPublish author tags readCount createTime updateTime', {
+            return Article.find(searchContent, 'articleId title isPublish author tags readCount createTime updateTime -_id', {
                 skip: skip,
                 limit: size,
                 sort: searchSort

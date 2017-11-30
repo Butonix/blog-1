@@ -40,10 +40,16 @@ export default class RouteAdmin extends React.Component {
                 <AdminContent>
                     <Switch>
                         <Route exact path={url} component={Admin}/>
-                        <Route path={`${url}/managerArticle`} component={AdminManagerArticle}/>
-                        <Route path={`${url}/managerTags`} component={AdminManagerTags}/>
-                        <Route path={`${url}/managerUser`} component={AdminManagerUser}/>
+                        {
+                            userInfo.userType == 1 ?
+                                <Route path={`${url}/managerUser`} component={AdminManagerUser}/> : null
+                        }
                         <Route path={`${url}/newArticle`} component={AdminNewArticle}/>
+                        {
+                            userInfo.userType == 1 ?
+                                <Route path={`${url}/managerTags`} component={AdminManagerTags}/> : null
+                        }
+                        <Route path={`${url}/managerArticle`} component={AdminManagerArticle}/>
                         <Redirect to={url}/>
                     </Switch>
                 </AdminContent>

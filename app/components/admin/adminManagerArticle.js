@@ -29,6 +29,7 @@ export default class AdminManagerArticle extends React.Component {
         let body = {};
         body.page = this.page;
         body.size = this.size;
+        body.author = true;
         this.articleStore.postArticleList(body);
     }
 
@@ -60,7 +61,7 @@ export default class AdminManagerArticle extends React.Component {
     }
 
     render() {
-        let {articleList,articleCount} = this.articleStore;
+        let {articleList, articleCount} = this.articleStore;
         return (
             <div className="admin-managerArticle">
                 <h2>文章管理</h2>
