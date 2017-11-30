@@ -8,13 +8,13 @@ import {inject, observer} from 'mobx-react'
 import Table from 'rc-table'
 import Pagination from 'rc-pagination'
 import './adminManagerUser.sass'
-import {Button} from '../zyc'
+import {Dialog, Input, Button} from '../zyc'
 
 @inject('UserStore') @observer
 export default class AdminManagerUser extends React.Component {
     @observable page = 1;
     @observable size = 5;
-    @observable total = 0;
+    @observable authorityShow;
 
     constructor(args) {
         super(args);
@@ -29,11 +29,7 @@ export default class AdminManagerUser extends React.Component {
         let body = {};
         body.page = this.page;
         body.size = this.size;
-        this.userStore.postUserList(body).then(response => {
-            if (response) {
-                this.total = response.data.total
-            }
-        })
+        this.userStore.postUserList(body)
     }
 
     handlePageChange(current) {
@@ -62,8 +58,21 @@ export default class AdminManagerUser extends React.Component {
         })
     }
 
+    handleModify() {
+        this.authorityShow = true
+
+    }
+
+    handleClose() {
+        this.authorityShow = false
+    }
+
+    handleOk() {
+        this.authorityShow = false
+    }
+
     render() {
-        let {userList} = this.userStore;
+        let {userList, userCount} = this.userStore;
 
         const columns = [{
             title: '姓名',
@@ -72,11 +81,11 @@ export default class AdminManagerUser extends React.Component {
         }, {
             title: 'userId',
             dataIndex: 'userId',
-            width: '25%'
+            width: '20%'
         }, {
             title: '密码(加密后)',
             dataIndex: 'password',
-            width: '25%'
+            width: '20%'
         }, {
             title: '身份',
             dataIndex: 'userType',
@@ -86,14 +95,23 @@ export default class AdminManagerUser extends React.Component {
             dataIndex: 'operation',
             width: '20%',
             render: (value, row) =>
-                <div className="managerUser-operation">
+                <div>
                     {
                         row.isUsed ?
-                            <a className="zyc-text-green" onClick={this.handleUse.bind(this, row.userId, false)}>启用中</a> :
-                            <a className="zyc-text-red" onClick={this.handleUse.bind(this, row.userId, true)}>禁用中</a>
+                            <span className="zyc-text-green zyc-text-hover zyc-text-space"
+                                  onClick={this.handleUse.bind(this, row.userId, false)}>启用中</span> :
+                            <span className="zyc-text-red zyc-text-hover zyc-text-space"
+                                  onClick={this.handleUse.bind(this, row.userId, true)}>禁用中</span>
                     }
-                    <a onClick={this.handleDelete.bind(this, row.userId)}>删除</a>
+                    <span className="zyc-text-hover zyc-text-space"
+                          onClick={this.handleDelete.bind(this, row.userId)}>删除</span>
                 </div>
+        }, {
+            title: '权限',
+            dataIndex: 'authority',
+            width: '10%',
+            render: (value, row) => row.userType !== 'admin' ?
+                <span className="zyc-text-hover" onClick={this.handleModify.bind(this)}>修改</span> : null
         }];
 
         return (
@@ -110,10 +128,24 @@ export default class AdminManagerUser extends React.Component {
                     <Pagination
                         current={this.page}
                         pageSize={this.size}
-                        total={this.total}
+                        total={userCount}
                         onChange={this.handlePageChange.bind(this)}
                     />
                 </div>
+                <Dialog
+                    title="权限修改"
+                    show={this.authorityShow}
+                    width={300}
+                    onOk={this.handleOk.bind(this)}
+                    onClose={this.handleClose.bind(this)}
+                >
+                    <div className="dialog-authority">
+                        <input type="radio" name="type"/>
+                        <label className="user">用户</label>
+                        <input type="radio" name="type"/>
+                        <label>游客</label>
+                    </div>
+                </Dialog>
             </div>
         )
     }

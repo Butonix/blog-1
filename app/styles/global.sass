@@ -29,9 +29,7 @@ h1, h2, h3, h4, h5, h6
 
 input
     background: transparent
-    height: 30px
     border: 1px solid $color204
-    width: 100%
     border-radius: 5px
     outline: none
     &::-webkit-input-placeholder
@@ -45,11 +43,13 @@ input
 
     &:-ms-input-placeholder
         color: $color153
+input[type="checkbox"],input[type="radio"]
+    position: relative
+    top: 2px
 
 textarea
     background: transparent
     border: 1px solid $color204
-    width: 100%
     border-radius: 5px
     resize: none
     outline: none

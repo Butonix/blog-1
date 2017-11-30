@@ -99,6 +99,7 @@ export default class AdminNewArticle extends React.Component {
                     title="文章预览"
                     show={this.viewShow}
                     width={800}
+                    footer={false}
                     onClose={this.handleViewClose.bind(this)}
                 >
                     <div className="dialog-view">

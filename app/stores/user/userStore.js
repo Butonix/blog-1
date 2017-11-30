@@ -10,6 +10,7 @@ class UserStore {
     @observable userInfo;
     @observable loginShow;
     @observable userList = [];
+    @observable userCount = 0;
 
     constructor() {
         this.registerUrl = '/user/register';
@@ -62,6 +63,7 @@ class UserStore {
         }).then(response => {
             if (response.result) {
                 this.userList = response.data.list;
+                this.userCount = response.data.total;
                 return Promise.resolve(response)
             } else {
                 Message.error(response.message);

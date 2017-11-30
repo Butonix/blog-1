@@ -7,6 +7,7 @@ import {observable} from 'mobx'
 import {observer} from 'mobx-react'
 import {createPortal} from 'react-dom'
 import './dialog.sass'
+import {Button} from './index'
 
 export default class Dialog extends React.Component {
 
@@ -18,7 +19,8 @@ export default class Dialog extends React.Component {
     }
 
     static defaultProps = {
-        header: true
+        header: true,
+        footer: true
     };
 
     componentWillUnmount() {
@@ -30,8 +32,19 @@ export default class Dialog extends React.Component {
 
     }
 
+    handleOk() {
+        this.props.onOk()
+    }
+
     render() {
-        let {show, title, header, width} = this.props;
+        let {show, title, header, width, footer} = this.props;
+
+        if (footer && typeof footer === 'boolean') {
+            footer = [
+                <Button key="sure" onClick={this.handleOk.bind(this)} className="btn">确认</Button>,
+                <Button key="close" onClick={this.handleClose.bind(this)} className="btn">取消</Button>
+            ]
+        }
 
         if (show) {
             return (
@@ -54,6 +67,12 @@ export default class Dialog extends React.Component {
                                     </div> : null
                             }
                             {this.props.children}
+                            {
+                                footer ?
+                                    <div className="footer">
+                                        {footer.map((button, index) => button)}
+                                    </div> : null
+                            }
                         </div>
                     </div>, this.node)
             )

@@ -27,15 +27,19 @@ class App extends React.Component {
     }
 
     render() {
+        let {userInfo} = this.userStore;
 
         return (
             <div className="JAVASCRIPT">
                 <Canvas />
                 <BrowserRouter>
                     {
-                        this.userStore.userInfo ?
+                        userInfo ?
                             <Switch>
-                                <Route path="/admin" component={RouteAdmin}/>
+                                {
+                                    userInfo.userType == 'admin' || userInfo.userType == 'user' ?
+                                        <Route path="/admin" component={RouteAdmin}/> : null
+                                }
                                 <Route path="/" component={RouteVisitor}/>
                             </Switch> : null
                     }

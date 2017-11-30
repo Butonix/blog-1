@@ -24,7 +24,7 @@ router.post('/register', (req, res) => {
                     let user = new User({
                         username: username,
                         password: md5(password + MD5_SUFFIX),
-                        userType: 'user',
+                        userType: 'visitor',
                         userId: data.seq
                     });
 

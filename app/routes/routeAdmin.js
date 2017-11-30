@@ -15,11 +15,12 @@ import {
 import {AdminMenu,AdminContent} from '../components/common'
 import './routeAdmin.sass'
 
-@observer
+@inject('UserStore') @observer
 export default class RouteAdmin extends React.Component {
 
     constructor(args) {
-        super(args)
+        super(args);
+        this.userStore = this.props.UserStore;
 
     }
 
@@ -29,6 +30,7 @@ export default class RouteAdmin extends React.Component {
 
     render() {
         const {url} = this.props.match;
+        const {userInfo} = this.userStore;
 
         console.log('admin',url);
 
