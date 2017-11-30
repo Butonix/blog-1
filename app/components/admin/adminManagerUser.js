@@ -15,6 +15,8 @@ export default class AdminManagerUser extends React.Component {
     @observable page = 1;
     @observable size = 5;
     @observable authorityShow;
+    @observable userType;
+    @observable userId;
 
     constructor(args) {
         super(args);
@@ -58,9 +60,15 @@ export default class AdminManagerUser extends React.Component {
         })
     }
 
-    handleModify() {
+    handleModify(userType, userId) {
+        this.userType = userType;
+        this.userId = userId;
         this.authorityShow = true
 
+    }
+
+    handleChangeType(userType) {
+        this.userType = userType
     }
 
     handleClose() {
@@ -68,7 +76,15 @@ export default class AdminManagerUser extends React.Component {
     }
 
     handleOk() {
-        this.authorityShow = false
+        let body = {};
+        body.userId = this.userId;
+        body.userType = this.userType;
+        this.userStore.postUserUpdate(body).then(response => {
+            if (response) {
+                this.authorityShow = false;
+                this.getUserList()
+            }
+        })
     }
 
     render() {
@@ -89,7 +105,8 @@ export default class AdminManagerUser extends React.Component {
         }, {
             title: '身份',
             dataIndex: 'userType',
-            width: '15%'
+            width: '15%',
+            render: (value, row) => value == 1 ? '管理员' : value == 2 ? '用户' : value == 3 ? '游客' : null
         }, {
             title: '操作',
             dataIndex: 'operation',
@@ -110,8 +127,9 @@ export default class AdminManagerUser extends React.Component {
             title: '权限',
             dataIndex: 'authority',
             width: '10%',
-            render: (value, row) => row.userType !== 'admin' ?
-                <span className="zyc-text-hover" onClick={this.handleModify.bind(this)}>修改</span> : null
+            render: (value, row) => row.userType !== 1 ?
+                <span className="zyc-text-hover"
+                      onClick={this.handleModify.bind(this, row.userType, row.userId)}>修改</span> : null
         }];
 
         return (
@@ -140,9 +158,11 @@ export default class AdminManagerUser extends React.Component {
                     onClose={this.handleClose.bind(this)}
                 >
                     <div className="dialog-authority">
-                        <input type="radio" name="type"/>
+                        <input type="radio" name="type" checked={this.userType == 2}
+                               onChange={this.handleChangeType.bind(this, 2)}/>
                         <label className="user">用户</label>
-                        <input type="radio" name="type"/>
+                        <input type="radio" name="type" checked={this.userType == 3}
+                               onChange={this.handleChangeType.bind(this, 3)}/>
                         <label>游客</label>
                     </div>
                 </Dialog>

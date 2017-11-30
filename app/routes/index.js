@@ -37,7 +37,7 @@ class App extends React.Component {
                         userInfo ?
                             <Switch>
                                 {
-                                    userInfo.userType == 'admin' || userInfo.userType == 'user' ?
+                                    userInfo.userType == 1 || userInfo.userType == 2 ?
                                         <Route path="/admin" component={RouteAdmin}/> : null
                                 }
                                 <Route path="/" component={RouteVisitor}/>

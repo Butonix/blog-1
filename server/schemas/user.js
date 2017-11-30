@@ -7,7 +7,10 @@ import mongoose from 'mongoose'
 const userSchema = new mongoose.Schema({
     username: String,
     password: String,
-    userType: String, //管理员 、普通用户
+    userType: {
+        type: Number,// 1: 管理员 、2 : 普通用户 、3: 游客
+        default: 0
+    },
     userId: {
         type: Number,
         default: 0

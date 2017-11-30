@@ -24,7 +24,7 @@ router.post('/register', (req, res) => {
                     let user = new User({
                         username: username,
                         password: md5(password + MD5_SUFFIX),
-                        userType: 'visitor',
+                        userType: 3,
                         userId: data.seq
                     });
 
@@ -112,7 +112,7 @@ router.post('/list', (req, res) => {
 });
 
 router.post('/update', (req, res) => {
-    let {userId, isUsed} = req.body;
+    let {userId, isUsed, userType} = req.body;
     let successMessage;
     let failMessage;
     let searchContent = {};
@@ -127,6 +127,13 @@ router.post('/update', (req, res) => {
             failMessage = '禁用失败!'
         }
     }
+
+    if (userType) {
+        searchContent.userType = userType;
+        successMessage = '修改成功!';
+        failMessage = '修改失败!'
+    }
+
     User.update({userId}, searchContent)
         .then(data => {
             if (data.n) {
