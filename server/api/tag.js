@@ -28,7 +28,6 @@ router.post('/add', function (req, res) {
 
                     return tag.save().then(data => {
                         responseClient(res, 200, 1, '标签添加成功!', data);
-                        getCount()
                     })
                 }
             })
@@ -56,25 +55,30 @@ router.post('/delete', function (req, res) {
 
 router.get('/list', function (req, res) {
 
-    let responseData = {
-        total: 0,
-        list: []
-    };
+    getCount().then(data => {
+        console.log('data', data);
+        let responseData = {
+            total: 0,
+            list: []
+        };
 
-    Tag.count({})
-        .then(count => {
-            responseData.total = count;
-            return Tag.find({}, {name: 1, tagId: 1, count: 1, _id: 0}).then(data => {
-                if (data) {
-                    responseData.list = data;
-                    responseClient(res, 200, 1, '获取标签成功!', responseData)
-                } else {
-                    responseClient(res, 200, 0, '获取标签失败!')
-                }
+        return Tag.count({})
+            .then(count => {
+                responseData.total = count;
+                return Tag.find({}, 'name tagId count -_id').then(data => {
+                    if (data) {
+                        responseData.list = data;
+                        responseClient(res, 200, 1, '获取标签成功!', responseData)
+                    } else {
+                        responseClient(res, 200, 0, '获取标签失败!')
+                    }
+                })
             })
-        }).catch(err => {
+    }).catch(err => {
         responseClient(res)
     })
+
+
 });
 
 export default router

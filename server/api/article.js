@@ -6,7 +6,6 @@ import express from 'express'
 import Article from '../models/article'
 import Id from '../models/id'
 import {responseClient, md5, MD5_SUFFIX} from '../util'
-import {getCount} from './util'
 const router = express.Router();
 
 router.post('/add', function (req, res) {
@@ -42,7 +41,6 @@ router.post('/add', function (req, res) {
 
                         return article.save().then(data => {
                             responseClient(res, 200, 1, '文章保存成功!', data);
-                            getCount()
                         })
                     }
                 });
@@ -125,7 +123,6 @@ router.post('/delete', function (req, res) {
     Article.remove({articleId}).then(data => {
         if (data.result.n) {
             responseClient(res, 200, 1, '文章删除成功!');
-            getCount()
         } else {
             responseClient(res, 200, 0, '文章删除失败!')
         }
@@ -213,7 +210,6 @@ router.post('/update', function (req, res) {
         .then(data => {
             if (data.n) {
                 responseClient(res, 200, 1, successMessage, data);
-                getCount()
 
             } else {
                 responseClient(res, 200, 0, failMessage)

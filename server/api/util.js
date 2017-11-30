@@ -8,18 +8,18 @@ import Tag from '../models/tag'
 
 export function getCount() {
 
-    Tag.find({}).then(data => {
+    return Tag.find({}).then(data => {
         if (data) {
-            data.map((item, index) => {
-                Article.count({tags: {$all: item.name}, isPublish: true}).then(count => {
-                    console.log(count);
-                    Tag.update({name: item.name}, {count: count}).then(data => {
-                        if (data.n) {
-                            console.log('更新成功!')
-                        }
+            return Promise.all(
+                data.map((item, index) => {
+                    return Article.count({tags: {$all: item.name}, isPublish: true}).then(count => {
+                        return Tag.update({name: item.name}, {count: count}).then(data => {
+                            if (data.n) {
+                                return data.n
+                            }
+                        })
                     })
-                })
-            })
+                }))
         }
     })
 }
