@@ -121,7 +121,9 @@ class Select extends React.Component {
                             ref={this.savePortal.bind(this)}
                             target={this.refs.select}
                         >
-                            {this.props.children}
+                            <div className="zyc-select-portal">
+                                {this.props.children}
+                            </div>
                         </Portal> : null
                 }
             </div>
