@@ -39,7 +39,13 @@ export default class Header extends React.Component {
 
         ];
 
-        const menu = (
+        const menu = userInfo.userType == 3 ?
+            <Menu>
+                <Menu.Item onClick={this.handleLoginOut.bind(this)}>
+                    <i className="iconfont icon-tuichu">{null}</i>
+                    <span>退出登录</span>
+                </Menu.Item>
+            </Menu> :
             <Menu>
                 <Menu.Item onClick={this.handleEntryManage.bind(this)}>
                     <i className="iconfont icon-guanli">{null}</i>
@@ -49,8 +55,7 @@ export default class Header extends React.Component {
                     <i className="iconfont icon-tuichu">{null}</i>
                     <span>退出登录</span>
                 </Menu.Item>
-            </Menu>
-        );
+            </Menu>;
 
 
         return (

@@ -47,6 +47,11 @@ export default class AdminMenu extends React.Component {
                     to: '/admin/managerArticle',
                     icon: 'wenzhangguanli'
                 },
+                {
+                    text: '主界面',
+                    to: '/',
+                    icon: 'fanhuishouye'
+                },
             ] :
             [
                 {
@@ -63,6 +68,11 @@ export default class AdminMenu extends React.Component {
                     text: '文章管理',
                     to: '/admin/managerArticle',
                     icon: 'wenzhangguanli'
+                },
+                {
+                    text: '主界面',
+                    to: '/',
+                    icon: 'fanhuishouye'
                 },
             ];
 

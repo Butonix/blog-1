@@ -141,7 +141,7 @@ router.post('/delete', function (req, res) {
 router.post('/detail', function (req, res) {
     let {articleId} = req.body;
 
-    Article.findOne({articleId}, 'articleId title content tags readCount updateTime createTime').then(data => {
+    Article.findOne({articleId}, 'articleId title content tags author readCount updateTime createTime').then(data => {
         if (data) {
             responseClient(res, 200, 1, '文章查找成功!', data)
         } else {
