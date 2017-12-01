@@ -14,8 +14,6 @@ import {Dialog, DropDown, Menu} from '../zyc'
 @inject('UserStore') @observer
 export default class Header extends React.Component {
 
-    @observable type;
-
     constructor(args) {
         super(args);
         this.userStore = this.props.UserStore;
@@ -23,7 +21,7 @@ export default class Header extends React.Component {
 
     render() {
 
-        const {loginShow, userInfo} = this.userStore;
+        const {loginShow, userInfo, loginType} = this.userStore;
 
         const nav = [
             {
@@ -89,8 +87,8 @@ export default class Header extends React.Component {
                                     </div>
                                 </DropDown> :
                                 <div className="login">
-                                    <span onClick={this.handleShowDialog.bind(this, 0)}>注册</span>
-                                    <span onClick={this.handleShowDialog.bind(this, 1)}>登录</span>
+                                    <span onClick={this.handleLogin.bind(this, 0)}>注册</span>
+                                    <span onClick={this.handleLogin.bind(this, 1)}>登录</span>
                                 </div>
                         }
                     </div>
@@ -101,7 +99,7 @@ export default class Header extends React.Component {
                     footer={false}
                     onClose={this.handleClose.bind(this)}
                 >
-                    <Login type={this.type}/>
+                    <Login type={loginType}/>
                 </Dialog>
             </header>
         )
@@ -120,8 +118,8 @@ export default class Header extends React.Component {
         })
     }
 
-    handleShowDialog(type) {
-        this.type = type;
+    handleLogin(type) {
+        this.userStore.loginType = type;
         this.userStore.loginShow = true;
     }
 

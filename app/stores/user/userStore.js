@@ -9,6 +9,7 @@ class UserStore {
 
     @observable userInfo;
     @observable loginShow;
+    @observable loginType;
     @observable userList = [];
     @observable userCount = 0;
 

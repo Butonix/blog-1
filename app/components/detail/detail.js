@@ -11,16 +11,20 @@ import reactRenderer from 'remark-react'
 import {ArticleCell} from '../common/articleList'
 import {splitLocation} from '../public/location'
 import './detail.sass'
+import {Dialog} from '../zyc'
+import Login from '../common/login'
 
-@inject('ArticleStore') @observer
+@inject('UserStore', 'ArticleStore') @observer
 export default class Detail extends React.Component {
     @observable prevTitle = {};
     @observable nextTitle = {};
+    @observable tipShow;
 
     constructor(args) {
         super(args);
 
         this.articleStore = this.props.ArticleStore;
+        this.userStore = this.props.UserStore;
     }
 
     componentWillMount() {
@@ -75,6 +79,27 @@ export default class Detail extends React.Component {
         })
     }
 
+    handleVote() {
+        if (this.userStore.userInfo.userId) {
+
+        } else {
+            this.tipShow = true
+
+        }
+    }
+
+    handleClose() {
+        this.tipShow = false;
+
+    }
+
+    handleLogin(type) {
+        this.tipShow = false;
+        this.userStore.loginType = type;
+        this.userStore.loginShow = true
+
+    }
+
     render() {
         let {articleDetail} = this.articleStore;
 
@@ -105,6 +130,31 @@ export default class Detail extends React.Component {
                             : <span>浏览到最末尾啦!</span>
                     }
                 </div>
+                <div className="detail-vote">
+                    <div className="vote" onClick={this.handleVote.bind(this)}>
+                        <i className="iconfont icon-dianzan">{null}</i>
+                        <span>100</span>
+                    </div>
+                </div>
+                <Dialog
+                    show={this.tipShow}
+                    header={false}
+                    footer={false}
+                    onClose={this.handleClose.bind(this)}
+                >
+                    <div className="dialog-tip">
+                        <h2>请登录</h2>
+                        <div className="content">
+                            <p className="login">
+                                <span onClick={this.handleLogin.bind(this, 1)}>账号登录</span>
+                            </p>
+                            <p>
+                                <span className="zyc-link-hover"
+                                      onClick={this.handleLogin.bind(this, 0)}>没有账号? 前往注册 »</span>
+                            </p>
+                        </div>
+                    </div>
+                </Dialog>
             </div>
         )
     }
