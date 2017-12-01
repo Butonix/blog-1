@@ -11,6 +11,10 @@ const articleSchema = new mongoose.Schema({
         type: Number,
         default: 0 //阅读次数
     },
+    voteCount: {
+        type: Number,
+        default: 0
+    },
     author: String,//作者
     tags: Array,//类型
     isPublish: Boolean,//是否发布

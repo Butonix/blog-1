@@ -12,19 +12,20 @@ import {ArticleCell} from '../common/articleList'
 import {splitLocation} from '../public/location'
 import './detail.sass'
 import {Dialog} from '../zyc'
-import Login from '../common/login'
 
-@inject('UserStore', 'ArticleStore') @observer
+@inject('UserStore', 'ArticleStore', 'VoteStore') @observer
 export default class Detail extends React.Component {
     @observable prevTitle = {};
     @observable nextTitle = {};
     @observable tipShow;
+    @observable isVote;
 
     constructor(args) {
         super(args);
 
         this.articleStore = this.props.ArticleStore;
         this.userStore = this.props.UserStore;
+        this.voteStore = this.props.VoteStore;
     }
 
     componentWillMount() {
@@ -36,6 +37,7 @@ export default class Detail extends React.Component {
         this.getArticleDetail();
         this.getTitlePrev();
         this.getTitleNext();
+        this.getVote()
     }
 
     componentWillReceiveProps() {
@@ -44,6 +46,20 @@ export default class Detail extends React.Component {
         this.getArticleDetail();
         this.getTitlePrev();
         this.getTitleNext();
+        this.getVote();
+    }
+
+    getVote() {
+        if (this.userStore.userInfo.userId) {
+            let body = {};
+            body.articleId = this.articleId;
+            body.userId = this.userStore.userInfo.userId;
+            this.voteStore.postVoteStatus(body).then(response => {
+                if (response) {
+                    this.isVote = response.data.isVote;
+                }
+            })
+        }
     }
 
     getArticleDetail() {
@@ -81,6 +97,17 @@ export default class Detail extends React.Component {
 
     handleVote() {
         if (this.userStore.userInfo.userId) {
+            let body = {};
+            body.userId = this.userStore.userInfo.userId;
+            body.articleId = this.articleId;
+            body.isVote = !this.isVote;
+
+            this.voteStore.postVoteUpdate(body).then(response => {
+                if (response) {
+                    this.getArticleDetail();
+                    this.getVote()
+                }
+            })
 
         } else {
             this.tipShow = true
@@ -131,9 +158,9 @@ export default class Detail extends React.Component {
                     }
                 </div>
                 <div className="detail-vote">
-                    <div className="vote" onClick={this.handleVote.bind(this)}>
+                    <div className={this.isVote ? 'vote' : null} onClick={this.handleVote.bind(this)}>
                         <i className="iconfont icon-dianzan">{null}</i>
-                        <span>100</span>
+                        <span>{articleDetail.voteCount}</span>
                     </div>
                 </div>
                 <Dialog
