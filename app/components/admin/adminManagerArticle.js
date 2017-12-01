@@ -111,10 +111,15 @@ class ArticleCell extends React.Component {
                             <span className="tip">作者</span>
                             <span>{data.author}</span>
                         </span>
-                        <span>
+                        <span className="zyc-area-line">
                             <i className="iconfont icon-yuedu">{null}</i>
                             <span className="tip">阅读数</span>
                             <span>{data.readCount}</span>
+                        </span>
+                        <span>
+                            <i className="iconfont icon-dianzanshu">{null}</i>
+                            <span className="tip">点赞数</span>
+                            <span>{data.voteCount}</span>
                         </span>
                     </p>
                 </div>

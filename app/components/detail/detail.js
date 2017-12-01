@@ -172,12 +172,11 @@ export default class Detail extends React.Component {
                     <div className="dialog-tip">
                         <h2>请登录</h2>
                         <div className="content">
-                            <p className="login">
-                                <span onClick={this.handleLogin.bind(this, 1)}>账号登录</span>
+                            <p className="login" onClick={this.handleLogin.bind(this, 1)}>
+                                <span>账号登录</span>
                             </p>
-                            <p>
-                                <span className="zyc-link-hover"
-                                      onClick={this.handleLogin.bind(this, 0)}>没有账号? 前往注册 »</span>
+                            <p onClick={this.handleLogin.bind(this, 0)}>
+                                <span className="zyc-link-hover">没有账号? 前往注册 »</span>
                             </p>
                         </div>
                     </div>

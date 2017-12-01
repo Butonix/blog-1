@@ -112,7 +112,7 @@ router.post('/list', function (req, res) {
     Article.count(searchContent)
         .then(count => {
             responseData.total = count;
-            return Article.find(searchContent, 'articleId title isPublish author tags readCount createTime updateTime -_id', {
+            return Article.find(searchContent, 'articleId title isPublish author tags readCount voteCount createTime updateTime -_id', {
                 skip: skip,
                 limit: size,
                 sort: searchSort
