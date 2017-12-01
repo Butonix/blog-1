@@ -97,7 +97,10 @@ router.post('/list', (req, res) => {
             responseData.total = count;
             return User.find({}, 'userId username userType password isUsed', {
                 skip: skip,
-                limit: size
+                limit: size,
+                sort: {
+                    userType : 1
+                }
             }).then(data => {
                 if (data) {
                     responseData.list = data;

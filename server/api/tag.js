@@ -56,7 +56,6 @@ router.post('/delete', function (req, res) {
 router.get('/list', function (req, res) {
 
     getCount().then(data => {
-        console.log('data', data);
         let responseData = {
             total: 0,
             list: []

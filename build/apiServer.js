@@ -16,7 +16,7 @@ app.use(session({
     secret: 'express_react_cookie',
     resave: false,
     saveUninitialized: true,
-    cookie: {maxAge: 60 * 1000 * 30}//过期时间
+    cookie: {maxAge: 60 * 1000 * 120}//过期时间
 }));
 app.use(bodyParser.json()); //application/json
 app.use(bodyParser.urlencoded({extended: false})); //application/x-www-form-urlencoded

@@ -101,9 +101,21 @@ class ArticleCell extends React.Component {
                 <div className="aboutArticle">
                     <p className="title">{data.title}</p>
                     <p className="info">
-                        <span className="author">{`作者 : ${data.author}`}</span>
-                        <span className="readCount">{`阅读数 : ${data.readCount}`}</span>
-                        <span>{`创作时间 : ${dateFormat(data.createTime, 'yyyy-mm-dd HH:MM:ss')}`}</span>
+                        <span className="zyc-area-line">
+                            <i className="iconfont icon-riqi">{null}</i>
+                            <span className="tip">创作时间</span>
+                            <span>{dateFormat(data.createTime, 'yyyy-mm-dd HH:MM:ss')}</span>
+                        </span>
+                        <span className="zyc-area-line">
+                            <i className="iconfont icon-zuozhe">{null}</i>
+                            <span className="tip">作者</span>
+                            <span>{data.author}</span>
+                        </span>
+                        <span>
+                            <i className="iconfont icon-yuedu">{null}</i>
+                            <span className="tip">阅读数</span>
+                            <span>{data.readCount}</span>
+                        </span>
                     </p>
                 </div>
                 <div className="state">
