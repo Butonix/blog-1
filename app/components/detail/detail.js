@@ -20,6 +20,8 @@ export default class Detail extends React.Component {
     @observable tipShow;
     @observable isVote;
 
+    @observable isRender;
+
     constructor(args) {
         super(args);
 
@@ -41,6 +43,7 @@ export default class Detail extends React.Component {
     }
 
     componentWillReceiveProps() {
+        this.isRender = false;
         let {articleId} = splitLocation(location);
         this.articleId = articleId;
         this.getArticleDetail();
@@ -67,7 +70,11 @@ export default class Detail extends React.Component {
         body.articleId = this.articleId;
         this.articleStore.postArticleUpdateReadCount(body).then(response => {
             if (response) {
-                this.articleStore.postArticleDetail(body)
+                this.articleStore.postArticleDetail(body).then(response => {
+                    if (response) {
+                        this.isRender = true
+                    }
+                })
             }
         });
     }
@@ -131,57 +138,58 @@ export default class Detail extends React.Component {
         let {articleDetail} = this.articleStore;
 
         return (
-            <div className="detail">
-                <div className="detail-header">
-                    <ArticleCell
-                        detail={true}
-                        data={articleDetail}
-                    />
-                </div>
-                <div className="detail-content">
-                    <div className="markdown-body">
-                        {remark().use(reactRenderer).processSync(articleDetail.content).contents}
+            this.isRender ?
+                <div className="detail">
+                    <div className="detail-header">
+                        <ArticleCell
+                            detail={true}
+                            data={articleDetail}
+                        />
                     </div>
-                </div>
-                <div className="detail-title">
-                    {
-                        this.nextTitle.articleId ?
-                            <Link
-                                to={`/detail?articleId=${this.nextTitle.articleId}`}>{`« ${this.nextTitle.title}`}</Link>
-                            : <span>浏览到最前面啦!</span>
-                    }
-                    {
-                        this.prevTitle.articleId ?
-                            <Link
-                                to={`/detail?articleId=${this.prevTitle.articleId}`}>{`${this.prevTitle.title} »`}</Link>
-                            : <span>浏览到最末尾啦!</span>
-                    }
-                </div>
-                <div className="detail-vote">
-                    <div className={this.isVote ? 'vote' : null} onClick={this.handleVote.bind(this)}>
-                        <i className="iconfont icon-dianzan">{null}</i>
-                        <span>{articleDetail.voteCount}</span>
-                    </div>
-                </div>
-                <Dialog
-                    show={this.tipShow}
-                    header={false}
-                    footer={false}
-                    onClose={this.handleClose.bind(this)}
-                >
-                    <div className="dialog-tip">
-                        <h2>请登录</h2>
-                        <div className="content">
-                            <p className="login" onClick={this.handleLogin.bind(this, 1)}>
-                                <span>账号登录</span>
-                            </p>
-                            <p onClick={this.handleLogin.bind(this, 0)}>
-                                <span className="zyc-link-hover">没有账号? 前往注册 »</span>
-                            </p>
+                    <div className="detail-content">
+                        <div className="markdown-body">
+                            {remark().use(reactRenderer).processSync(articleDetail.content).contents}
                         </div>
                     </div>
-                </Dialog>
-            </div>
+                    <div className="detail-title">
+                        {
+                            this.nextTitle.articleId ?
+                                <Link
+                                    to={`/detail?articleId=${this.nextTitle.articleId}`}>{`« ${this.nextTitle.title}`}</Link>
+                                : <span>浏览到最前面啦!</span>
+                        }
+                        {
+                            this.prevTitle.articleId ?
+                                <Link
+                                    to={`/detail?articleId=${this.prevTitle.articleId}`}>{`${this.prevTitle.title} »`}</Link>
+                                : <span>浏览到最末尾啦!</span>
+                        }
+                    </div>
+                    <div className="detail-vote">
+                        <div className={this.isVote ? 'vote' : null} onClick={this.handleVote.bind(this)}>
+                            <i className="iconfont icon-dianzan">{null}</i>
+                            <span>{articleDetail.voteCount}</span>
+                        </div>
+                    </div>
+                    <Dialog
+                        show={this.tipShow}
+                        header={false}
+                        footer={false}
+                        onClose={this.handleClose.bind(this)}
+                    >
+                        <div className="dialog-tip">
+                            <h2>请登录</h2>
+                            <div className="content">
+                                <p className="login" onClick={this.handleLogin.bind(this, 1)}>
+                                    <span>账号登录</span>
+                                </p>
+                                <p onClick={this.handleLogin.bind(this, 0)}>
+                                    <span className="zyc-link-hover">没有账号? 前往注册 »</span>
+                                </p>
+                            </div>
+                        </div>
+                    </Dialog>
+                </div> : null
         )
     }
 }

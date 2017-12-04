@@ -16,6 +16,8 @@ export default class CategoriesTag extends React.Component {
     @observable page = 1;
     @observable size = 5;
 
+    @observable isRender;
+
     constructor(args) {
         super(args);
 
@@ -33,7 +35,11 @@ export default class CategoriesTag extends React.Component {
         body.size = this.size;
         body.isPublish = true;
         body.tags = this.props.match.params.tag;
-        this.articleStore.postArticleList(body)
+        this.articleStore.postArticleList(body).then(response => {
+            if (response) {
+                this.isRender = true
+            }
+        })
     }
 
 
@@ -45,41 +51,42 @@ export default class CategoriesTag extends React.Component {
     render() {
         let {articleList, articleCount} = this.articleStore;
         return (
-            <div className="categories-tag">
-                {
-                    articleCount ?
-                        <section className="zyc-collection-line">
-                            <h2 className="zyc-collection-circle">
-                                <span>{this.props.match.params.tag}</span>
-                                <span className="tip">分类</span>
-                            </h2>
-                            <ul className="tag-list">
-                                {
-                                    articleList.map((item, index) =>
-                                        <li className="zyc-collection-circle-small" key={item.articleId}>
-                                            <span>{dateFormat(item.createTime, 'mm-dd')}</span>
-                                            <Link to={`/detail?articleId=${item.articleId}`}>{item.title}</Link>
-                                        </li>
-                                    )
-                                }
-                            </ul>
-                        </section> :
-                        <div className="no-data">
-                            该分类下暂无文章!
-                        </div>
-                }
-                {
-                    articleCount ?
-                        <div className="zyc-pager">
-                            <Pagination
-                                current={this.page}
-                                pageSize={this.size}
-                                total={articleCount}
-                                onChange={this.handlePageChange.bind(this)}
-                            />
-                        </div> : null
-                }
-            </div>
+            this.isRender ?
+                <div className="categories-tag">
+                    {
+                        articleCount ?
+                            <section className="zyc-collection-line">
+                                <h2 className="zyc-collection-circle">
+                                    <span>{this.props.match.params.tag}</span>
+                                    <span className="tip">分类</span>
+                                </h2>
+                                <ul className="tag-list">
+                                    {
+                                        articleList.map((item, index) =>
+                                            <li className="zyc-collection-circle-small" key={item.articleId}>
+                                                <span>{dateFormat(item.createTime, 'mm-dd')}</span>
+                                                <Link to={`/detail?articleId=${item.articleId}`}>{item.title}</Link>
+                                            </li>
+                                        )
+                                    }
+                                </ul>
+                            </section> :
+                            <div className="no-data">
+                                该分类下暂无文章!
+                            </div>
+                    }
+                    {
+                        articleCount ?
+                            <div className="zyc-pager">
+                                <Pagination
+                                    current={this.page}
+                                    pageSize={this.size}
+                                    total={articleCount}
+                                    onChange={this.handlePageChange.bind(this)}
+                                />
+                            </div> : null
+                    }
+                </div> : null
         )
     }
 }

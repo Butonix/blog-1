@@ -18,6 +18,10 @@ export default class RouteVisitor extends React.Component {
 
     }
 
+    componentWillReceiveProps() {
+        window.scrollTo(0, 0)
+    }
+
     componentDidMount() {
 
     }

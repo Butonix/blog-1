@@ -12,7 +12,7 @@ import {
     AdminManagerUser,
     AdminNewArticle
 } from '../components/admin'
-import {AdminMenu,AdminContent} from '../components/common'
+import {AdminMenu, AdminContent} from '../components/common'
 import './routeAdmin.sass'
 
 @inject('UserStore') @observer
@@ -24,6 +24,10 @@ export default class RouteAdmin extends React.Component {
 
     }
 
+    componentWillReceiveProps() {
+        window.scrollTo(0, 0)
+    }
+
     componentDidMount() {
 
     }
@@ -32,11 +36,11 @@ export default class RouteAdmin extends React.Component {
         const {url} = this.props.match;
         const {userInfo} = this.userStore;
 
-        console.log('admin',url);
+        console.log('admin', url);
 
         return (
             <div className="route-admin" data-flex="dir:left box:first">
-                <Route path={url} component={AdminMenu} />
+                <Route path={url} component={AdminMenu}/>
                 <AdminContent>
                     <Switch>
                         <Route exact path={url} component={Admin}/>

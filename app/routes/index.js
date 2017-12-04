@@ -22,6 +22,7 @@ class App extends React.Component {
         this.userStore.getUserInfo()
     }
 
+
     componentDidMount() {
 
     }

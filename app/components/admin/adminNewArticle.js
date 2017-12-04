@@ -53,6 +53,7 @@ export default class AdminNewArticle extends React.Component {
     render() {
         let {tagList} = this.tagStore;
         return (
+
             <div className="admin-newArticle">
                 <h2>发布文章</h2>
                 <section>

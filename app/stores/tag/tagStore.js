@@ -17,6 +17,11 @@ class TagStore {
         this.tagDeleteUrl = '/tag/delete';
     }
 
+    @action clearStore() {
+        this.tagList = [];
+        this.tagCount = 0;
+    }
+
     @action postTagDelete(body) {
 
         return xhr({

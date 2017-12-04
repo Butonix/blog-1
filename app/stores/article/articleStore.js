@@ -21,6 +21,12 @@ class ArticleStore {
         this.articleDetailTitleUrl = '/article/detail/title'
     }
 
+    @action clearStore() {
+        this.articleList = [];
+        this.articleCount = 0;
+        this.articleDetail = {};
+    }
+
     @action postArticleDetailTitle(body) {
 
         return xhr({

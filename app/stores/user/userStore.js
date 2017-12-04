@@ -23,6 +23,11 @@ class UserStore {
         this.userDeleteUrl = '/user/delete'
     }
 
+    @action clearStore() {
+        this.userList = [];
+        this.userCount = 0;
+    }
+
     @action postUserDelete(body) {
 
         return xhr({
