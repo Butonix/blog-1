@@ -32,7 +32,7 @@ class App extends React.Component {
 
         return (
             <div className="JAVASCRIPT">
-                {/*<Canvas />*/}
+                <Canvas />
                 <BackTop
                     visibleHeight={500}
                 />
