@@ -34,7 +34,6 @@ export default class Header extends React.Component {
                 to: '/categories',
                 icon: 'fenlei'
             },
-
         ];
 
         const menu = userInfo.userType == 3 ?
@@ -60,7 +59,18 @@ export default class Header extends React.Component {
             <header className="com-header">
                 <div className="nav" data-flex="cross:center main:justify">
                     <div className="nav-left" data-flex="dir:left cross:center">
-                        <div className="nav-logo">SCRIPTCHAO</div>
+                        <div className="nav-logo">
+                            <Link to="/">
+                                <span className="line">
+                                    <i className="line-before">{null}</i>
+                                </span>
+                                <span className="title">SCRIPTCHAO</span>
+                                <span className="line">
+                                    <i className="line-after">{null}</i>
+                                </span>
+
+                            </Link>
+                        </div>
                         <div className="nav-menu">
                             {
                                 nav.map((value) =>
