@@ -33,7 +33,7 @@ export default class Canvas extends React.Component {
         let dots = [];
         let mouseArea = {x: null, y: null, max: 20000};
 
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 60; i++) {
             let x = canvas.width * Math.random();
             let y = canvas.height * Math.random();
             let xv = Math.random() * 2 - 1;
