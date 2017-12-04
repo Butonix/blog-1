@@ -11,6 +11,7 @@ import Button from './button'
 import Select from './select'
 import Input from './input'
 import Tag from './tag'
+import BackTop from './backTop'
 
 export {
     Dialog,
@@ -21,5 +22,6 @@ export {
     Button,
     Select,
     Input,
-    Tag
+    Tag,
+    BackTop
 }
