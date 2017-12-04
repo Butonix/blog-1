@@ -55,7 +55,7 @@ export default class Portal extends React.Component {
             target = target.offsetParent
         }
 
-        return {left: l, top: t, width: w, height: h}
+        return {left: l, top: t + window.pageYOffset, width: w, height: h}
     }
 
 
