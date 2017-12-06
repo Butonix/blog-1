@@ -4,7 +4,7 @@
 
 import {observable, action} from 'mobx'
 import xhr from '../xhr'
-import {Message} from '../../components/zyc'
+import {Message,Spin} from '../../components/zyc'
 
 class ArticleStore {
     @observable articleList = [];

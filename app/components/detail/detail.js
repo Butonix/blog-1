@@ -36,7 +36,7 @@ export default class Detail extends React.Component {
     }
 
     componentDidMount() {
-        this.getArticleDetail();
+        this.getReadCountAndArticle();
         this.getTitlePrev();
         this.getTitleNext();
         this.getVote()
@@ -46,10 +46,10 @@ export default class Detail extends React.Component {
         this.isRender = false;
         let {articleId} = splitLocation(location);
         this.articleId = articleId;
-        this.getArticleDetail();
+        this.getReadCountAndArticle();
         this.getTitlePrev();
         this.getTitleNext();
-        this.getVote();
+        this.getVote(); // 样式状态
     }
 
     getVote() {
@@ -65,18 +65,25 @@ export default class Detail extends React.Component {
         }
     }
 
-    getArticleDetail() {
+    getReadCountAndArticle() {
         let body = {};
         body.articleId = this.articleId;
         this.articleStore.postArticleUpdateReadCount(body).then(response => {
             if (response) {
-                this.articleStore.postArticleDetail(body).then(response => {
-                    if (response) {
-                        this.isRender = true
-                    }
-                })
+                this.getArticleDetail()
             }
         });
+    }
+
+    getArticleDetail() {
+        let body = {};
+        body.articleId = this.articleId;
+
+        this.articleStore.postArticleDetail(body).then(response => {
+            if (response) {
+                this.isRender = true
+            }
+        })
     }
 
 

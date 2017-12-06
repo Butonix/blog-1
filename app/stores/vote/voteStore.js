@@ -4,7 +4,7 @@
 
 import {observable, action} from 'mobx'
 import xhr from '../xhr'
-import {Message} from '../../components/zyc'
+import {Message,Spin} from '../../components/zyc'
 
 class VoteStore {
     constructor() {
@@ -13,12 +13,14 @@ class VoteStore {
     }
 
     @action postVoteUpdate(body) {
+        Spin.show();
 
         return xhr({
             method: 'post',
             url: this.voteUpdateUrl,
             body: body
         }).then(response => {
+            Spin.close();
             if (response.result) {
                 return Promise.resolve(response)
             } else {

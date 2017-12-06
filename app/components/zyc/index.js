@@ -12,6 +12,7 @@ import Select from './select'
 import Input from './input'
 import Tag from './tag'
 import BackTop from './backTop'
+import Spin from './spin'
 
 export {
     Dialog,
@@ -23,5 +24,6 @@ export {
     Select,
     Input,
     Tag,
-    BackTop
+    BackTop,
+    Spin
 }
