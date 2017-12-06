@@ -3,7 +3,7 @@
  */
 
 export default {
-    host: '127.0.0.1',
+    host: '0.0.0.0',
     port: process.env.NODE_ENV === 'development' ? 8080 : 80,
     apiHost: '127.0.0.1',
     apiPort: 7070,
