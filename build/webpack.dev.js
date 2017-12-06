@@ -6,7 +6,9 @@ import path from 'path'
 import webpack from 'webpack'
 import merge from 'webpack-merge'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import OpenBrowserPlugin from 'open-browser-webpack-plugin'
 import baseConfig from './webpack.base'
+import config from '../config'
 
 const rootPath = path.resolve(__dirname, '..');
 const entryPath = path.join(rootPath, 'app');
@@ -54,6 +56,9 @@ const devConfig = {
         ]
     },
     plugins: [
+        new OpenBrowserPlugin({
+            url: `http://${config.host}:${config.port}`
+        }),
         new webpack.HotModuleReplacementPlugin(), //热更新
         new webpack.DefinePlugin({
             'process.env': {

@@ -24,7 +24,7 @@ app.use(webpackDevMiddleware(compiler, {
 
 app.use(webpackHotMiddleware(compiler));
 
-app.listen(config.port, (err) => {
+app.listen(config.port, (err) => { // 8080端口
     if (err) {
         console.log(err)
     } else {

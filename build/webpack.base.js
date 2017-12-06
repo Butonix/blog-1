@@ -5,8 +5,6 @@
 import path from 'path'
 import webpack from 'webpack'
 import ProgressBarPlugin from 'progress-bar-webpack-plugin'
-import OpenBrowserPlugin from 'open-browser-webpack-plugin'
-import config from '../config'
 
 const baseConfig = {
     entry: {
@@ -57,9 +55,6 @@ const baseConfig = {
     },
     plugins: [
         new ProgressBarPlugin(),
-        new OpenBrowserPlugin({
-            url: `http://${config.host}:${config.port}`
-        }),
         new webpack.NoEmitOnErrorsPlugin(),//保证出错时页面不阻塞，且会在编译结束后报错
         new webpack.HashedModuleIdsPlugin(),//实现 chunkhash 的稳定化
     ],

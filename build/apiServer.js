@@ -23,9 +23,14 @@ app.use(bodyParser.urlencoded({extended: false})); //application/x-www-form-urle
 
 
 app.all('*', function (req, res, next) { //跨域
-    console.log(req.headers.origin);
 
-    if(req.headers.origin == 'http://127.0.0.1:8080' || req.headers.origin == 'http://101.132.163.117'){
+    if(
+        req.headers.origin == 'http://127.0.0.1:8080' ||
+        req.headers.origin == 'http://localhost:8080' ||
+        req.headers.origin == 'http://127.0.0.1:6060' ||
+        req.headers.origin == 'http://localhost:6060' ||
+        req.headers.origin == 'http://101.132.163.117'
+    ){
         res.header('Access-Control-Allow-Origin', req.headers.origin); //支持的跨域请求地址
         res.header('Access-Control-Allow-Credentials', true); //是否允许浏览器发送cookies
         res.header('Access-Control-Allow-Headers', 'Cache-Control, Content-Language, Content-Type, Expires, Last-Modified,Pragma');
@@ -34,7 +39,6 @@ app.all('*', function (req, res, next) { //跨域
     }else {
         next();
     }
-
 
     if (req.method === 'OPTIONS') {
         res.sendStatus(200);
@@ -56,7 +60,7 @@ mongoose.connect(`mongodb://${config.dbHost}:${config.dbPort}/blog`, {useMongoCl
     }
     console.log('数据库连接成功');
 
-    app.listen(config.apiPort, function (err) {
+    app.listen(config.apiPort, function (err) { // 7070端口
         if (err) {
             console.error('err:', err);
         } else {
