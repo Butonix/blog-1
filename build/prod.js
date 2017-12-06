@@ -24,7 +24,7 @@ app.use('/', express.static(path.join(__dirname, '..', 'docs')));
 
 
 
-app.listen(config.port, config.host, (err) => {
+app.listen(config.port, (err) => {
     if (err) {
         console.log(err)
     } else {
