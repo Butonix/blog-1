@@ -28,7 +28,7 @@ app.listen(config.port, (err) => {
     if (err) {
         console.log(err)
     } else {
-        console.log(`===>open http://${config.host}:${config.port} in a browser to view the app`);
+        console.log(`===>app is running at port:${config.port}`);
     }
 
 });

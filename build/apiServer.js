@@ -50,11 +50,11 @@ mongoose.connect(`mongodb://${config.dbHost}:${config.dbPort}/blog`, {useMongoCl
     }
     console.log('数据库连接成功');
 
-    app.listen(config.apiPort, config.apiHost, function (err) {
+    app.listen(config.apiPort, function (err) {
         if (err) {
             console.error('err:', err);
         } else {
-            console.info(`===> api server is running at http://${config.apiHost}:${config.apiPort}`)
+            console.info(`===> api server is running at port:${config.apiPort}`)
         }
     });
 });
