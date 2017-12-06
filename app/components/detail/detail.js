@@ -19,6 +19,7 @@ export default class Detail extends React.Component {
     @observable nextTitle = {};
     @observable tipShow;
     @observable isVote;
+    @observable voteCount = 0;
 
     @observable isRender;
 
@@ -36,7 +37,7 @@ export default class Detail extends React.Component {
     }
 
     componentDidMount() {
-        this.getReadCountAndArticle();
+        this.getArticleDetail();
         this.getTitlePrev();
         this.getTitleNext();
         this.getVote()
@@ -46,11 +47,12 @@ export default class Detail extends React.Component {
         this.isRender = false;
         let {articleId} = splitLocation(location);
         this.articleId = articleId;
-        this.getReadCountAndArticle();
+        this.getArticleDetail();
         this.getTitlePrev();
         this.getTitleNext();
         this.getVote(); // 样式状态
     }
+
 
     getVote() {
         if (this.userStore.userInfo.userId) {
@@ -65,25 +67,19 @@ export default class Detail extends React.Component {
         }
     }
 
-    getReadCountAndArticle() {
+    getArticleDetail() {
         let body = {};
         body.articleId = this.articleId;
         this.articleStore.postArticleUpdateReadCount(body).then(response => {
             if (response) {
-                this.getArticleDetail()
+                this.articleStore.postArticleDetail(body).then(response => {
+                    if (response) {
+                        this.voteCount = response.data.voteCount;
+                        this.isRender = true
+                    }
+                })
             }
         });
-    }
-
-    getArticleDetail() {
-        let body = {};
-        body.articleId = this.articleId;
-
-        this.articleStore.postArticleDetail(body).then(response => {
-            if (response) {
-                this.isRender = true
-            }
-        })
     }
 
 
@@ -111,17 +107,21 @@ export default class Detail extends React.Component {
 
     handleVote() {
         if (this.userStore.userInfo.userId) {
+
+            if(this.isVote) { //本地模拟点赞 防止获取重复数据
+                this.voteCount--;
+                this.isVote = !this.isVote;
+            }else {
+                this.voteCount++;
+                this.isVote = !this.isVote;
+            }
+
             let body = {};
             body.userId = this.userStore.userInfo.userId;
             body.articleId = this.articleId;
-            body.isVote = !this.isVote;
+            body.isVote = this.isVote;
 
-            this.voteStore.postVoteUpdate(body).then(response => {
-                if (response) {
-                    this.getArticleDetail();
-                    this.getVote()
-                }
-            })
+            this.voteStore.postVoteUpdate(body)
 
         } else {
             this.tipShow = true
@@ -175,7 +175,7 @@ export default class Detail extends React.Component {
                     <div className="detail-vote">
                         <div className={this.isVote ? 'vote' : null} onClick={this.handleVote.bind(this)}>
                             <i className="iconfont icon-dianzan">{null}</i>
-                            <span>{articleDetail.voteCount}</span>
+                            <span>{this.voteCount}</span>
                         </div>
                     </div>
                     <Dialog
