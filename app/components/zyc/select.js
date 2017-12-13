@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDom from 'react-dom'
 import {observable} from 'mobx'
 import {observer} from 'mobx-react'
 import Portal from './portal'
@@ -53,7 +53,7 @@ class Select extends React.Component {
     }
 
     mousedown(e) {
-        if (this.show && !(this.refs.select.contains(e.target) || ReactDOM.findDOMNode(this.portal).contains(e.target))) {
+        if (this.show && !(this.refs.select.contains(e.target) || ReactDom.findDOMNode(this.portal).contains(e.target))) {
             this.show = false
         }
     }

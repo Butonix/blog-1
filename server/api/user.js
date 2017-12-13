@@ -5,7 +5,7 @@
 import express from 'express'
 import User from '../models/user'
 import Id from '../models/id'
-import {responseClient, md5, MD5_SUFFIX} from '../util'
+import {responseClient, MD5_SUFFIX} from '../util'
 const router = express.Router();
 
 router.post('/register', (req, res) => {
@@ -23,7 +23,7 @@ router.post('/register', (req, res) => {
                 }).then(data => {
                     let user = new User({
                         username: username,
-                        password: md5(password + MD5_SUFFIX),
+                        password: password,
                         userType: 3,
                         userId: data.seq
                     });
@@ -42,7 +42,7 @@ router.post('/login', (req, res) => {
     let {username, password} = req.body;
     User.findOne({
         username,
-        password: md5(password + MD5_SUFFIX)
+        password,
     }).then(data => {
         if (data) {
             if (data.isUsed) {

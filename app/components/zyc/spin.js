@@ -3,7 +3,7 @@
  */
 
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDom from 'react-dom'
 import {observable} from 'mobx'
 import {observer} from 'mobx-react'
 import './spin.sass'
@@ -27,10 +27,10 @@ function SpinRender() {
 
 SpinRender.prototype = {
     show: function () {
-        ReactDOM.render(<Spin />, document.getElementById('spin'))
+        ReactDom.render(<Spin />, document.getElementById('spin'))
     },
     close: function () {
-        ReactDOM.unmountComponentAtNode(document.getElementById('spin'))
+        ReactDom.unmountComponentAtNode(document.getElementById('spin'))
 
     }
 };

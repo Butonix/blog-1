@@ -5,7 +5,7 @@
 import React from 'react'
 import {observable} from 'mobx'
 import {observer, inject} from 'mobx-react'
-import ReactDom from 'react-dom'
+import md5 from 'blueimp-md5'
 import {Dialog, Message} from '../zyc'
 import './login.sass'
 import {Username, Password} from '../public/regular'
@@ -107,11 +107,11 @@ class LoginForm extends React.Component {
 
         let body = {};
         body.username = username;
-        body.password = password;
+        body.password = md5(password);
 
         this.userStore.postLogin(body).then((response) => {
-            if(response){
-                localStorage.setItem('expired',(new Date).getTime());
+            if (response) {
+                localStorage.setItem('expired', (new Date).getTime());
                 this.userStore.getUserInfo()
             }
         })
@@ -174,9 +174,18 @@ class RegisterForm extends React.Component {
 
         let body = {};
         body.username = username;
-        body.password = password;
+        body.password = md5(password);
 
-        this.userStore.postRegister(body)
+        this.userStore.postRegister(body).then(response => {
+            if (response) {
+                this.userStore.postLogin(body).then(response => {
+                    if (response) {
+                        localStorage.setItem('expired', (new Date).getTime());
+                        this.userStore.getUserInfo()
+                    }
+                })
+            }
+        })
     }
 }
 
