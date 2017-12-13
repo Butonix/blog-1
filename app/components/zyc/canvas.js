@@ -26,16 +26,14 @@ export default class Canvas extends React.Component {
         let ctx = canvas.getContext('2d');
         let cw = canvas.width = window.innerWidth;
         let ch = canvas.height = window.innerHeight;
-        let cx = cw / 2;
-        let cy = ch / 2;
 
 
         let dots = [];
         let mouseArea = {x: null, y: null, max: 20000};
 
         for (let i = 0; i < 60; i++) {
-            let x = canvas.width * Math.random();
-            let y = canvas.height * Math.random();
+            let x = cw * Math.random();
+            let y = ch * Math.random();
             let xv = Math.random() * 2 - 1;
             let yv = Math.random() * 2 - 1;
             dots.push({
@@ -58,8 +56,8 @@ export default class Canvas extends React.Component {
                 dot.x += dot.xv;
                 dot.y += dot.yv;
 
-                dot.xv *= (dot.x > canvas.width || dot.x < 0) ? -1 : 1;
-                dot.yv *= (dot.y > canvas.height || dot.y < 0) ? -1 : 1;
+                dot.xv *= (dot.x > cw || dot.x < 0) ? -1 : 1;
+                dot.yv *= (dot.y > ch || dot.y < 0) ? -1 : 1;
 
                 ctx.fillRect(dot.x - 0.5, dot.y - 0.5, 1, 1);
 
@@ -120,8 +118,6 @@ export default class Canvas extends React.Component {
         window.addEventListener('resize', () => {
             cw = canvas.width = window.innerWidth;
             ch = canvas.height = window.innerHeight;
-            cx = cw / 2;
-            cy = ch / 2;
         });
 
     }

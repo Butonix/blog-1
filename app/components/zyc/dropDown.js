@@ -42,6 +42,7 @@ export default class DropDown extends React.Component {
                     this.show ?
                         <Portal
                             target={this.refs.dropDown}
+                            fixed={true}
                         >
                             {this.props.overlay}
                         </Portal> : null

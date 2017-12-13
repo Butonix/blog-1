@@ -5,7 +5,7 @@
 import React from 'react'
 import {observable} from 'mobx'
 import {observer} from 'mobx-react'
-import ReactDom from 'react-dom'
+import ReactDOM from 'react-dom'
 import './message.sass'
 
 @observer
@@ -78,7 +78,7 @@ class Item extends React.Component {
 
 
 function render() {
-    return ReactDom.render(<Message />, document.getElementById('message'))
+    return ReactDOM.render(<Message />, document.getElementById('message'))
 }
 
 function success(message) {

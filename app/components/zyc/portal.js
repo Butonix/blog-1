@@ -55,17 +55,18 @@ export default class Portal extends React.Component {
             target = target.offsetParent
         }
 
-        return {left: l, top: t + window.pageYOffset, width: w, height: h}
+        return {left: l, top: t, width: w, height: h}
     }
 
 
     render() {
         let {top, left, height, width} = this.direction;
+        let {fixed} = this.props;
 
         return createPortal(
             <div className="zyc-portal" style={{
                 left: left,
-                top: top + height + 5,
+                top: fixed ? top + window.pageYOffset + height + 5 : top + height + 5,
                 width: width
             }}>
                 {this.props.children}
