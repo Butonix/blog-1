@@ -8,7 +8,7 @@ import {Route, Switch, Redirect, BrowserRouter} from 'react-router-dom'
 import '../styles/index.sass'
 import RouteAdmin from './routeAdmin'
 import RouteVisitor from './routeVisitor'
-import {Canvas, BackTop} from '../components/zyc'
+import {BackTop} from '../components/zyc'
 
 @inject('UserStore') @observer
 class App extends React.Component {
@@ -32,7 +32,6 @@ class App extends React.Component {
 
         return (
             <div className="JAVASCRIPT">
-                <Canvas />
                 <BackTop
                     visibleHeight={500}
                 />

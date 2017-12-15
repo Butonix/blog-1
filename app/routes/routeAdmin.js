@@ -14,6 +14,7 @@ import {
 } from '../components/admin'
 import {AdminMenu, AdminContent} from '../components/common'
 import './routeAdmin.sass'
+import {Canvas} from '../components/zyc'
 
 @inject('UserStore') @observer
 export default class RouteAdmin extends React.Component {
@@ -40,6 +41,7 @@ export default class RouteAdmin extends React.Component {
 
         return (
             <div className="route-admin">
+                {this.props.location.pathname == '/admin/newArticle' ? null : <Canvas />}
                 <Route path={url} component={AdminMenu}/>
                 <AdminContent>
                     <Switch>

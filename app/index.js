@@ -10,7 +10,7 @@ import {Provider} from 'mobx-react'
 import Stores from './stores/index'
 import App from './routes/index'
 
-window.stores = window.stores || Stores;
+window.stores = window.stores || Stores; // react-hot-loader 警告
 
 ReactDom.render(
     <AppContainer warnings={false}>
