@@ -24,7 +24,7 @@ app.use('/', express.static(path.join(__dirname, '..', 'docs')));
 
 
 
-app.listen(config.port, (err) => { // 80端口 6060端口
+app.listen(config.port, (err) => { // 8080端口
     if (err) {
         console.log(err)
     } else {

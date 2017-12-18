@@ -29,7 +29,7 @@ app.all('*', function (req, res, next) { //跨域
         req.headers.origin == 'http://localhost:8080' ||
         req.headers.origin == 'http://127.0.0.1:6060' ||
         req.headers.origin == 'http://localhost:6060' ||
-        req.headers.origin == 'http://101.132.163.117' ||
+        req.headers.origin == 'http://101.132.163.117:8080' ||
         req.headers.origin == 'http://www.scriptchao.com' ||
         req.headers.origin == 'http://www.scriptchao.xyz'
     ) {

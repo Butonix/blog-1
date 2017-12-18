@@ -6,7 +6,7 @@ import config from '../../../config'
 
 const origin = `http://${config.apiHost}:${config.apiPort}`;
 
-const expiredTime = 1000 * 60 * 35;
+const expiredTime = 1000 * 60 * 125;
 
 export {
     origin,

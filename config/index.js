@@ -6,8 +6,7 @@ const devHost =  '127.0.0.1';
 // const prodHost = '127.0.0.1';
 const prodHost = '101.132.163.117';
 const devPort =  8080;
-// const prodPort = 6060;
-const prodPort = 80;
+const prodPort = 8080;
 
 
 export default {
