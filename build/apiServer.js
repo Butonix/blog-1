@@ -24,21 +24,21 @@ app.use(bodyParser.urlencoded({extended: false})); //application/x-www-form-urle
 
 app.all('*', function (req, res, next) { //跨域
 
-    if (
-        req.headers.origin == 'http://127.0.0.1:8080' ||
-        req.headers.origin == 'http://localhost:8080' ||
-        req.headers.origin == 'http://101.132.163.117' ||
-        req.headers.origin == 'http://www.scriptchao.com' ||
-        req.headers.origin == 'http://www.scriptchao.xyz'
-    ) {
-        res.header('Access-Control-Allow-Origin', req.headers.origin); //支持的跨域请求地址
-        res.header('Access-Control-Allow-Credentials', true); //是否允许浏览器发送cookies
-        res.header('Access-Control-Allow-Headers', 'Cache-Control, Content-Language, Content-Type, Expires, Last-Modified,Pragma');
-        res.header('Access-Control-Expose-Headers', 'Content-Length, Authorization, Accept, X-Requested-With');
-        res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
-    } else {
-        next();
-    }
+    // if (
+    //     req.headers.origin == 'http://127.0.0.1:8080' ||
+    //     req.headers.origin == 'http://localhost:8080' ||
+    //     req.headers.origin == 'http://101.132.163.117' ||
+    //     req.headers.origin == 'http://www.scriptchao.com' ||
+    //     req.headers.origin == 'http://www.scriptchao.xyz'
+    // ) {
+    //     res.header('Access-Control-Allow-Origin', req.headers.origin); //支持的跨域请求地址
+    //     res.header('Access-Control-Allow-Credentials', true); //是否允许浏览器发送cookies
+    //     res.header('Access-Control-Allow-Headers', 'Cache-Control, Content-Language, Content-Type, Expires, Last-Modified,Pragma');
+    //     res.header('Access-Control-Expose-Headers', 'Content-Length, Authorization, Accept, X-Requested-With');
+    //     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+    // } else {
+    //     next();
+    // }
 
     if (req.method === 'OPTIONS') {
         res.sendStatus(200);

@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env NODE_ENV=development babel-node build/dev.js",
-    "prod": "cross-env NODE_ENV=production babel-node build/prod.js",
-    "apiServer": "cross-env NODE_ENV=development nodemon --exec babel-node --watch server --watch build/apiServer.js build/apiServer.js",
-    "staticServer": "cross-env NODE_ENV=production babel-node build/apiServer.js",
-    "start": "npm-run-all --parallel dev apiServer",
-    "build": "npm-run-all --parallel prod staticServer"
+    "dev": "cross-env NODE_ENV=development babel-node build/server.js",
+    "prod": "cross-env NODE_ENV=production babel-node build/server.js",
+    "devServer": "cross-env NODE_ENV=development nodemon --exec babel-node --watch server --watch build/apiServer.js build/apiServer.js",
+    "prodServer": "cross-env NODE_ENV=production babel-node build/apiServer.js",
+    "start": "npm-run-all --parallel dev devServer",
+    "build": "npm-run-all --parallel prod prodServer"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "flex.css": "^1.1.7",
     "github-markdown-css": "^2.9.0",
     "history": "^4.7.2",
+    "http-proxy": "^1.16.2",
     "mobx": "^2.7.0",
     "mobx-react": "^4.3.3",
     "mongoose": "^4.13.0",

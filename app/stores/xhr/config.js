@@ -4,7 +4,7 @@
 
 import config from '../../../config'
 
-const origin = `http://${config.apiHost}:${config.apiPort}`;
+const origin = `http://${config.host}:${config.port}/blog`;
 
 const expiredTime = 1000 * 60 * 125;
 
