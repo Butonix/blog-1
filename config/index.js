@@ -4,10 +4,9 @@
 
 const devHost = '127.0.0.1';
 // const prodHost = '127.0.0.1';
-const prodHost = 'www.scriptchao.com';
+const prodHost = 'www.scriptchao.xyz';
 const devPort = 8080;
-// const prodPort = 8080;
-const prodPort = 80;
+const prodPort = 8080;
 
 
 export default {
