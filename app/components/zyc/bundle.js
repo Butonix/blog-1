@@ -15,8 +15,9 @@ class Bundle extends React.Component {
 
     }
 
-    componentWillMount() {
-        this.props.load().then(Component => this.component = Component.default);
+    async componentWillMount() {
+        const {default: component} = await this.props.load();
+        this.component = component
     }
 
     render() {
