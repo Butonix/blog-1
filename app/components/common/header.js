@@ -9,6 +9,7 @@ import {NavLink, Link} from 'react-router-dom'
 import './header.sass'
 import Login from './login'
 import {Dialog, DropDown, Menu} from '../zyc'
+import history from '../../history'
 
 
 @inject('UserStore') @observer
@@ -44,7 +45,9 @@ export default class Header extends React.Component {
                 </Menu.Item>
             </Menu> :
             <Menu>
-                <Menu.Item onClick={this.handleEntryManage.bind(this)}>
+                <Menu.Item onClick={() => {
+                    history.push('/admin')
+                }}>
                     <i className="iconfont icon-guanli">{null}</i>
                     <span>后台管理</span>
                 </Menu.Item>
@@ -113,10 +116,6 @@ export default class Header extends React.Component {
                 </Dialog>
             </header>
         )
-    }
-
-    handleEntryManage() {
-        this.props.history.push('/admin')
     }
 
     handleLoginOut() {

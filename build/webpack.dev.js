@@ -18,8 +18,7 @@ const devConfig = {
     entry: {
         app: [
             'babel-polyfill',
-            'react-hot-loader/patch',
-            'webpack-hot-middleware/client',
+            'webpack-hot-middleware/client?reload=true',
             path.join(entryPath, 'index.js')
         ],
     },

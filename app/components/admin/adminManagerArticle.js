@@ -9,6 +9,7 @@ import Pagination from 'rc-pagination'
 import dateFormat from 'dateformat'
 import './adminManagerArticle.sass'
 import {Button} from '../zyc'
+import history from '../../history'
 
 @inject('ArticleStore') @observer
 export default class AdminManagerArticle extends React.Component {
@@ -73,7 +74,6 @@ export default class AdminManagerArticle extends React.Component {
                                 key={item.articleId}
                                 onDelete={this.handleDelete.bind(this)}
                                 onPublish={this.handlePublish.bind(this)}
-                                history={this.props.history}
                             />
                         )
                     }
@@ -132,7 +132,7 @@ class ArticleCell extends React.Component {
                 </div>
                 <div className="operation">
                     <Button className="btn" onClick={() => {
-                        this.props.history.push(`/admin/newArticle?articleId=${data.articleId}`)
+                        history.push(`/admin/newArticle?articleId=${data.articleId}`)
                     }}>编辑</Button>
                     <Button className="btn" onClick={() => {
                         this.props.onDelete(data.articleId)

@@ -9,7 +9,6 @@ import {Header, Main, Footer} from '../components/common'
 import {Homepage} from '../components/homepage'
 import {Categories, CategoriesTag} from '../components/categories'
 import {Detail} from '../components/detail'
-import {Canvas} from '../components/zyc'
 
 @observer
 export default class RouteVisitor extends React.Component {
@@ -17,10 +16,6 @@ export default class RouteVisitor extends React.Component {
     constructor(args) {
         super(args)
 
-    }
-
-    componentWillReceiveProps() {
-        window.scrollTo(0, 0)
     }
 
     componentDidMount() {
@@ -34,7 +29,6 @@ export default class RouteVisitor extends React.Component {
 
         return (
             <div className="route-visitor">
-                {this.props.location.pathname == '/detail' ? null : <Canvas />}
                 <Route path={url} component={Header}/>
                 <Main>
                     <Switch>

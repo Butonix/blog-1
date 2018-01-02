@@ -4,11 +4,11 @@
 
 import React from 'react'
 import {inject, observer} from 'mobx-react'
-import {Route, Switch, Redirect, BrowserRouter} from 'react-router-dom'
+import {Route, Switch, Redirect} from 'react-router-dom'
 import '../styles/index.sass'
 import RouteAdmin from './routeAdmin'
 import RouteVisitor from './routeVisitor'
-import {BackTop} from '../components/zyc'
+import {BackTop, Canvas} from '../components/zyc'
 
 @inject('UserStore') @observer
 class App extends React.Component {
@@ -19,7 +19,13 @@ class App extends React.Component {
     }
 
     componentWillMount() {
+
         this.userStore.getUserInfo()
+    }
+
+    componentWillReceiveProps() {
+
+        window.scrollTo(0, 0)
     }
 
 
@@ -35,18 +41,17 @@ class App extends React.Component {
                 <BackTop
                     visibleHeight={500}
                 />
-                <BrowserRouter>
-                    {
-                        userInfo ?
-                            <Switch>
-                                {
-                                    userInfo.userType == 1 || userInfo.userType == 2 ?
-                                        <Route path="/admin" component={RouteAdmin}/> : null
-                                }
-                                <Route path="/" component={RouteVisitor}/>
-                            </Switch> : null
-                    }
-                </BrowserRouter>
+                {this.props.location.pathname == '/detail' || this.props.location.pathname == '/admin/newArticle' ? null : <Canvas />}
+                {
+                    userInfo ?
+                        <Switch>
+                            {
+                                userInfo.userType == 1 || userInfo.userType == 2 ?
+                                    <Route path="/admin" render={(props) => <RouteAdmin userType={userInfo.userType} {...props}/>}/> : null
+                            }
+                            <Route path="/" component={RouteVisitor}/>
+                        </Switch> : null
+                }
             </div>
         )
     }

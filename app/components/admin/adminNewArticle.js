@@ -10,6 +10,7 @@ import reactRenderer from 'remark-react'
 import './adminNewArticle.sass'
 import {Button, Select, Input, Dialog, Message} from '../zyc'
 import {splitLocation} from '../public/location'
+import history from '../../history'
 
 
 @inject('TagStore', 'ArticleStore') @observer
@@ -159,7 +160,7 @@ export default class AdminNewArticle extends React.Component {
 
         this.articleStore.postArticleUpdate(body).then(response => {
             if (response) {
-                this.props.history.push('/admin/managerArticle')
+                history.push('/admin/managerArticle')
 
             }
         })
@@ -174,7 +175,7 @@ export default class AdminNewArticle extends React.Component {
 
         this.articleStore.postArticleAdd(body).then(response => {
             if (response) {
-                this.props.history.push('/admin/managerArticle')
+                history.push('/admin/managerArticle')
             }
         })
     }
