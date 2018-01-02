@@ -24,6 +24,7 @@ const devConfig = {
     },
     output: {
         filename: '[name].js',
+        chunkFilename: '[name].js',
         publicPath: '/', ///html src指向
     },
     module: {

@@ -26,6 +26,7 @@ const prodConfig = {
     output: {
         path: path.join(outputPath, 'static'),
         filename: '[name].[chunkhash:6].js',
+        chunkFilename: '[name].[chunkhash:6].js',
         publicPath: '/static/'
     },
     module: {
