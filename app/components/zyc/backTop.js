@@ -2,12 +2,12 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observable } from 'mobx'
-import { observer } from 'mobx-react'
-import './backTop.sass'
-import './animation'
-import './tween'
+import React from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import './backTop.sass';
+import './animation';
+import './tween';
 
 @observer
 export default class BackTop extends React.Component {
@@ -16,12 +16,12 @@ export default class BackTop extends React.Component {
 
     constructor(args) {
         super(args);
-        this.scroll = this.scroll.bind(this)
+        this.scroll = this.scroll.bind(this);
 
     }
 
     componentWillMount() {
-        window.addEventListener('scroll', this.scroll)
+        window.addEventListener('scroll', this.scroll);
     }
 
     componentDidMount() {
@@ -29,21 +29,21 @@ export default class BackTop extends React.Component {
     }
 
     componentWillUnmount() {
-        window.removeEventListener('scroll', this.scroll)
+        window.removeEventListener('scroll', this.scroll);
     }
 
     scroll() {
         if (window.pageYOffset >= this.props.visibleHeight) {
-            this.needBack = true
+            this.needBack = true;
         } else {
-            this.needBack = false
+            this.needBack = false;
         }
     }
 
     handleBackTop() {
 
         Math.animation(window.pageYOffset, 0, (value) => {
-            window.scroll(0, value)
+            window.scroll(0, value);
         }, 'Quad.easeIn', 300);
     }
 
@@ -55,6 +55,6 @@ export default class BackTop extends React.Component {
                 <div className="zyc-backTop" onClick={this.handleBackTop.bind(this)}>
                     <i className="iconfont icon-fanhuidingbu">{null}</i>
                 </div> : null
-        )
+        );
     }
 }

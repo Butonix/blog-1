@@ -20,7 +20,7 @@ class UserStore {
         this.loginOutUrl = '/user/loginOut';
         this.userListUrl = '/user/list';
         this.userUpdateUrl = '/user/update';
-        this.userDeleteUrl = '/user/delete'
+        this.userDeleteUrl = '/user/delete';
     }
 
     @action clearStore() {
@@ -34,15 +34,15 @@ class UserStore {
             method: 'post',
             url: this.userDeleteUrl,
             body,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
                 Message.success(response.message);
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
-        })
+        });
     }
 
     @action postUserUpdate(body) {
@@ -51,15 +51,15 @@ class UserStore {
             method: 'post',
             url: this.userUpdateUrl,
             body,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
                 Message.success(response.message);
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
-        })
+        });
     }
 
     @action postUserList(body) {
@@ -68,31 +68,31 @@ class UserStore {
             method: 'post',
             url: this.userListUrl,
             body,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
                 this.userList = response.data.list;
                 this.userCount = response.data.total;
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
-        })
+        });
     }
 
     @action getLoginOut() {
         return xhr({
             method: 'get',
             url: this.loginOutUrl,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
                 Message.success(response.message);
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
-        })
+        });
 
 
     }
@@ -103,15 +103,16 @@ class UserStore {
             method: 'post',
             url: this.registerUrl,
             body,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
+
                 Message.success(response.message);
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
-        })
+        });
     }
 
     @action postLogin(body) {
@@ -120,16 +121,16 @@ class UserStore {
             method: 'post',
             url: this.loginUrl,
             body,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
                 this.loginShow = false;
                 Message.success(response.message);
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
-        })
+        });
     }
 
 
@@ -138,9 +139,8 @@ class UserStore {
         return xhr({
             method: 'get',
             url: this.userInfoUrl,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
-                
                 this.userInfo = response.data;
                 return Promise.resolve(response);
             }
@@ -148,7 +148,7 @@ class UserStore {
             console.info(response.message);
             return false;
 
-        })
+        });
     }
 
 }

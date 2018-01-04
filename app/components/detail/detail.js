@@ -2,16 +2,16 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observable } from 'mobx'
-import { inject, observer } from 'mobx-react'
-import { Link } from 'react-router-dom'
-import remark from 'remark'
-import reactRenderer from 'remark-react'
-import { ArticleCell } from '../common/articleList'
-import splitLocation from '../public/location'
-import './detail.sass'
-import { Dialog } from '../zyc'
+import React from 'react';
+import { observable } from 'mobx';
+import { inject, observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
+import remark from 'remark';
+import reactRenderer from 'remark-react';
+import { ArticleCell } from '../common/articleList';
+import splitLocation from '../public/location';
+import './detail.sass';
+import { Dialog } from '../zyc';
 
 @inject('UserStore', 'ArticleStore', 'VoteStore') @observer
 export default class Detail extends React.Component {
@@ -34,14 +34,14 @@ export default class Detail extends React.Component {
     componentWillMount() {
         const { location } = window;
         const { articleId } = splitLocation(location);
-        this.articleId = articleId
+        this.articleId = articleId;
     }
 
     componentDidMount() {
         this.getArticleDetail();
         this.getTitlePrev();
         this.getTitleNext();
-        this.getVote()
+        this.getVote();
     }
 
     componentWillReceiveProps() {
@@ -61,25 +61,25 @@ export default class Detail extends React.Component {
             const body = {};
             body.articleId = this.articleId;
             body.userId = this.userStore.userInfo.userId;
-            this.voteStore.postVoteStatus(body).then(response => {
+            this.voteStore.postVoteStatus(body).then((response) => {
                 if (response) {
                     this.isVote = response.data.isVote;
                 }
-            })
+            });
         }
     }
 
     getArticleDetail() {
         const body = {};
         body.articleId = this.articleId;
-        this.articleStore.postArticleUpdateReadCount(body).then(response => {
+        this.articleStore.postArticleUpdateReadCount(body).then((response) => {
             if (response) {
-                this.articleStore.postArticleDetail(body).then(response1 => {
+                this.articleStore.postArticleDetail(body).then((response1) => {
                     if (response1) {
                         this.voteCount = response1.data.voteCount;
-                        this.isRender = true
+                        this.isRender = true;
                     }
-                })
+                });
             }
         });
     }
@@ -89,22 +89,22 @@ export default class Detail extends React.Component {
         const body = {};
         body.articleId = this.articleId;
         body.prev = true;
-        this.articleStore.postArticleDetailTitle(body).then(response => {
+        this.articleStore.postArticleDetailTitle(body).then((response) => {
             if (response) {
-                this.prevTitle = response.data
+                this.prevTitle = response.data;
             }
-        })
+        });
     }
 
     getTitleNext() {
         const body = {};
         body.articleId = this.articleId;
         body.next = true;
-        this.articleStore.postArticleDetailTitle(body).then(response => {
+        this.articleStore.postArticleDetailTitle(body).then((response) => {
             if (response) {
-                this.nextTitle = response.data
+                this.nextTitle = response.data;
             }
-        })
+        });
     }
 
     handleVote() {
@@ -123,10 +123,10 @@ export default class Detail extends React.Component {
             body.articleId = this.articleId;
             body.isVote = this.isVote;
 
-            this.voteStore.postVoteUpdate(body)
+            this.voteStore.postVoteUpdate(body);
 
         } else {
-            this.tipShow = true
+            this.tipShow = true;
 
         }
     }
@@ -139,7 +139,7 @@ export default class Detail extends React.Component {
     handleLogin(type) {
         this.tipShow = false;
         this.userStore.loginType = type;
-        this.userStore.loginShow = true
+        this.userStore.loginShow = true;
 
     }
 
@@ -195,6 +195,6 @@ export default class Detail extends React.Component {
                         </div>
                     </Dialog>
                 </div> : null
-        )
+        );
     }
 }

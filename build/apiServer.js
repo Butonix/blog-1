@@ -1,14 +1,14 @@
 /**
  * Created by scriptchao on 2017/10/26.
  */
-import express from 'express'
-import bodyParser from 'body-parser'
-import mongoose from 'mongoose'
-import cookieParser from 'cookie-parser'
-import session from 'express-session'
-import blueBird from 'bluebird'
-import config from '../config'
-import { main } from '../server'
+import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import blueBird from 'bluebird';
+import config from '../config';
+import { main } from '../server';
 
 const app = express();
 
@@ -53,18 +53,18 @@ app.use('/', main);// 展示页面路由
 
 mongoose.Promise = blueBird;
 
-mongoose.connect(`mongodb://${config.dbHost}:${config.dbPort}/blog`, { useMongoClient: true }, err => {
+mongoose.connect(`mongodb://${config.dbHost}:${config.dbPort}/blog`, { useMongoClient: true }, (err) => {
     if (err) {
         console.log(err, '数据库连接失败');
         return;
     }
     console.log('数据库连接成功');
 
-    app.listen(config.apiPort, err1 => { // 7070端口
+    app.listen(config.apiPort, (err1) => { // 7070端口
         if (err1) {
             console.error('err:', err1);
         } else {
-            console.info(`===> api server is running at port:${config.apiPort}`)
+            console.info(`===> api server is running at port:${config.apiPort}`);
         }
     });
 });

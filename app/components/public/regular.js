@@ -9,4 +9,4 @@ const Password = /^[a-zA-Z]\w{4,15}$/; // 字母开头的5-16位字符
 export {
     Username,
     Password,
-}
+};

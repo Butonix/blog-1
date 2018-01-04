@@ -2,13 +2,13 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observable } from 'mobx'
-import { inject, observer } from 'mobx-react'
-import { Link } from 'react-router-dom'
-import Pagination from 'rc-pagination'
-import dateFormat from 'dateformat'
-import './categoriesTag.sass'
+import React from 'react';
+import { observable } from 'mobx';
+import { inject, observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
+import Pagination from 'rc-pagination';
+import dateFormat from 'dateformat';
+import './categoriesTag.sass';
 
 
 @inject('ArticleStore') @observer
@@ -21,12 +21,12 @@ export default class CategoriesTag extends React.Component {
     constructor(args) {
         super(args);
 
-        this.articleStore = this.props.ArticleStore
+        this.articleStore = this.props.ArticleStore;
     }
 
     componentDidMount() {
 
-        this.getArticleList()
+        this.getArticleList();
     }
 
     getArticleList() {
@@ -35,17 +35,17 @@ export default class CategoriesTag extends React.Component {
         body.size = this.size;
         body.isPublish = true;
         body.tags = this.props.match.params.tag;
-        this.articleStore.postArticleList(body).then(response => {
+        this.articleStore.postArticleList(body).then((response) => {
             if (response) {
-                this.isRender = true
+                this.isRender = true;
             }
-        })
+        });
     }
 
 
     handlePageChange(current) {
         this.page = current;
-        this.getArticleList()
+        this.getArticleList();
     }
 
     render() {
@@ -66,8 +66,7 @@ export default class CategoriesTag extends React.Component {
                                             <li className="zyc-collection-circle-small" key={item.articleId}>
                                                 <span>{dateFormat(item.createTime, 'mm-dd')}</span>
                                                 <Link to={`/detail?articleId=${item.articleId}`}>{item.title}</Link>
-                                            </li>
-                                        )
+                                            </li>)
                                     }
                                 </ul>
                             </section> :
@@ -87,6 +86,6 @@ export default class CategoriesTag extends React.Component {
                             </div> : null
                     }
                 </div> : null
-        )
+        );
     }
 }

@@ -2,13 +2,13 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observable } from 'mobx'
-import { observer, inject } from 'mobx-react'
-import md5 from 'blueimp-md5'
-import { Message } from '../zyc'
-import './login.sass'
-import { Username, Password } from '../public/regular'
+import React from 'react';
+import { observable } from 'mobx';
+import { observer, inject } from 'mobx-react';
+import md5 from 'blueimp-md5';
+import { Message } from '../zyc';
+import './login.sass';
+import { Username, Password } from '../public/regular';
 
 
 @observer
@@ -19,7 +19,7 @@ class Login extends React.Component {
     constructor(args) {
         super(args);
 
-        this.type = this.props.type
+        this.type = this.props.type;
     }
 
     render() {
@@ -35,12 +35,12 @@ class Login extends React.Component {
                         <RegisterForm />
                 }
             </div>
-        )
+        );
     }
 
     handleTab(type) {
 
-        this.type = type
+        this.type = type;
     }
 }
 
@@ -57,11 +57,11 @@ class LoginTab extends React.Component {
                 <span className={type ? 'active' : ''}
                     onClick={this.handleTab.bind(this, 1)}>登录</span>
             </div>
-        )
+        );
     }
 
     handleTab(type) {
-        this.props.onTab(type)
+        this.props.onTab(type);
     }
 
 }
@@ -71,7 +71,7 @@ class LoginForm extends React.Component {
 
     constructor(args) {
         super(args);
-        this.userStore = this.props.UserStore
+        this.userStore = this.props.UserStore;
     }
 
     render() {
@@ -89,7 +89,7 @@ class LoginForm extends React.Component {
                     <span onClick={this.handleLogin.bind(this)}>登录</span>
                 </li>
             </ul>
-        )
+        );
     }
 
     handleLogin() {
@@ -98,18 +98,18 @@ class LoginForm extends React.Component {
 
         if (!username) {
             Message.error('用户名不能为空!');
-            return false
+            return false;
         }
         if (!password) {
             Message.error('密码不能为空!');
-            return false
+            return false;
         }
 
         const body = {};
         body.username = username;
         body.password = md5(password);
 
-        this.userStore.postLogin(body).then(response => {
+        this.userStore.postLogin(body).then((response) => {
             if (response) {
                 localStorage.setItem('expired', +new Date());
                 this.userStore.getUserInfo();
@@ -126,7 +126,7 @@ class RegisterForm extends React.Component {
 
     constructor(args) {
         super(args);
-        this.userStore = this.props.UserStore
+        this.userStore = this.props.UserStore;
     }
 
     render() {
@@ -148,7 +148,7 @@ class RegisterForm extends React.Component {
                     <span onClick={this.handleRegister.bind(this)}>注册</span>
                 </li>
             </ul>
-        )
+        );
     }
 
     handleRegister() {
@@ -159,37 +159,37 @@ class RegisterForm extends React.Component {
 
         if (!Username.test(username)) {
             Message.error('请输入5-16位字符!');
-            return false
+            return false;
         }
 
         if (!Password.test(password)) {
             Message.error('请输入以字母开头的5-16位字符的密码!');
-            return false
+            return false;
         }
 
         if (password !== passwordRe) {
 
             Message.error('两次输入密码不一致!');
 
-            return false
+            return false;
         }
 
         const body = {};
         body.username = username;
         body.password = md5(password);
 
-        this.userStore.postRegister(body).then(response => {
+        this.userStore.postRegister(body).then((response) => {
             if (response) {
-                this.userStore.postLogin(body).then(response1 => {
+                this.userStore.postLogin(body).then((response1) => {
                     if (response1) {
                         localStorage.setItem('expired', +new Date());
-                        this.userStore.getUserInfo()
+                        this.userStore.getUserInfo();
                     }
-                })
+                });
             }
-        })
+        });
         return true;
     }
 }
 
-export default Login
+export default Login;

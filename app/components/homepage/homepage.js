@@ -2,12 +2,12 @@
  * Created by scriptchao on 2017/10/26.
  */
 
-import React from 'react'
-import { observable } from 'mobx'
-import { inject, observer } from 'mobx-react'
-import './homepage.sass'
-import ArticleList from '../common/articleList'
-import { getScrollHeight, getScrollTop, getWindowHeight } from '../public/window'
+import React from 'react';
+import { observable } from 'mobx';
+import { inject, observer } from 'mobx-react';
+import './homepage.sass';
+import ArticleList from '../common/articleList';
+import { getScrollHeight, getScrollTop, getWindowHeight } from '../public/window';
 
 @inject('ArticleStore') @observer
 export default class Homepage extends React.Component {
@@ -23,15 +23,15 @@ export default class Homepage extends React.Component {
     }
 
     componentWillMount() {
-        window.addEventListener('scroll', this.scroll)
+        window.addEventListener('scroll', this.scroll);
     }
 
     componentDidMount() {
-        this.getArticleList()
+        this.getArticleList();
     }
 
     componentWillUnmount() {
-        window.removeEventListener('scroll', this.scroll)
+        window.removeEventListener('scroll', this.scroll);
     }
 
     getArticleList() {
@@ -40,18 +40,18 @@ export default class Homepage extends React.Component {
         body.page = this.page;
         body.size = this.size;
 
-        this.articleStore.postArticleList(body).then(response => {
+        this.articleStore.postArticleList(body).then((response) => {
             if (response) {
-                this.content = this.content.concat(this.articleStore.articleList)
+                this.content = this.content.concat(this.articleStore.articleList);
             }
-        })
+        });
     }
 
     scroll() {
 
         if (getScrollHeight() == getScrollTop() + getWindowHeight()) {
             this.page++;
-            this.getArticleList()
+            this.getArticleList();
         }
     }
 
@@ -62,6 +62,6 @@ export default class Homepage extends React.Component {
                     data={this.content}
                 />
             </div>
-        )
+        );
     }
 }

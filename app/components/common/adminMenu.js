@@ -2,11 +2,11 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observable } from 'mobx'
-import { inject, observer } from 'mobx-react'
-import { NavLink } from 'react-router-dom'
-import './adminMenu.sass'
+import React from 'react';
+import { observable } from 'mobx';
+import { inject, observer } from 'mobx-react';
+import { NavLink } from 'react-router-dom';
+import './adminMenu.sass';
 
 @inject('UserStore') @observer
 export default class AdminMenu extends React.Component {
@@ -80,7 +80,7 @@ export default class AdminMenu extends React.Component {
         return (
             <div className="com-admin-menu">
                 {
-                    menu.map((value) =>
+                    menu.map(value =>
                         <NavLink
                             exact
                             to={value.to}
@@ -90,10 +90,9 @@ export default class AdminMenu extends React.Component {
                         >
                             <i className={`iconfont icon-${value.icon}`}>{null}</i>
                             <span>{value.text}</span>
-                        </NavLink>
-                    )
+                        </NavLink>)
                 }
             </div>
-        )
+        );
     }
 }

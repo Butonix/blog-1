@@ -2,13 +2,13 @@
  * Created by scriptchao on 2017/10/26.
  */
 
-import path from 'path'
-import webpack from 'webpack'
-import merge from 'webpack-merge'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import OpenBrowserPlugin from 'open-browser-webpack-plugin'
-import baseConfig from './webpack.base'
-import config from '../config'
+import path from 'path';
+import webpack from 'webpack';
+import merge from 'webpack-merge';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import OpenBrowserPlugin from 'open-browser-webpack-plugin';
+import baseConfig from './webpack.base';
+import config from '../config';
 
 const rootPath = path.resolve(__dirname, '..');
 const entryPath = path.join(rootPath, 'app');
@@ -72,5 +72,5 @@ const devConfig = {
     ]
 };
 
-export default merge(baseConfig, devConfig)
+export default merge(baseConfig, devConfig);
 

@@ -2,9 +2,9 @@
  * Created by scriptchao on 2017/10/26.
  */
 
-import path from 'path'
-import webpack from 'webpack'
-import ProgressBarPlugin from 'progress-bar-webpack-plugin'
+import path from 'path';
+import webpack from 'webpack';
+import ProgressBarPlugin from 'progress-bar-webpack-plugin';
 
 const baseConfig = {
     entry: {
@@ -60,4 +60,4 @@ const baseConfig = {
     ],
 };
 
-export default baseConfig
+export default baseConfig;

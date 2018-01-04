@@ -6,13 +6,14 @@ const splitLocation = (location) => {
     const data = {};
     const { search } = location;
 
-    search.slice(1).split('&').map(value => {
+    search.slice(1).split('&').map((value) => {
         const [a, b] = value.split('=');
         data[a] = b;
+        return true;
     });
 
-    return data
-}
+    return data;
+};
 
 
-export default splitLocation
+export default splitLocation;

@@ -3,8 +3,8 @@
  */
 
 import React from 'react';
-import { observable } from 'mobx'
-import { observer } from 'mobx-react'
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 
 @observer
 class Bundle extends React.Component {
@@ -12,7 +12,7 @@ class Bundle extends React.Component {
 
     async componentWillMount() {
         const { default: component } = await this.props.load();
-        this.component = component
+        this.component = component;
     }
 
     render() {

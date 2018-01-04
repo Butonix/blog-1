@@ -2,10 +2,10 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observable } from 'mobx'
-import { observer } from 'mobx-react'
-import './footer.sass'
+import React from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import './footer.sass';
 
 
 @observer
@@ -22,6 +22,6 @@ export default class Footer extends React.Component {
                         target="_blank">浙公网安备 33010602008935号</a>
                 </p>
             </footer>
-        )
+        );
     }
 }

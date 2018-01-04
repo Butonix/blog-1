@@ -9,7 +9,7 @@ import { Message, Spin } from '../../components/zyc';
 class VoteStore {
     constructor() {
         this.voteUpdateUrl = '/vote/update';
-        this.voteStatusUrl = '/vote/status'
+        this.voteStatusUrl = '/vote/status';
     }
 
     @action postVoteUpdate(body) {
@@ -19,17 +19,17 @@ class VoteStore {
             method: 'post',
             url: this.voteUpdateUrl,
             body,
-        }).then(response => {
+        }).then((response) => {
             Spin.close();
 
             if (response.result) {
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
 
             Message.error(response.message);
             return false;
 
-        })
+        });
     }
 
     @action postVoteStatus(body) {
@@ -38,14 +38,14 @@ class VoteStore {
             method: 'post',
             url: this.voteStatusUrl,
             body,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
-        })
+        });
     }
 }
 

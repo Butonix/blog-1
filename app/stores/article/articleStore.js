@@ -2,9 +2,9 @@
  * Created by scriptchao on 2017/11/17.
  */
 
-import { observable, action } from 'mobx'
-import xhr from '../xhr'
-import { Message } from '../../components/zyc'
+import { observable, action } from 'mobx';
+import xhr from '../xhr';
+import { Message } from '../../components/zyc';
 
 class ArticleStore {
     @observable articleList = [];
@@ -18,7 +18,7 @@ class ArticleStore {
         this.articleDetailUrl = '/article/detail';
         this.articleUpdateUrl = '/article/update';
         this.articleUpdateReadCountUrl = '/article/update/readCount';
-        this.articleDetailTitleUrl = '/article/detail/title'
+        this.articleDetailTitleUrl = '/article/detail/title';
     }
 
     @action clearStore() {
@@ -33,14 +33,14 @@ class ArticleStore {
             method: 'post',
             url: this.articleDetailTitleUrl,
             body,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
-        })
+        });
     }
 
     @action postArticleUpdateReadCount(body) {
@@ -49,14 +49,14 @@ class ArticleStore {
             method: 'post',
             url: this.articleUpdateReadCountUrl,
             body,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
-        })
+        });
     }
 
     @action postArticleUpdate(body) {
@@ -65,15 +65,15 @@ class ArticleStore {
             method: 'post',
             url: this.articleUpdateUrl,
             body,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
                 Message.success(response.message);
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
-        })
+        });
     }
 
     @action postArticleAdd(body) {
@@ -82,15 +82,15 @@ class ArticleStore {
             method: 'post',
             url: this.articleAddUrl,
             body,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
                 Message.success(response.message);
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
-        })
+        });
     }
 
     @action postArticleList(body) {
@@ -99,16 +99,16 @@ class ArticleStore {
             method: 'post',
             url: this.articleListUrl,
             body,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
                 this.articleList = response.data.list;
                 this.articleCount = response.data.total;
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
-        })
+        });
     }
 
     @action postArticleDelete(body) {
@@ -117,15 +117,15 @@ class ArticleStore {
             method: 'post',
             url: this.articleDeleteUrl,
             body,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
                 Message.success(response.message);
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
-        })
+        });
     }
 
     @action postArticleDetail(body) {
@@ -134,16 +134,16 @@ class ArticleStore {
             method: 'post',
             url: this.articleDetailUrl,
             body,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
                 this.articleDetail = response.data;
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
 
-        })
+        });
     }
 }
 

@@ -2,14 +2,14 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observable } from 'mobx'
-import { observer, inject } from 'mobx-react'
-import { NavLink, Link } from 'react-router-dom'
-import './header.sass'
-import Login from './login'
-import { Dialog, DropDown, Menu } from '../zyc'
-import history from '../../history'
+import React from 'react';
+import { observable } from 'mobx';
+import { observer, inject } from 'mobx-react';
+import { NavLink, Link } from 'react-router-dom';
+import './header.sass';
+import Login from './login';
+import { Dialog, DropDown, Menu } from '../zyc';
+import history from '../../history';
 
 
 @inject('UserStore') @observer
@@ -46,7 +46,7 @@ export default class Header extends React.Component {
             </Menu> :
             <Menu>
                 <Menu.Item onClick={() => {
-                    history.push('/admin')
+                    history.push('/admin');
                 }}>
                     <i className="iconfont icon-guanli">{null}</i>
                     <span>后台管理</span>
@@ -76,7 +76,7 @@ export default class Header extends React.Component {
                         </div>
                         <div className="nav-menu">
                             {
-                                nav.map((value) =>
+                                nav.map(value =>
                                     <NavLink
                                         exact
                                         to={value.to}
@@ -85,8 +85,7 @@ export default class Header extends React.Component {
                                     >
                                         <i className={`iconfont icon-${value.icon}`}>{null}</i>
                                         <span>{value.text}</span>
-                                    </NavLink>
-                                )
+                                    </NavLink>)
                             }
                         </div>
                     </div>
@@ -115,16 +114,16 @@ export default class Header extends React.Component {
                     <Login type={loginType} />
                 </Dialog>
             </header>
-        )
+        );
     }
 
     handleLoginOut() {
-        this.userStore.getLoginOut().then(response => {
+        this.userStore.getLoginOut().then((response) => {
             if (response) {
                 localStorage.clear();
-                this.userStore.getUserInfo()
+                this.userStore.getUserInfo();
             }
-        })
+        });
     }
 
     handleLogin(type) {
@@ -133,6 +132,6 @@ export default class Header extends React.Component {
     }
 
     handleClose() {
-        this.userStore.loginShow = false
+        this.userStore.loginShow = false;
     }
 }

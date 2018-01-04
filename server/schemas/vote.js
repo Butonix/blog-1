@@ -1,7 +1,7 @@
 /**
  * Created by scriptchao on 2017/12/1.
  */
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const voteSchema = new mongoose.Schema(
     {
@@ -16,8 +16,10 @@ const voteSchema = new mongoose.Schema(
             type: Date,
             default: Date.now
         }
-    }, {
+    },
+    {
         timestamps: { createdAt: 'createTime', updatedAt: 'updateTime' }
-    });
+    }
+);
 
-export default voteSchema
+export default voteSchema;

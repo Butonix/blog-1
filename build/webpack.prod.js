@@ -2,14 +2,14 @@
  * Created by scriptchao on 2017/10/26.
  */
 
-import path from 'path'
-import webpack from 'webpack'
-import merge from 'webpack-merge'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import CopyWebpackPlugin from 'copy-webpack-plugin'
-import CleanWebpackPlugin from 'clean-webpack-plugin'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import baseConfig from './webpack.base'
+import path from 'path';
+import webpack from 'webpack';
+import merge from 'webpack-merge';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import CleanWebpackPlugin from 'clean-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import baseConfig from './webpack.base';
 
 
 const rootPath = path.resolve(__dirname, '..');
@@ -88,4 +88,4 @@ const prodConfig = {
     ]
 };
 
-export default merge(baseConfig, prodConfig)
+export default merge(baseConfig, prodConfig);

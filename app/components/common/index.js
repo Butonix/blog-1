@@ -3,14 +3,14 @@
  */
 
 
-import React from 'react'
-import { Bundle } from '../zyc'
+import React from 'react';
+import { Bundle } from '../zyc';
 
-const Header = (props) => <Bundle {...props} load={() => import('./header')} />;
-const Main = (props) => <Bundle {...props} load={() => import('./main')} />;
-const Footer = (props) => <Bundle {...props} load={() => import('./footer')} />;
-const AdminMenu = (props) => <Bundle {...props} load={() => import('./adminMenu')} />;
-const AdminContent = (props) => <Bundle {...props} load={() => import('./adminContent')} />;
+const Header = props => <Bundle {...props} load={() => import('./header')} />;
+const Main = props => <Bundle {...props} load={() => import('./main')} />;
+const Footer = props => <Bundle {...props} load={() => import('./footer')} />;
+const AdminMenu = props => <Bundle {...props} load={() => import('./adminMenu')} />;
+const AdminContent = props => <Bundle {...props} load={() => import('./adminContent')} />;
 
 export {
     Header,
@@ -18,4 +18,4 @@ export {
     Footer,
     AdminMenu,
     AdminContent,
-}
+};

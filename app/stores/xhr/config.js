@@ -11,4 +11,4 @@ const expiredTime = 1000 * 60 * 125;
 export {
     origin,
     expiredTime,
-}
+};

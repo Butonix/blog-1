@@ -2,25 +2,26 @@
  * Created by scriptchao on 2017/10/26.
  */
 
-import React from 'react'
-import { observer } from 'mobx-react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import React from 'react';
+import { observer } from 'mobx-react';
+import PropTypes from 'prop-types'
+import { Route, Switch, Redirect } from 'react-router-dom';
 import {
     Admin,
     AdminManagerArticle,
     AdminManagerTags,
     AdminManagerUser,
     AdminNewArticle,
-} from '../components/admin'
-import { AdminMenu, AdminContent } from '../components/common'
-import './routeAdmin.sass'
+} from '../components/admin';
+import { AdminMenu, AdminContent } from '../components/common';
+import './routeAdmin.sass';
 
 @observer
 export default class RouteAdmin extends React.Component {
 
-    componentDidMount() {
-
-    }
+    static propTypes = {
+        match: PropTypes.object.isRequired,
+    };
 
     render() {
         const { url } = this.props.match;
@@ -47,7 +48,7 @@ export default class RouteAdmin extends React.Component {
                     </Switch>
                 </AdminContent>
             </div>
-        )
+        );
     }
 
 

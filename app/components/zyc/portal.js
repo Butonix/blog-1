@@ -2,11 +2,11 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observable } from 'mobx'
-import { observer } from 'mobx-react'
-import { createPortal } from 'react-dom'
-import './portal.sass'
+import React from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import { createPortal } from 'react-dom';
+import './portal.sass';
 
 @observer
 export default class Portal extends React.Component {
@@ -16,7 +16,7 @@ export default class Portal extends React.Component {
     constructor(args) {
         super(args);
 
-        this.resize = this.resize.bind(this)
+        this.resize = this.resize.bind(this);
     }
 
     componentWillMount() {
@@ -25,7 +25,7 @@ export default class Portal extends React.Component {
         this.node = document.createElement('div');
         document.body.appendChild(this.node);
 
-        this.direction = this.getDirection(this.props.target)
+        this.direction = this.getDirection(this.props.target);
     }
 
     componentDidMount() {
@@ -38,11 +38,14 @@ export default class Portal extends React.Component {
 
     componentWillUnmount() {
         document.body.removeChild(this.node);
-        window.removeEventListener('resize', this.resize)
+        window.removeEventListener('resize', this.resize);
     }
 
     getDirection(value) {
-        let l = 0, t = 0, w = 0, h = 0;
+        let l = 0;
+        let t = 0;
+        let w = 0;
+        let h = 0;
         let target = value;
 
         if (target) {
@@ -53,7 +56,7 @@ export default class Portal extends React.Component {
         while (target) {
             l += target.offsetLeft;
             t += target.offsetTop;
-            target = target.offsetParent
+            target = target.offsetParent;
         }
 
         return {
@@ -61,7 +64,7 @@ export default class Portal extends React.Component {
             top: t,
             width: w,
             height: h,
-        }
+        };
     }
 
 
@@ -75,7 +78,7 @@ export default class Portal extends React.Component {
                 top: fixed ? top + window.pageYOffset + height + 5 : top + height + 5,
                 width,
             }}>{this.props.children}
-        </div>, this.node)
+        </div>, this.node);
 
     }
 }

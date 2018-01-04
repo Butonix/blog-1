@@ -2,11 +2,11 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observable } from 'mobx'
-import { inject, observer } from 'mobx-react'
-import './adminManagerTags.sass'
-import { Button, Input, Tag, Message } from '../zyc'
+import React from 'react';
+import { observable } from 'mobx';
+import { inject, observer } from 'mobx-react';
+import './adminManagerTags.sass';
+import { Button, Input, Tag, Message } from '../zyc';
 
 
 @inject('TagStore') @observer
@@ -22,7 +22,7 @@ export default class AdminManagerTags extends React.Component {
     }
 
     componentDidMount() {
-        this.tagStore.getTagList()
+        this.tagStore.getTagList();
     }
 
     render() {
@@ -36,8 +36,7 @@ export default class AdminManagerTags extends React.Component {
                             key={tag.tagId}
                             className="tag"
                             onClose={this.handleCloseTag.bind(this, tag)}
-                        >{tag.name}</Tag>
-                    )
+                        >{tag.name}</Tag>)
                 }
                 {
                     this.inputShow ?
@@ -58,21 +57,21 @@ export default class AdminManagerTags extends React.Component {
                         </Button>
                 }
             </div>
-        )
+        );
     }
 
     handleCloseTag(tag) {
         const body = {};
         body.name = tag.name;
-        this.tagStore.postTagDelete(body).then(response => {
+        this.tagStore.postTagDelete(body).then((response) => {
             if (response) {
-                this.tagStore.getTagList()
+                this.tagStore.getTagList();
             }
-        })
+        });
     }
 
     handleShowInput() {
-        this.inputShow = true
+        this.inputShow = true;
     }
 
     handleInputChange(e) {
@@ -84,17 +83,17 @@ export default class AdminManagerTags extends React.Component {
         if (!this.inputValue) {
             Message.error('标签名不能为空!');
             this.inputShow = false;
-            return
+            return;
         }
 
         const body = {};
         body.name = this.inputValue;
-        this.tagStore.postTagAdd(body).then(response => {
+        this.tagStore.postTagAdd(body).then((response) => {
             if (response) {
                 this.inputShow = false;
                 this.inputValue = '';
-                this.tagStore.getTagList()
+                this.tagStore.getTagList();
             }
-        })
+        });
     }
 }

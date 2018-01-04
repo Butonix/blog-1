@@ -2,11 +2,11 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observable } from 'mobx'
-import { Link } from 'react-router-dom'
-import { inject, observer } from 'mobx-react'
-import './categories.sass'
+import React from 'react';
+import { observable } from 'mobx';
+import { Link } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
+import './categories.sass';
 
 @inject('TagStore') @observer
 export default class Categories extends React.Component {
@@ -19,11 +19,11 @@ export default class Categories extends React.Component {
     }
 
     componentDidMount() {
-        this.tagStore.getTagList().then(response => {
+        this.tagStore.getTagList().then((response) => {
             if (response) {
-                this.isRender = true
+                this.isRender = true;
             }
-        })
+        });
     }
 
     render() {
@@ -40,11 +40,10 @@ export default class Categories extends React.Component {
                                 <li key={tag.tagId}>
                                     <Link to={`/categories/${tag.name}`} className="zyc-link-hover">{tag.name}</Link>
                                     <span>{`(${tag.count})`}</span>
-                                </li>
-                            )
+                                </li>)
                         }
                     </ul>
                 </div> : null
-        )
+        );
     }
 }

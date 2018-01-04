@@ -2,11 +2,11 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observer } from 'mobx-react'
-import { createPortal } from 'react-dom'
-import './dialog.sass'
-import { Button } from './index'
+import React from 'react';
+import { observer } from 'mobx-react';
+import { createPortal } from 'react-dom';
+import './dialog.sass';
+import { Button } from './index';
 
 @observer
 export default class Dialog extends React.Component {
@@ -28,12 +28,12 @@ export default class Dialog extends React.Component {
     }
 
     handleClose() {
-        this.props.onClose()
+        this.props.onClose();
 
     }
 
     handleOk() {
-        this.props.onOk()
+        this.props.onOk();
     }
 
     render() {
@@ -44,7 +44,7 @@ export default class Dialog extends React.Component {
             footer = [
                 <Button key="sure" onClick={this.handleOk.bind(this)} className="btn">确认</Button>,
                 <Button key="close" onClick={this.handleClose.bind(this)} className="btn">取消</Button>
-            ]
+            ];
         }
 
         if (show) {
@@ -75,10 +75,11 @@ export default class Dialog extends React.Component {
                                     </div> : null
                             }
                         </div>
-                    </div>, this.node)
-            )
+                    </div>, this.node
+                )
+            );
         }
-        return null
+        return null;
 
     }
 }

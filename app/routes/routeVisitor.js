@@ -2,20 +2,22 @@
  * Created by scriptchao on 2017/10/26.
  */
 
-import React from 'react'
-import { observer } from 'mobx-react'
-import { Route, Switch, Redirect } from 'react-router-dom'
-import { Header, Main, Footer } from '../components/common'
-import { Homepage } from '../components/homepage'
-import { Categories, CategoriesTag } from '../components/categories'
-import { Detail } from '../components/detail'
+import React from 'react';
+import { observer } from 'mobx-react';
+import PropTypes from 'prop-types';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { Header, Main, Footer } from '../components/common';
+import { Homepage } from '../components/homepage';
+import { Categories, CategoriesTag } from '../components/categories';
+import { Detail } from '../components/detail';
 
 @observer
 export default class RouteVisitor extends React.Component {
 
-    componentDidMount() {
+    static propTypes = {
+        match: PropTypes.object.isRequired,
+    };
 
-    }
 
     render() {
         const { url } = this.props.match;
@@ -36,8 +38,6 @@ export default class RouteVisitor extends React.Component {
                 </Main>
                 <Route path={url} component={Footer} />
             </div>
-        )
+        );
     }
-
-
 }

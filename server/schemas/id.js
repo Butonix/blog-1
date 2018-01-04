@@ -1,7 +1,7 @@
 /**
  * Created by scriptchao on 2017/11/28.
  */
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const idSchema = new mongoose.Schema({
     _id: String,
@@ -11,4 +11,4 @@ const idSchema = new mongoose.Schema({
     }
 });
 
-export default idSchema
+export default idSchema;

@@ -2,14 +2,14 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observable } from 'mobx'
-import { inject, observer } from 'mobx-react'
-import Pagination from 'rc-pagination'
-import dateFormat from 'dateformat'
-import './adminManagerArticle.sass'
-import { Button } from '../zyc'
-import history from '../../history'
+import React from 'react';
+import { observable } from 'mobx';
+import { inject, observer } from 'mobx-react';
+import Pagination from 'rc-pagination';
+import dateFormat from 'dateformat';
+import './adminManagerArticle.sass';
+import { Button } from '../zyc';
+import history from '../../history';
 
 @inject('ArticleStore') @observer
 export default class AdminManagerArticle extends React.Component {
@@ -18,11 +18,11 @@ export default class AdminManagerArticle extends React.Component {
 
     constructor(args) {
         super(args);
-        this.articleStore = this.props.ArticleStore
+        this.articleStore = this.props.ArticleStore;
     }
 
     componentDidMount() {
-        this.getArticleList()
+        this.getArticleList();
     }
 
     getArticleList() {
@@ -43,22 +43,22 @@ export default class AdminManagerArticle extends React.Component {
     handleDelete(articleId) {
         const body = {};
         body.articleId = articleId;
-        this.articleStore.postArticleDelete(body).then(response => {
+        this.articleStore.postArticleDelete(body).then((response) => {
             if (response) {
-                this.getArticleList()
+                this.getArticleList();
             }
-        })
+        });
     }
 
     handlePublish(articleId, isPublish) {
         const body = {};
         body.articleId = articleId;
         body.isPublish = isPublish;
-        this.articleStore.postArticleUpdate(body).then(response => {
+        this.articleStore.postArticleUpdate(body).then((response) => {
             if (response) {
-                this.getArticleList()
+                this.getArticleList();
             }
-        })
+        });
     }
 
     render() {
@@ -74,8 +74,7 @@ export default class AdminManagerArticle extends React.Component {
                                 key={item.articleId}
                                 onDelete={this.handleDelete.bind(this)}
                                 onPublish={this.handlePublish.bind(this)}
-                            />
-                        )
+                            />)
                     }
                 </section>
                 <div className="zyc-pager">
@@ -87,7 +86,7 @@ export default class AdminManagerArticle extends React.Component {
                     />
                 </div>
             </div>
-        )
+        );
     }
 }
 
@@ -134,29 +133,29 @@ class ArticleCell extends React.Component {
                     <Button
                         className="btn"
                         onClick={() => {
-                            history.push(`/admin/newArticle?articleId=${data.articleId}`)
+                            history.push(`/admin/newArticle?articleId=${data.articleId}`);
                         }}>编辑</Button>
                     <Button
                         className="btn"
                         onClick={() => {
-                            this.props.onDelete(data.articleId)
+                            this.props.onDelete(data.articleId);
                         }}>删除</Button>
                     {
                         data.isPublish ?
                             <Button
                                 className="btn"
                                 onClick={() => {
-                                    this.props.onPublish(data.articleId, false)
+                                    this.props.onPublish(data.articleId, false);
                                 }}>撤回</Button> :
                             <Button
                                 className="btn"
                                 onClick={() => {
-                                    this.props.onPublish(data.articleId, true)
+                                    this.props.onPublish(data.articleId, true);
                                 }}>发布</Button>
                     }
                 </div>
             </div>
 
-        )
+        );
     }
 }

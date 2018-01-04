@@ -2,11 +2,11 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observable } from 'mobx'
-import { observer } from 'mobx-react'
-import Portal from './portal'
-import './dropDown.sass'
+import React from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import Portal from './portal';
+import './dropDown.sass';
 
 
 @observer
@@ -18,13 +18,13 @@ export default class DropDown extends React.Component {
 
     handleEnter() {
         clearTimeout(this.timer);
-        this.show = true
+        this.show = true;
     }
 
     handleLeaver() {
         this.timer = setTimeout(() => {
-            this.show = false
-        }, 100)
+            this.show = false;
+        }, 100);
     }
 
     render() {
@@ -46,6 +46,6 @@ export default class DropDown extends React.Component {
                         </Portal> : null
                 }
             </div>
-        )
+        );
     }
 }

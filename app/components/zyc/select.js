@@ -2,12 +2,12 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import ReactDom from 'react-dom'
-import { observable } from 'mobx'
-import { observer } from 'mobx-react'
-import Portal from './portal'
-import './select.sass'
+import React from 'react';
+import ReactDom from 'react-dom';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import Portal from './portal';
+import './select.sass';
 
 class SelectItem extends React.Component {
 
@@ -16,7 +16,7 @@ class SelectItem extends React.Component {
             <div className="zyc-select-item" type="type">
                 {this.props.children}
             </div>
-        )
+        );
     }
 }
 
@@ -31,26 +31,28 @@ class Select extends React.Component {
     constructor(args) {
         super(args);
 
-        this.mousedown = this.mousedown.bind(this)
+        this.mousedown = this.mousedown.bind(this);
 
     }
 
     componentWillMount() {
 
-        this.createEventListener()
+        this.createEventListener();
     }
 
     createEventListener() {
-        window.addEventListener('mousedown', this.mousedown)
+        window.addEventListener('mousedown', this.mousedown);
     }
 
     componentWillUnmount() {
-        window.removeEventListener('mousedown', this.mousedown)
+        window.removeEventListener('mousedown', this.mousedown);
     }
 
     mousedown(e) {
+        
         if (this.show && !(this.refs.select.contains(e.target) || ReactDom.findDOMNode(this.portal).contains(e.target))) {
-            this.show = false
+
+            this.show = false;
         }
     }
 
@@ -68,23 +70,23 @@ class Select extends React.Component {
     manageTags(tag) {
 
         if (this.props.value.includes(tag)) {
-            this.props.value.splice(this.props.value.indexOf(tag), 1)
+            this.props.value.splice(this.props.value.indexOf(tag), 1);
 
         } else {
-            this.props.value.push(tag)
+            this.props.value.push(tag);
         }
-        this.props.onSelectTags(this.props.value)
+        this.props.onSelectTags(this.props.value);
 
     }
 
     handleDelText(index) {
 
         this.props.value.splice(index, 1);
-        this.props.onSelectTags(this.props.value)
+        this.props.onSelectTags(this.props.value);
     }
 
     showPortal() {
-        this.show = true
+        this.show = true;
     }
 
     render() {
@@ -112,7 +114,7 @@ class Select extends React.Component {
                 {
                     this.show ?
                         <Portal
-                            ref={node => { this.portal = node }}
+                            ref={(node) => { this.portal = node; }}
                             target={this.refs.select}
                         >
                             <div className="zyc-select-portal">
@@ -121,9 +123,9 @@ class Select extends React.Component {
                         </Portal> : null
                 }
             </div>
-        )
+        );
     }
 }
 
 
-export default Select
+export default Select;

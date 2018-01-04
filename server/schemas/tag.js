@@ -2,7 +2,7 @@
  * Created by scriptchao on 2017/11/17.
  */
 
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const tagSchema = new mongoose.Schema(
     {
@@ -23,10 +23,11 @@ const tagSchema = new mongoose.Schema(
             type: Date,
             default: Date.now
         }
-    }, {
+    },
+    {
         // timestamps: true
         timestamps: { createdAt: 'createTime', updatedAt: 'updateTime' }
     }
 );
 
-export default tagSchema
+export default tagSchema;

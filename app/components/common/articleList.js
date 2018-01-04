@@ -2,12 +2,12 @@
  * Created by scriptchao on 2017/11/27.
  */
 
-import React from 'react'
-import { observable } from 'mobx'
-import { inject, observer } from 'mobx-react'
-import { Link } from 'react-router-dom'
-import dateFormat from 'dateformat'
-import './articleList.sass'
+import React from 'react';
+import { observable } from 'mobx';
+import { inject, observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
+import dateFormat from 'dateformat';
+import './articleList.sass';
 
 class ArticleList extends React.Component {
     render() {
@@ -19,11 +19,10 @@ class ArticleList extends React.Component {
                         <ArticleCell
                             data={item}
                             key={item.articleId}
-                        />
-                    )
+                        />)
                 }
             </div>
-        )
+        );
     }
 }
 
@@ -51,8 +50,7 @@ class ArticleCell extends React.Component {
                         <span className="tip">分类于</span>
                         {
                             data.tags && data.tags.map((tag, index) =>
-                                <Link to={`/categories/${tag}`} key={tag}>{tag}</Link>
-                            )
+                                <Link to={`/categories/${tag}`} key={tag}>{tag}</Link>)
                         }
                     </span>
                     <span>
@@ -68,9 +66,9 @@ class ArticleCell extends React.Component {
                         </div> : null
                 }
             </div>
-        )
+        );
     }
 }
 
-export { ArticleCell }
-export default ArticleList
+export { ArticleCell };
+export default ArticleList;

@@ -28,15 +28,15 @@ class TagStore {
             method: 'post',
             url: this.tagDeleteUrl,
             body,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
                 Message.success(response.message);
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
-        })
+        });
     }
 
     @action postTagAdd(body) {
@@ -45,15 +45,15 @@ class TagStore {
             method: 'post',
             url: this.tagAddUrl,
             body,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
                 Message.success(response.message);
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
-        })
+        });
     }
 
     @action getTagList() {
@@ -61,17 +61,17 @@ class TagStore {
         return xhr({
             method: 'get',
             url: this.tagListUrl,
-        }).then(response => {
+        }).then((response) => {
             if (response.result) {
                 this.tagList = response.data.list;
                 this.tagCount = response.data.total;
-                return Promise.resolve(response)
+                return Promise.resolve(response);
             }
             Message.error(response.message);
             return false;
 
 
-        })
+        });
     }
 
 }

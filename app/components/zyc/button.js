@@ -2,9 +2,9 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observer } from 'mobx-react'
-import './button.sass'
+import React from 'react';
+import { observer } from 'mobx-react';
+import './button.sass';
 
 @observer
 export default class Button extends React.Component {
@@ -16,7 +16,7 @@ export default class Button extends React.Component {
 
 
     handleClick() {
-        this.props.onClick && this.props.onClick()
+        this.props.onClick && this.props.onClick();
     }
 
 
@@ -29,6 +29,6 @@ export default class Button extends React.Component {
             >
                 {this.props.children}
             </button>
-        )
+        );
     }
 }

@@ -2,7 +2,7 @@
  * Created by scriptchao on 2017/11/3.
  */
 
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
     {
@@ -28,9 +28,11 @@ const userSchema = new mongoose.Schema(
             type: Date,
             default: Date.now
         }
-    }, {
+    },
+    {
         timestamps: { createdAt: 'createTime', updatedAt: 'updateTime' }
-    });
+    }
+);
 
-export default userSchema
+export default userSchema;
 

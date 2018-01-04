@@ -2,15 +2,15 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observable, toJS } from 'mobx'
-import { inject, observer } from 'mobx-react'
-import remark from 'remark'
-import reactRenderer from 'remark-react'
-import './adminNewArticle.sass'
-import { Button, Select, Input, Dialog, Message } from '../zyc'
-import splitLocation from '../public/location'
-import history from '../../history'
+import React from 'react';
+import { observable, toJS } from 'mobx';
+import { inject, observer } from 'mobx-react';
+import remark from 'remark';
+import reactRenderer from 'remark-react';
+import './adminNewArticle.sass';
+import { Button, Select, Input, Dialog, Message } from '../zyc';
+import splitLocation from '../public/location';
+import history from '../../history';
 
 
 @inject('TagStore', 'ArticleStore') @observer
@@ -29,10 +29,10 @@ export default class AdminNewArticle extends React.Component {
     }
 
     componentWillMount() {
-        const { location } = window
+        const { location } = window;
         const { articleId } = splitLocation(location);
 
-        this.articleId = articleId
+        this.articleId = articleId;
     }
 
     componentDidMount() {
@@ -41,13 +41,13 @@ export default class AdminNewArticle extends React.Component {
         if (this.articleId) {
             const body = {};
             body.articleId = this.articleId;
-            this.articleStore.postArticleDetail(body).then(response => {
+            this.articleStore.postArticleDetail(body).then((response) => {
                 if (response) {
                     this.title = response.data.title;
                     this.content = response.data.content;
                     this.tags = response.data.tags;
                 }
-            })
+            });
         }
     }
 
@@ -83,8 +83,7 @@ export default class AdminNewArticle extends React.Component {
                                 <Select.Item
                                     key={tag.tagId}
                                 >{tag.name}
-                                </Select.Item>
-                            )
+                                </Select.Item>)
                         }
                     </Select>
                     <div className="button">
@@ -112,7 +111,7 @@ export default class AdminNewArticle extends React.Component {
                     </div>
                 </Dialog>
             </div>
-        )
+        );
     }
 
     handleInputChange(e) {
@@ -120,7 +119,7 @@ export default class AdminNewArticle extends React.Component {
     }
 
     handleTextAreaChange(e) {
-        this.content = e.target.value
+        this.content = e.target.value;
 
     }
 
@@ -132,23 +131,23 @@ export default class AdminNewArticle extends React.Component {
     handleArticle() {
         if (!this.title) {
             Message.error('请输入文章标题!');
-            return
+            return;
         }
 
         if (!this.content) {
             Message.error('请输入文章内容!');
-            return
+            return;
         }
 
         if (!this.tags.length) {
             Message.error('请选择分类!');
-            return
+            return;
         }
 
         if (this.articleId) {
-            this.updateArticle()
+            this.updateArticle();
         } else {
-            this.saveArticle()
+            this.saveArticle();
         }
     }
 
@@ -159,12 +158,12 @@ export default class AdminNewArticle extends React.Component {
         body.tags = toJS(this.tags);
         body.articleId = this.articleId;
 
-        this.articleStore.postArticleUpdate(body).then(response => {
+        this.articleStore.postArticleUpdate(body).then((response) => {
             if (response) {
-                history.push('/admin/managerArticle')
+                history.push('/admin/managerArticle');
 
             }
-        })
+        });
     }
 
     saveArticle() {
@@ -174,20 +173,20 @@ export default class AdminNewArticle extends React.Component {
         body.tags = toJS(this.tags);
         body.isPublish = false;
 
-        this.articleStore.postArticleAdd(body).then(response => {
+        this.articleStore.postArticleAdd(body).then((response) => {
             if (response) {
-                history.push('/admin/managerArticle')
+                history.push('/admin/managerArticle');
             }
-        })
+        });
     }
 
     handlePreView() {
 
-        this.viewShow = true
+        this.viewShow = true;
     }
 
     handleViewClose() {
 
-        this.viewShow = false
+        this.viewShow = false;
     }
 }

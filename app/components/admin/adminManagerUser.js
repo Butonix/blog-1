@@ -2,13 +2,13 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observable, toJS } from 'mobx'
-import { inject, observer } from 'mobx-react'
-import Table from 'rc-table'
-import Pagination from 'rc-pagination'
-import './adminManagerUser.sass'
-import { Dialog, Input, Button } from '../zyc'
+import React from 'react';
+import { observable, toJS } from 'mobx';
+import { inject, observer } from 'mobx-react';
+import Table from 'rc-table';
+import Pagination from 'rc-pagination';
+import './adminManagerUser.sass';
+import { Dialog, Input, Button } from '../zyc';
 
 @inject('UserStore') @observer
 export default class AdminManagerUser extends React.Component {
@@ -31,60 +31,60 @@ export default class AdminManagerUser extends React.Component {
         const body = {};
         body.page = this.page;
         body.size = this.size;
-        this.userStore.postUserList(body)
+        this.userStore.postUserList(body);
     }
 
     handlePageChange(current) {
         this.page = current;
-        this.getUserList()
+        this.getUserList();
     }
 
     handleUse(userId, isUsed) {
         const body = {};
         body.userId = userId;
         body.isUsed = isUsed;
-        this.userStore.postUserUpdate(body).then(response => {
+        this.userStore.postUserUpdate(body).then((response) => {
             if (response) {
-                this.getUserList()
+                this.getUserList();
             }
-        })
+        });
     }
 
     handleDelete(userId) {
         const body = {};
         body.userId = userId;
-        this.userStore.postUserDelete(body).then(response => {
+        this.userStore.postUserDelete(body).then((response) => {
             if (response) {
-                this.getUserList()
+                this.getUserList();
             }
-        })
+        });
     }
 
     handleModify(userType, userId) {
         this.userType = userType;
         this.userId = userId;
-        this.authorityShow = true
+        this.authorityShow = true;
 
     }
 
     handleChangeType(userType) {
-        this.userType = userType
+        this.userType = userType;
     }
 
     handleClose() {
-        this.authorityShow = false
+        this.authorityShow = false;
     }
 
     handleOk() {
         const body = {};
         body.userId = this.userId;
         body.userType = this.userType;
-        this.userStore.postUserUpdate(body).then(response => {
+        this.userStore.postUserUpdate(body).then((response) => {
             if (response) {
                 this.authorityShow = false;
-                this.getUserList()
+                this.getUserList();
             }
-        })
+        });
     }
 
     render() {
@@ -106,7 +106,10 @@ export default class AdminManagerUser extends React.Component {
             title: '身份',
             dataIndex: 'userType',
             width: '15%',
-            render: (value, row) => value == 1 ? '管理员' : value == 2 ? '用户' : value == 3 ? '游客' : null
+            render: (value, row) => {
+                const arr = ['未知', '管理员', '用户', '游客'];
+                return arr[value];
+            }
         }, {
             title: '操作',
             dataIndex: 'operation',
@@ -127,9 +130,10 @@ export default class AdminManagerUser extends React.Component {
             title: '权限',
             dataIndex: 'authority',
             width: '10%',
-            render: (value, row) => row.userType !== 1 ?
-                <span className="zyc-text-hover"
-                    onClick={this.handleModify.bind(this, row.userType, row.userId)}>修改</span> : null
+            render: (value, row) => (
+                row.userType !== 1 ?
+                    <span className="zyc-text-hover" onClick={this.handleModify.bind(this, row.userType, row.userId)}>修改</span> : null
+            )
         }];
 
         return (
@@ -173,6 +177,6 @@ export default class AdminManagerUser extends React.Component {
                     </div>
                 </Dialog>
             </div>
-        )
+        );
     }
 }

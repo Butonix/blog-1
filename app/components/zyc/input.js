@@ -2,9 +2,9 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react'
-import { observer } from 'mobx-react'
-import './input.sass'
+import React from 'react';
+import { observer } from 'mobx-react';
+import './input.sass';
 
 @observer
 export default class Input extends React.Component {
@@ -14,11 +14,11 @@ export default class Input extends React.Component {
     };
 
     handleChange(e) {
-        this.props.onChange && this.props.onChange(e)
+        this.props.onChange && this.props.onChange(e);
     }
 
     handleBlur() {
-        this.props.onBlur && this.props.onBlur()
+        this.props.onBlur && this.props.onBlur();
     }
 
 
@@ -35,6 +35,6 @@ export default class Input extends React.Component {
                 onChange={this.handleChange.bind(this)}
                 onBlur={this.handleBlur.bind(this)}
             />
-        )
+        );
     }
 }

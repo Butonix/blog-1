@@ -4,7 +4,9 @@
 
 // 滚动条在Y轴上的滚动距离
 export function getScrollTop() {
-    let scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+    let scrollTop = 0;
+    let bodyScrollTop = 0;
+    let documentScrollTop = 0;
     if (document.body) {
         bodyScrollTop = document.body.scrollTop;
     }
@@ -16,7 +18,9 @@ export function getScrollTop() {
 }
 // 文档的总高度
 export function getScrollHeight() {
-    let scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+    let scrollHeight = 0;
+    let bodyScrollHeight = 0;
+    let documentScrollHeight = 0;
     if (document.body) {
         bodyScrollHeight = document.body.scrollHeight;
     }
