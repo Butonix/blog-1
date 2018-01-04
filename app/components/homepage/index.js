@@ -3,9 +3,9 @@
  */
 
 import React from 'react'
-import {Bundle} from '../zyc'
+import { Bundle } from '../zyc'
 
-const Homepage = (props) => <Bundle {...props} load={() => import('./homepage')}/>;
+const Homepage = (props) => <Bundle {...props} load={() => import('./homepage')} />;
 
 export {
     Homepage

@@ -3,9 +3,9 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
-import {Link} from 'react-router-dom'
-import {inject, observer} from 'mobx-react'
+import { observable } from 'mobx'
+import { Link } from 'react-router-dom'
+import { inject, observer } from 'mobx-react'
 import './categories.sass'
 
 @inject('TagStore') @observer
@@ -27,7 +27,7 @@ export default class Categories extends React.Component {
     }
 
     render() {
-        let {tagList, tagCount} = this.tagStore;
+        const { tagList, tagCount } = this.tagStore;
         return (
             this.isRender ?
                 <div className="categories">

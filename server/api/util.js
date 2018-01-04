@@ -9,29 +9,34 @@ import Vote from '../models/vote'
 
 export function getCount() {
 
-    return Tag.find({}).then(data => {
-        if (data) {
-            return Promise.all(
-                data.map((item, index) => {
-                    return Article.count({tags: {$all: item.name}, isPublish: true}).then(count => {
-                        return Tag.update({name: item.name}, {count: count}).then(data => {
-                            if (data.n) {
-                                return data.n
-                            }
-                        })
-                    })
-                }))
-        }
-    })
+    return Tag.find({})
+        .then(data => {
+            if (data) {
+                return Promise.all(
+                    data.map((item, index) =>
+                        Article.count({ tags: { $all: item.name }, isPublish: true })
+                            .then(count =>
+                                Tag.update({ name: item.name }, { count })
+                                    .then(data1 => {
+                                        if (data1.n) {
+                                            return data1.n
+                                        }
+                                    })
+                            )
+                    ))
+            }
+        })
 }
 
 export function getVoteCount(articleId) {
 
-    return Vote.count({articleId: articleId, isVote: true}).then(count => {
-        return Article.update({articleId: articleId}, {voteCount: count}).then(data => {
-            if (data.n) {
-                return data
-            }
-        })
-    })
+    return Vote.count({ articleId, isVote: true })
+        .then(count =>
+            Article.update({ articleId }, { voteCount: count })
+                .then(data => {
+                    if (data.n) {
+                        return data
+                    }
+                })
+        )
 }

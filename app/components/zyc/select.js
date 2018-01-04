@@ -4,16 +4,12 @@
 
 import React from 'react'
 import ReactDom from 'react-dom'
-import {observable} from 'mobx'
-import {observer} from 'mobx-react'
+import { observable } from 'mobx'
+import { observer } from 'mobx-react'
 import Portal from './portal'
 import './select.sass'
 
 class SelectItem extends React.Component {
-    constructor(args) {
-        super(args);
-
-    }
 
     render() {
         return (
@@ -61,7 +57,7 @@ class Select extends React.Component {
     handleClick(e) {
         if (e.target.attributes.type) {
 
-            let tag = e.target.innerText;
+            const tag = e.target.innerText;
             this.manageTags(tag);
 
         } else {
@@ -91,12 +87,8 @@ class Select extends React.Component {
         this.show = true
     }
 
-    savePortal(node) {
-        this.portal = node;
-    }
-
     render() {
-        let {className, value = []} = this.props;
+        const { className, value = [] } = this.props;
 
         return (
             <div
@@ -105,12 +97,14 @@ class Select extends React.Component {
                 ref="select"
             >
                 {
-                    value.length ? value.map((value, index) =>
-                        <div className="zyc-select-content" key={value}>
-                            <span>{value}</span>
-                            <i className="iconfont icon-guanbi"
-                               onClick={this.handleDelText.bind(this, index)}>{null}</i>
-                        </div>) :
+                    value.length ?
+                        value.map((item, index) =>
+                            <div className="zyc-select-content" key={item}>
+                                <span>{item}</span>
+                                <i className="iconfont icon-guanbi"
+                                    onClick={this.handleDelText.bind(this, index)}>{null}
+                                </i>
+                            </div>) :
                         <div className="zyc-select-placeholder">
                             请选择分类
                         </div>
@@ -118,7 +112,7 @@ class Select extends React.Component {
                 {
                     this.show ?
                         <Portal
-                            ref={this.savePortal.bind(this)}
+                            ref={node => { this.portal = node }}
                             target={this.refs.select}
                         >
                             <div className="zyc-select-portal">

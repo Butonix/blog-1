@@ -3,11 +3,11 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
-import {inject, observer} from 'mobx-react'
+import { observable } from 'mobx'
+import { inject, observer } from 'mobx-react'
 import './homepage.sass'
 import ArticleList from '../common/articleList'
-import {getScrollHeight, getScrollTop, getWindowHeight} from '../public/window'
+import { getScrollHeight, getScrollTop, getWindowHeight } from '../public/window'
 
 @inject('ArticleStore') @observer
 export default class Homepage extends React.Component {
@@ -35,7 +35,7 @@ export default class Homepage extends React.Component {
     }
 
     getArticleList() {
-        let body = {};
+        const body = {};
         body.isPublish = true;
         body.page = this.page;
         body.size = this.size;

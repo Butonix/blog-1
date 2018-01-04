@@ -3,16 +3,11 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
-import {observer} from 'mobx-react'
+import { observer } from 'mobx-react'
 import './input.sass'
 
+@observer
 export default class Input extends React.Component {
-
-    constructor(args) {
-        super(args);
-
-    }
 
     static defaultProps = {
         type: 'text'
@@ -28,7 +23,7 @@ export default class Input extends React.Component {
 
 
     render() {
-        let {type, style, placeholder, className, value} = this.props;
+        const { type, style, placeholder, className, value } = this.props;
 
         return (
             <input

@@ -3,13 +3,13 @@
  */
 
 import React from 'react'
-import {observable, toJS} from 'mobx'
-import {inject, observer} from 'mobx-react'
+import { observable, toJS } from 'mobx'
+import { inject, observer } from 'mobx-react'
 import remark from 'remark'
 import reactRenderer from 'remark-react'
 import './adminNewArticle.sass'
-import {Button, Select, Input, Dialog, Message} from '../zyc'
-import {splitLocation} from '../public/location'
+import { Button, Select, Input, Dialog, Message } from '../zyc'
+import splitLocation from '../public/location'
 import history from '../../history'
 
 
@@ -29,7 +29,8 @@ export default class AdminNewArticle extends React.Component {
     }
 
     componentWillMount() {
-        let {articleId} = splitLocation(location);
+        const { location } = window
+        const { articleId } = splitLocation(location);
 
         this.articleId = articleId
     }
@@ -38,7 +39,7 @@ export default class AdminNewArticle extends React.Component {
         this.tagStore.getTagList();
 
         if (this.articleId) {
-            let body = {};
+            const body = {};
             body.articleId = this.articleId;
             this.articleStore.postArticleDetail(body).then(response => {
                 if (response) {
@@ -52,7 +53,7 @@ export default class AdminNewArticle extends React.Component {
 
 
     render() {
-        let {tagList} = this.tagStore;
+        const { tagList } = this.tagStore;
         return (
 
             <div className="admin-newArticle">
@@ -88,12 +89,12 @@ export default class AdminNewArticle extends React.Component {
                     </Select>
                     <div className="button">
                         <Button onClick={this.handleArticle.bind(this)}
-                                className="btn"
-                                type="primary"
+                            className="btn"
+                            type="primary"
                         >{this.articleId ? '更新' : '保存'}</Button>
                         <Button onClick={this.handlePreView.bind(this)}
-                                className="btn"
-                                type="primary"
+                            className="btn"
+                            type="primary"
                         >预览</Button>
                     </div>
                 </section>
@@ -152,7 +153,7 @@ export default class AdminNewArticle extends React.Component {
     }
 
     updateArticle() {
-        let body = {};
+        const body = {};
         body.title = this.title;
         body.content = this.content;
         body.tags = toJS(this.tags);
@@ -167,7 +168,7 @@ export default class AdminNewArticle extends React.Component {
     }
 
     saveArticle() {
-        let body = {};
+        const body = {};
         body.title = this.title;
         body.content = this.content;
         body.tags = toJS(this.tags);
@@ -190,5 +191,3 @@ export default class AdminNewArticle extends React.Component {
         this.viewShow = false
     }
 }
-
-

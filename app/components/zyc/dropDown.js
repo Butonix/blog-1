@@ -3,9 +3,8 @@
  */
 
 import React from 'react'
-import ReactDom from 'react-dom'
-import {observable} from 'mobx'
-import {observer} from 'mobx-react'
+import { observable } from 'mobx'
+import { observer } from 'mobx-react'
 import Portal from './portal'
 import './dropDown.sass'
 
@@ -16,9 +15,6 @@ export default class DropDown extends React.Component {
     @observable show;
     @observable timer;
 
-    constructor(args) {
-        super(args);
-    }
 
     handleEnter() {
         clearTimeout(this.timer);
@@ -33,16 +29,18 @@ export default class DropDown extends React.Component {
 
     render() {
         return (
-            <div className="zyc-dropDown" ref="dropDown"
-                 onMouseEnter={this.handleEnter.bind(this)}
-                 onMouseLeave={this.handleLeaver.bind(this)}
+            <div
+                className="zyc-dropDown"
+                ref="dropDown"
+                onMouseEnter={this.handleEnter.bind(this)}
+                onMouseLeave={this.handleLeaver.bind(this)}
             >
                 {this.props.children}
                 {
                     this.show ?
                         <Portal
                             target={this.refs.dropDown}
-                            fixed={true}
+                            fixed
                         >
                             {this.props.overlay}
                         </Portal> : null

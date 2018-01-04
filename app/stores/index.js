@@ -11,5 +11,5 @@ export default {
     UserStore,
     TagStore,
     ArticleStore,
-    VoteStore
+    VoteStore,
 }

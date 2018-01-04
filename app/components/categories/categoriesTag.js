@@ -3,9 +3,9 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
-import {inject, observer} from 'mobx-react'
-import {Link} from 'react-router-dom'
+import { observable } from 'mobx'
+import { inject, observer } from 'mobx-react'
+import { Link } from 'react-router-dom'
 import Pagination from 'rc-pagination'
 import dateFormat from 'dateformat'
 import './categoriesTag.sass'
@@ -30,7 +30,7 @@ export default class CategoriesTag extends React.Component {
     }
 
     getArticleList() {
-        let body = {};
+        const body = {};
         body.page = this.page;
         body.size = this.size;
         body.isPublish = true;
@@ -49,7 +49,7 @@ export default class CategoriesTag extends React.Component {
     }
 
     render() {
-        let {articleList, articleCount} = this.articleStore;
+        const { articleList, articleCount } = this.articleStore;
         return (
             this.isRender ?
                 <div className="categories-tag">

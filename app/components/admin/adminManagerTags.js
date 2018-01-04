@@ -3,10 +3,10 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
-import {inject, observer} from 'mobx-react'
+import { observable } from 'mobx'
+import { inject, observer } from 'mobx-react'
 import './adminManagerTags.sass'
-import {Button, Input, Tag, Message} from '../zyc'
+import { Button, Input, Tag, Message } from '../zyc'
 
 
 @inject('TagStore') @observer
@@ -26,7 +26,7 @@ export default class AdminManagerTags extends React.Component {
     }
 
     render() {
-        let {tagList} = this.tagStore;
+        const { tagList } = this.tagStore;
         return (
             <div className="admin-managerTags">
                 <h2>标签管理</h2>
@@ -43,9 +43,9 @@ export default class AdminManagerTags extends React.Component {
                     this.inputShow ?
                         <Input
                             className="ipt"
-                            style={{width: 120}}
+                            style={{ width: 120 }}
                             placeholder="请输入新标签"
-                            value={this.inputValue} //给默认值 不然会有警告
+                            value={this.inputValue} // 给默认值 不然会有警告
                             onChange={this.handleInputChange.bind(this)}
                             onBlur={this.handleInputConfirm.bind(this)}
                         /> :
@@ -62,7 +62,7 @@ export default class AdminManagerTags extends React.Component {
     }
 
     handleCloseTag(tag) {
-        let body = {};
+        const body = {};
         body.name = tag.name;
         this.tagStore.postTagDelete(body).then(response => {
             if (response) {
@@ -87,7 +87,7 @@ export default class AdminManagerTags extends React.Component {
             return
         }
 
-        let body = {};
+        const body = {};
         body.name = this.inputValue;
         this.tagStore.postTagAdd(body).then(response => {
             if (response) {

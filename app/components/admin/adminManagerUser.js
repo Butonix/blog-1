@@ -3,12 +3,12 @@
  */
 
 import React from 'react'
-import {observable, toJS} from 'mobx'
-import {inject, observer} from 'mobx-react'
+import { observable, toJS } from 'mobx'
+import { inject, observer } from 'mobx-react'
 import Table from 'rc-table'
 import Pagination from 'rc-pagination'
 import './adminManagerUser.sass'
-import {Dialog, Input, Button} from '../zyc'
+import { Dialog, Input, Button } from '../zyc'
 
 @inject('UserStore') @observer
 export default class AdminManagerUser extends React.Component {
@@ -28,7 +28,7 @@ export default class AdminManagerUser extends React.Component {
     }
 
     getUserList() {
-        let body = {};
+        const body = {};
         body.page = this.page;
         body.size = this.size;
         this.userStore.postUserList(body)
@@ -40,7 +40,7 @@ export default class AdminManagerUser extends React.Component {
     }
 
     handleUse(userId, isUsed) {
-        let body = {};
+        const body = {};
         body.userId = userId;
         body.isUsed = isUsed;
         this.userStore.postUserUpdate(body).then(response => {
@@ -51,7 +51,7 @@ export default class AdminManagerUser extends React.Component {
     }
 
     handleDelete(userId) {
-        let body = {};
+        const body = {};
         body.userId = userId;
         this.userStore.postUserDelete(body).then(response => {
             if (response) {
@@ -76,7 +76,7 @@ export default class AdminManagerUser extends React.Component {
     }
 
     handleOk() {
-        let body = {};
+        const body = {};
         body.userId = this.userId;
         body.userType = this.userType;
         this.userStore.postUserUpdate(body).then(response => {
@@ -88,7 +88,7 @@ export default class AdminManagerUser extends React.Component {
     }
 
     render() {
-        let {userList, userCount} = this.userStore;
+        const { userList, userCount } = this.userStore;
 
         const columns = [{
             title: '姓名',
@@ -116,12 +116,12 @@ export default class AdminManagerUser extends React.Component {
                     {
                         row.isUsed ?
                             <span className="zyc-text-green zyc-text-hover zyc-text-space"
-                                  onClick={this.handleUse.bind(this, row.userId, false)}>启用中</span> :
+                                onClick={this.handleUse.bind(this, row.userId, false)}>启用中</span> :
                             <span className="zyc-text-red zyc-text-hover zyc-text-space"
-                                  onClick={this.handleUse.bind(this, row.userId, true)}>禁用中</span>
+                                onClick={this.handleUse.bind(this, row.userId, true)}>禁用中</span>
                     }
                     <span className="zyc-text-hover zyc-text-space"
-                          onClick={this.handleDelete.bind(this, row.userId)}>删除</span>
+                        onClick={this.handleDelete.bind(this, row.userId)}>删除</span>
                 </div>
         }, {
             title: '权限',
@@ -129,7 +129,7 @@ export default class AdminManagerUser extends React.Component {
             width: '10%',
             render: (value, row) => row.userType !== 1 ?
                 <span className="zyc-text-hover"
-                      onClick={this.handleModify.bind(this, row.userType, row.userId)}>修改</span> : null
+                    onClick={this.handleModify.bind(this, row.userType, row.userId)}>修改</span> : null
         }];
 
         return (
@@ -158,11 +158,17 @@ export default class AdminManagerUser extends React.Component {
                     onClose={this.handleClose.bind(this)}
                 >
                     <div className="dialog-authority">
-                        <input type="radio" name="type" checked={this.userType == 2}
-                               onChange={this.handleChangeType.bind(this, 2)}/>
+                        <input
+                            type="radio"
+                            name="type"
+                            checked={this.userType == 2}
+                            onChange={this.handleChangeType.bind(this, 2)} />
                         <label className="user">用户</label>
-                        <input type="radio" name="type" checked={this.userType == 3}
-                               onChange={this.handleChangeType.bind(this, 3)}/>
+                        <input
+                            type="radio"
+                            name="type"
+                            checked={this.userType == 3}
+                            onChange={this.handleChangeType.bind(this, 3)} />
                         <label>游客</label>
                     </div>
                 </Dialog>

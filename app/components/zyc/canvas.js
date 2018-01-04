@@ -1,19 +1,16 @@
 /**
  * Created by scriptchao on 2017/10/30.
  */
-
+/* eslint-disable */
 import React from 'react'
-import {observable} from 'mobx'
-import {observer} from 'mobx-react'
-import {createPortal} from 'react-dom'
+import { observable } from 'mobx'
+import { observer } from 'mobx-react'
+import { createPortal } from 'react-dom'
 import './canvas.sass'
 
+@observer
 export default class Canvas extends React.Component {
 
-    constructor(...args) {
-        super(...args);
-
-    }
 
     componentWillMount() {
         this.node = document.createElement('div');
@@ -29,7 +26,7 @@ export default class Canvas extends React.Component {
 
 
         let dots = [];
-        let mouseArea = {x: null, y: null, max: 20000};
+        let mouseArea = { x: null, y: null, max: 20000 };
 
         for (let i = 0; i < 60; i++) {
             let x = cw * Math.random();
@@ -126,7 +123,7 @@ export default class Canvas extends React.Component {
     render() {
 
         return (
-            createPortal(<canvas id="canvas" className="com-canvas">{null}</canvas>,this.node)
+            createPortal(<canvas id="canvas" className="com-canvas">{null}</canvas>, this.node)
 
         )
     }

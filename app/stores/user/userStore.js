@@ -1,9 +1,9 @@
 /**
  * Created by scriptchao on 2017/11/2.
  */
-import {observable, action} from 'mobx'
-import xhr from '../xhr'
-import {Message} from '../../components/zyc'
+import { observable, action } from 'mobx';
+import xhr from '../xhr';
+import { Message } from '../../components/zyc';
 
 class UserStore {
 
@@ -33,14 +33,15 @@ class UserStore {
         return xhr({
             method: 'post',
             url: this.userDeleteUrl,
-            body: body
+            body,
         }).then(response => {
             if (response.result) {
                 Message.success(response.message);
                 return Promise.resolve(response)
-            } else {
-                Message.error(response.message);
             }
+            Message.error(response.message);
+            return false;
+
         })
     }
 
@@ -49,14 +50,15 @@ class UserStore {
         return xhr({
             method: 'post',
             url: this.userUpdateUrl,
-            body: body
+            body,
         }).then(response => {
             if (response.result) {
                 Message.success(response.message);
                 return Promise.resolve(response)
-            } else {
-                Message.error(response.message);
             }
+            Message.error(response.message);
+            return false;
+
         })
     }
 
@@ -65,15 +67,16 @@ class UserStore {
         return xhr({
             method: 'post',
             url: this.userListUrl,
-            body: body
+            body,
         }).then(response => {
             if (response.result) {
                 this.userList = response.data.list;
                 this.userCount = response.data.total;
                 return Promise.resolve(response)
-            } else {
-                Message.error(response.message);
             }
+            Message.error(response.message);
+            return false;
+
         })
     }
 
@@ -85,9 +88,10 @@ class UserStore {
             if (response.result) {
                 Message.success(response.message);
                 return Promise.resolve(response)
-            } else {
-                Message.error(response.message);
             }
+            Message.error(response.message);
+            return false;
+
         })
 
 
@@ -98,14 +102,15 @@ class UserStore {
         return xhr({
             method: 'post',
             url: this.registerUrl,
-            body: body
+            body,
         }).then(response => {
             if (response.result) {
                 Message.success(response.message);
                 return Promise.resolve(response)
-            } else {
-                Message.error(response.message);
             }
+            Message.error(response.message);
+            return false;
+
         })
     }
 
@@ -114,15 +119,16 @@ class UserStore {
         return xhr({
             method: 'post',
             url: this.loginUrl,
-            body: body
+            body,
         }).then(response => {
             if (response.result) {
                 this.loginShow = false;
                 Message.success(response.message);
                 return Promise.resolve(response)
-            } else {
-                Message.error(response.message);
             }
+            Message.error(response.message);
+            return false;
+
         })
     }
 
@@ -134,15 +140,17 @@ class UserStore {
             url: this.userInfoUrl,
         }).then(response => {
             if (response.result) {
+                
                 this.userInfo = response.data;
                 return Promise.resolve(response);
-            } else {
-                this.userInfo = {};
-                console.info(response.message);
             }
+            this.userInfo = {};
+            console.info(response.message);
+            return false;
+
         })
     }
 
 }
 
-export default new UserStore
+export default new UserStore();

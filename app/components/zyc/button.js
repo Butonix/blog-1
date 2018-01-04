@@ -3,16 +3,12 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
-import {observer} from 'mobx-react'
+import { observer } from 'mobx-react'
 import './button.sass'
 
+@observer
 export default class Button extends React.Component {
 
-    constructor(args) {
-        super(args);
-
-    }
 
     static defaultProps = {
         type: 'primary',
@@ -25,7 +21,7 @@ export default class Button extends React.Component {
 
 
     render() {
-        let {className, type} = this.props;
+        const { className, type } = this.props;
         return (
             <button
                 className={className ? `zyc-button ${className} ${type}` : `zyc-button ${type}`}

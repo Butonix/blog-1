@@ -44,7 +44,8 @@ const prodConfig = {
             {
                 test: /\.sass$/,
                 use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader', use: [
+                    fallback: 'style-loader',
+                    use: [
                         'css-loader',
                         'postcss-loader',
                         'sass-loader',
@@ -69,7 +70,7 @@ const prodConfig = {
         }),
         new webpack.DefinePlugin({
             'process.env': {
-                'NODE_ENV': JSON.stringify('production')
+                NODE_ENV: JSON.stringify('production')
             }
         }),
         new webpack.optimize.AggressiveMergingPlugin(),

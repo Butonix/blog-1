@@ -25,7 +25,7 @@ const devConfig = {
     output: {
         filename: '[name].js',
         chunkFilename: '[name].js',
-        publicPath: '/', ///html src指向
+        publicPath: '/', // html src指向
     },
     module: {
         rules: [
@@ -59,10 +59,10 @@ const devConfig = {
         new OpenBrowserPlugin({
             url: `http://${config.host}:${config.port}`
         }),
-        new webpack.HotModuleReplacementPlugin(), //热更新
+        new webpack.HotModuleReplacementPlugin(), // 热更新
         new webpack.DefinePlugin({
             'process.env': {
-                'NODE_ENV': JSON.stringify('development')
+                NODE_ENV: JSON.stringify('development')
             }
         }),
         new HtmlWebpackPlugin({

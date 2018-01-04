@@ -2,9 +2,9 @@
  * Created by scriptchao on 2017/11/17.
  */
 
-import {observable, action} from 'mobx'
+import { observable, action } from 'mobx'
 import xhr from '../xhr'
-import {Message,Spin} from '../../components/zyc'
+import { Message } from '../../components/zyc'
 
 class ArticleStore {
     @observable articleList = [];
@@ -32,13 +32,14 @@ class ArticleStore {
         return xhr({
             method: 'post',
             url: this.articleDetailTitleUrl,
-            body: body
+            body,
         }).then(response => {
             if (response.result) {
                 return Promise.resolve(response)
-            } else {
-                Message.error(response.message);
             }
+            Message.error(response.message);
+            return false;
+
         })
     }
 
@@ -47,13 +48,14 @@ class ArticleStore {
         return xhr({
             method: 'post',
             url: this.articleUpdateReadCountUrl,
-            body: body
+            body,
         }).then(response => {
             if (response.result) {
                 return Promise.resolve(response)
-            } else {
-                Message.error(response.message);
             }
+            Message.error(response.message);
+            return false;
+
         })
     }
 
@@ -62,14 +64,15 @@ class ArticleStore {
         return xhr({
             method: 'post',
             url: this.articleUpdateUrl,
-            body: body
+            body,
         }).then(response => {
             if (response.result) {
                 Message.success(response.message);
                 return Promise.resolve(response)
-            } else {
-                Message.error(response.message);
             }
+            Message.error(response.message);
+            return false;
+
         })
     }
 
@@ -78,14 +81,15 @@ class ArticleStore {
         return xhr({
             method: 'post',
             url: this.articleAddUrl,
-            body: body
+            body,
         }).then(response => {
             if (response.result) {
                 Message.success(response.message);
                 return Promise.resolve(response)
-            } else {
-                Message.error(response.message);
             }
+            Message.error(response.message);
+            return false;
+
         })
     }
 
@@ -94,15 +98,16 @@ class ArticleStore {
         return xhr({
             method: 'post',
             url: this.articleListUrl,
-            body: body
+            body,
         }).then(response => {
             if (response.result) {
                 this.articleList = response.data.list;
                 this.articleCount = response.data.total;
                 return Promise.resolve(response)
-            } else {
-                Message.error(response.message);
             }
+            Message.error(response.message);
+            return false;
+
         })
     }
 
@@ -111,14 +116,15 @@ class ArticleStore {
         return xhr({
             method: 'post',
             url: this.articleDeleteUrl,
-            body: body
+            body,
         }).then(response => {
             if (response.result) {
                 Message.success(response.message);
                 return Promise.resolve(response)
-            } else {
-                Message.error(response.message);
             }
+            Message.error(response.message);
+            return false;
+
         })
     }
 
@@ -127,16 +133,18 @@ class ArticleStore {
         return xhr({
             method: 'post',
             url: this.articleDetailUrl,
-            body: body
+            body,
         }).then(response => {
             if (response.result) {
                 this.articleDetail = response.data;
                 return Promise.resolve(response)
-            } else {
-                Message.error(response.message);
             }
+            Message.error(response.message);
+            return false;
+
+
         })
     }
 }
 
-export default new ArticleStore
+export default new ArticleStore();

@@ -3,16 +3,11 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
-import {observer} from 'mobx-react'
+import { observer } from 'mobx-react'
 import './menu.sass'
 
-
+@observer
 class MenuItem extends React.Component {
-
-    constructor(args) {
-        super(args);
-    }
 
     handleClick() {
         this.props.onClick()
@@ -28,14 +23,10 @@ class MenuItem extends React.Component {
     }
 }
 
-
+@observer
 class Menu extends React.Component {
 
     static Item = MenuItem;
-
-    constructor(args) {
-        super(args);
-    }
 
     render() {
 

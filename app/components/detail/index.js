@@ -3,8 +3,8 @@
  */
 
 import React from 'react'
-import {Bundle} from '../zyc'
+import { Bundle } from '../zyc'
 
-const Detail = (props) => <Bundle {...props} load={() => import('./detail')}/>;
+const Detail = (props) => <Bundle {...props} load={() => import('./detail')} />;
 
-export {Detail}
+export { Detail }

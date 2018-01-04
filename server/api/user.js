@@ -5,27 +5,28 @@
 import express from 'express'
 import User from '../models/user'
 import Id from '../models/id'
-import {responseClient, MD5_SUFFIX} from '../util'
+import { responseClient, MD5_SUFFIX } from '../util'
+
 const router = express.Router();
 
 router.post('/register', (req, res) => {
-    let {username, password} = req.body;
+    const { username, password } = req.body;
 
-    User.findOne({username})// 用户名区分 //collection
+    User.findOne({ username })// 用户名区分 // collection
         .then(data => {
             if (data) {
                 responseClient(res, 200, 0, '用户名已存在!');
             } else {
-                return Id.findOneAndUpdate({_id: 'userId'}, {
+                return Id.findOneAndUpdate({ _id: 'userId' }, {
                     $inc: {
                         seq: 1
                     }
-                }).then(data => {
-                    let user = new User({
-                        username: username,
-                        password: password,
+                }).then(data1 => {
+                    const user = new User({
+                        username,
+                        password,
                         userType: 3,
-                        userId: data.seq
+                        userId: data1.seq
                     });
 
                     return user.save().then(() => {
@@ -34,19 +35,20 @@ router.post('/register', (req, res) => {
                 })
             }
         }).catch(err => {
-        responseClient(res);
-    })
+            responseClient(res);
+        })
 });
 
 router.post('/login', (req, res) => {
-    let {username, password} = req.body;
+    const { username, password } = req.body;
     User.findOne({
         username,
         password,
     }).then(data => {
         if (data) {
+            console.log(data)
             if (data.isUsed) {
-                let userInfo = {};
+                const userInfo = {};
                 userInfo.username = data.username;
                 userInfo.userType = data.userType;
                 userInfo.userId = data.userId;
@@ -82,24 +84,24 @@ router.get('/loginOut', (req, res) => {
 });
 
 router.post('/list', (req, res) => {
-    let {page, size} = req.body;
-    page = parseInt(page);
-    size = parseInt(size);
-    let responseData = {
+    let { page, size } = req.body;
+    page = parseInt(page, 0);
+    size = parseInt(size, 0);
+    const responseData = {
         total: 0,
         list: []
     };
 
-    let skip = (page - 1) * size;
+    const skip = (page - 1) * size;
 
     User.count()
         .then(count => {
             responseData.total = count;
             return User.find({}, 'userId username userType password isUsed', {
-                skip: skip,
+                skip,
                 limit: size,
                 sort: {
-                    userType : 1
+                    userType: 1
                 }
             }).then(data => {
                 if (data) {
@@ -110,15 +112,16 @@ router.post('/list', (req, res) => {
                 }
             })
         }).catch(err => {
-        responseClient(res)
-    })
+            responseClient(res)
+        })
 });
 
 router.post('/update', (req, res) => {
-    let {userId, isUsed, userType} = req.body;
+    const { userId, isUsed, userType } = req.body;
+    const searchContent = {};
     let successMessage;
     let failMessage;
-    let searchContent = {};
+
 
     if (isUsed) {
         searchContent.isUsed = isUsed;
@@ -137,7 +140,7 @@ router.post('/update', (req, res) => {
         failMessage = '修改失败!'
     }
 
-    User.update({userId}, searchContent)
+    User.update({ userId }, searchContent)
         .then(data => {
             if (data.n) {
                 responseClient(res, 200, 1, successMessage)
@@ -145,14 +148,14 @@ router.post('/update', (req, res) => {
                 responseClient(res, 200, 0, failMessage)
             }
         }).catch(err => {
-        responseClient(res)
-    })
+            responseClient(res)
+        })
 });
 
 router.post('/delete', (req, res) => {
-    let {userId} = req.body;
+    const { userId } = req.body;
 
-    User.remove({userId}).then(data => {
+    User.remove({ userId }).then(data => {
         if (data.result.n) {
             responseClient(res, 200, 1, '删除成功!')
         } else {

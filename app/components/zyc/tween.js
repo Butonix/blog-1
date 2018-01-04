@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
  * Tween.js
  * t: current time（当前时间）；
@@ -6,6 +7,7 @@
  * d: duration（持续时间）。
  * you can visit 'http://easings.net/zh-cn' to get effect
 */
+
 var Tween = {
     Linear: function(t, b, c, d) { return c*t/d + b; },
     Quad: {

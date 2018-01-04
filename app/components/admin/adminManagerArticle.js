@@ -3,12 +3,12 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
-import {inject, observer} from 'mobx-react'
+import { observable } from 'mobx'
+import { inject, observer } from 'mobx-react'
 import Pagination from 'rc-pagination'
 import dateFormat from 'dateformat'
 import './adminManagerArticle.sass'
-import {Button} from '../zyc'
+import { Button } from '../zyc'
 import history from '../../history'
 
 @inject('ArticleStore') @observer
@@ -27,7 +27,7 @@ export default class AdminManagerArticle extends React.Component {
 
     getArticleList() {
 
-        let body = {};
+        const body = {};
         body.page = this.page;
         body.size = this.size;
         body.author = true;
@@ -41,7 +41,7 @@ export default class AdminManagerArticle extends React.Component {
     }
 
     handleDelete(articleId) {
-        let body = {};
+        const body = {};
         body.articleId = articleId;
         this.articleStore.postArticleDelete(body).then(response => {
             if (response) {
@@ -51,7 +51,7 @@ export default class AdminManagerArticle extends React.Component {
     }
 
     handlePublish(articleId, isPublish) {
-        let body = {};
+        const body = {};
         body.articleId = articleId;
         body.isPublish = isPublish;
         this.articleStore.postArticleUpdate(body).then(response => {
@@ -62,7 +62,7 @@ export default class AdminManagerArticle extends React.Component {
     }
 
     render() {
-        let {articleList, articleCount} = this.articleStore;
+        const { articleList, articleCount } = this.articleStore;
         return (
             <div className="admin-managerArticle">
                 <h2>文章管理</h2>
@@ -94,7 +94,7 @@ export default class AdminManagerArticle extends React.Component {
 class ArticleCell extends React.Component {
 
     render() {
-        let {data} = this.props;
+        const { data } = this.props;
 
         return (
             <div className="article-cell">
@@ -131,20 +131,28 @@ class ArticleCell extends React.Component {
                     }
                 </div>
                 <div className="operation">
-                    <Button className="btn" onClick={() => {
-                        history.push(`/admin/newArticle?articleId=${data.articleId}`)
-                    }}>编辑</Button>
-                    <Button className="btn" onClick={() => {
-                        this.props.onDelete(data.articleId)
-                    }}>删除</Button>
+                    <Button
+                        className="btn"
+                        onClick={() => {
+                            history.push(`/admin/newArticle?articleId=${data.articleId}`)
+                        }}>编辑</Button>
+                    <Button
+                        className="btn"
+                        onClick={() => {
+                            this.props.onDelete(data.articleId)
+                        }}>删除</Button>
                     {
                         data.isPublish ?
-                            <Button className="btn" onClick={() => {
-                                this.props.onPublish(data.articleId, false)
-                            }}>撤回</Button> :
-                            <Button className="btn" onClick={() => {
-                                this.props.onPublish(data.articleId, true)
-                            }}>发布</Button>
+                            <Button
+                                className="btn"
+                                onClick={() => {
+                                    this.props.onPublish(data.articleId, false)
+                                }}>撤回</Button> :
+                            <Button
+                                className="btn"
+                                onClick={() => {
+                                    this.props.onPublish(data.articleId, true)
+                                }}>发布</Button>
                     }
                 </div>
             </div>

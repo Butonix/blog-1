@@ -4,8 +4,9 @@
 
 import mongoose from 'mongoose'
 
-const tagSchema = new mongoose.Schema({
-        name: String, //标签名
+const tagSchema = new mongoose.Schema(
+    {
+        name: String, // 标签名
         tagId: {
             type: Number,
             default: 0
@@ -24,7 +25,7 @@ const tagSchema = new mongoose.Schema({
         }
     }, {
         // timestamps: true
-        timestamps: {createdAt: 'createTime', updatedAt: 'updateTime'}
+        timestamps: { createdAt: 'createTime', updatedAt: 'updateTime' }
     }
 );
 

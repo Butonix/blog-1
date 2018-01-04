@@ -3,25 +3,20 @@
  */
 
 import React from 'react';
-import {observable} from 'mobx'
-import {observer} from 'mobx-react'
+import { observable } from 'mobx'
+import { observer } from 'mobx-react'
 
 @observer
 class Bundle extends React.Component {
     @observable component;
 
-    constructor(props) {
-        super(props);
-
-    }
-
     async componentWillMount() {
-        const {default: component} = await this.props.load();
+        const { default: component } = await this.props.load();
         this.component = component
     }
 
     render() {
-        const {...props} = this.props;
+        const { ...props } = this.props;
         const Component = this.component;
 
         return Component ? <Component {...props} /> : null;

@@ -3,12 +3,12 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
-import {observer, inject} from 'mobx-react'
+import { observable } from 'mobx'
+import { observer, inject } from 'mobx-react'
 import md5 from 'blueimp-md5'
-import {Dialog, Message} from '../zyc'
+import { Message } from '../zyc'
 import './login.sass'
-import {Username, Password} from '../public/regular'
+import { Username, Password } from '../public/regular'
 
 
 @observer
@@ -32,7 +32,7 @@ class Login extends React.Component {
                 {
                     this.type ?
                         <LoginForm /> :
-                        <RegisterForm/>
+                        <RegisterForm />
                 }
             </div>
         )
@@ -48,14 +48,14 @@ class Login extends React.Component {
 @observer
 class LoginTab extends React.Component {
     render() {
-        let {type} = this.props;
+        const { type } = this.props;
         return (
             <div className="login-tab">
                 <span className={type ? '' : 'active'}
-                      onClick={this.handleTab.bind(this, 0)}>注册</span>
+                    onClick={this.handleTab.bind(this, 0)}>注册</span>
                 <i>-</i>
                 <span className={type ? 'active' : ''}
-                      onClick={this.handleTab.bind(this, 1)}>登录</span>
+                    onClick={this.handleTab.bind(this, 1)}>登录</span>
             </div>
         )
     }
@@ -79,11 +79,11 @@ class LoginForm extends React.Component {
             <ul className="login-form">
                 <li>
                     <i className="iconfont icon-yonghuming">{null}</i>
-                    <input type="text" placeholder="username" ref="username"/>
+                    <input type="text" placeholder="username" ref="username" />
                 </li>
                 <li>
                     <i className="iconfont icon-mima">{null}</i>
-                    <input type="password" placeholder="password" ref="password"/>
+                    <input type="password" placeholder="password" ref="password" />
                 </li>
                 <li>
                     <span onClick={this.handleLogin.bind(this)}>登录</span>
@@ -93,8 +93,8 @@ class LoginForm extends React.Component {
     }
 
     handleLogin() {
-        let username = this.refs.username.value;
-        let password = this.refs.password.value;
+        const username = this.refs.username.value;
+        const password = this.refs.password.value;
 
         if (!username) {
             Message.error('用户名不能为空!');
@@ -105,16 +105,18 @@ class LoginForm extends React.Component {
             return false
         }
 
-        let body = {};
+        const body = {};
         body.username = username;
         body.password = md5(password);
 
-        this.userStore.postLogin(body).then((response) => {
+        this.userStore.postLogin(body).then(response => {
             if (response) {
-                localStorage.setItem('expired', (new Date).getTime());
-                this.userStore.getUserInfo()
+                localStorage.setItem('expired', +new Date());
+                this.userStore.getUserInfo();
+
             }
-        })
+        });
+        return true;
     }
 }
 
@@ -132,15 +134,15 @@ class RegisterForm extends React.Component {
             <ul className="register-form">
                 <li>
                     <i className="iconfont icon-yonghuming">{null}</i>
-                    <input type="text" placeholder="username" ref="username"/>
+                    <input type="text" placeholder="username" ref="username" />
                 </li>
                 <li>
                     <i className="iconfont icon-mima">{null}</i>
-                    <input type="password" placeholder="password" ref="password"/>
+                    <input type="password" placeholder="password" ref="password" />
                 </li>
                 <li>
                     <i className="iconfont icon-mima">{null}</i>
-                    <input type="password" placeholder="repeat password" ref="passwordRe"/>
+                    <input type="password" placeholder="repeat password" ref="passwordRe" />
                 </li>
                 <li>
                     <span onClick={this.handleRegister.bind(this)}>注册</span>
@@ -151,9 +153,9 @@ class RegisterForm extends React.Component {
 
     handleRegister() {
 
-        let username = this.refs.username.value;
-        let password = this.refs.password.value;
-        let passwordRe = this.refs.passwordRe.value;
+        const username = this.refs.username.value;
+        const password = this.refs.password.value;
+        const passwordRe = this.refs.passwordRe.value;
 
         if (!Username.test(username)) {
             Message.error('请输入5-16位字符!');
@@ -172,20 +174,21 @@ class RegisterForm extends React.Component {
             return false
         }
 
-        let body = {};
+        const body = {};
         body.username = username;
         body.password = md5(password);
 
         this.userStore.postRegister(body).then(response => {
             if (response) {
-                this.userStore.postLogin(body).then(response => {
-                    if (response) {
-                        localStorage.setItem('expired', (new Date).getTime());
+                this.userStore.postLogin(body).then(response1 => {
+                    if (response1) {
+                        localStorage.setItem('expired', +new Date());
                         this.userStore.getUserInfo()
                     }
                 })
             }
         })
+        return true;
     }
 }
 

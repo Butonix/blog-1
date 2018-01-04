@@ -1,20 +1,21 @@
 /**
  * Created by scriptchao on 2017/11/2.
  */
-import {origin, expiredTime} from './config'
-import {Message} from '../../components/zyc'
+import { origin, expiredTime } from './config';
+import { Message } from '../../components/zyc';
 
 const xhr = (req = {}) => {
+    const { method, url, body = {} } = req;
 
-    let {method, url, body = {}} = req;
+    const options = {};
 
-    let options = {};
+    const search = Object.entries(body).map((value) => `${value[0]}=${value[1]}`).join('&');
 
-    let search = Object.entries(body).map((value, index) => `${value[0]}=${value[1]}`).join('&');
+    let xUrl = url;
 
     if (method === 'get' || method === 'GET') {
         if (search) {
-            url = `${url}?${search}`
+            xUrl = `${url}?${search}`
         }
     }
 
@@ -23,38 +24,39 @@ const xhr = (req = {}) => {
     }
 
     options.headers = {
-        'Content-Type': "application/x-www-form-urlencoded", // body 为a&b
-        // 'Content-Type': "application/json", //body 为JSON.Stringify({}) //文件上传和formData不需要content-type
+        'Content-Type': 'application/x-www-form-urlencoded', // body 为a&b
+        // 'Content-Type': "application/json", // body 为JSON.Stringify({}) // 文件上传和formData不需要content-type
     };
     options.method = method;
-    options.mode = 'cors';
-    options.credentials = 'include';
+    // options.mode = 'cors';
+    options.credentials = 'include'; // 必须
 
-    if(localStorage.getItem('expired')){ //登录超时验证
+    const { localStorage, location } = window;
 
-        let now = (new Date).getTime();
+    if (localStorage.getItem('expired')) { // 登录超时验证
 
-        if(now - localStorage.getItem('expired') > expiredTime) {
+        const now = +new Date();
+
+        if (now - localStorage.getItem('expired') > expiredTime) {
             localStorage.clear();
-            window.location.reload();
+            location.reload();
         }
     }
 
 
-
-    return fetch(origin + url, options)
+    return fetch(origin + xUrl, options)
         .then(res => {
-            if (res.ok) { //200-299 ok的条件
-                return res.json()
+            if (res.ok) { // 200-299 ok的条件
 
-            } else { //这步是没有必要的 自己控制status为200
-                return Promise.reject({
-                    message: res.status,
-                    status: res.status
-                })
+                return res.json()
             }
-        })
-        .catch(e => {
+
+            return Promise.reject(new Error({ // 这步是没有必要的 自己控制status为200
+                message: res.status,
+                status: res.status,
+            }))
+
+        }).catch(e => {
             console.log('error', e, e.status);
             if (!e.status) {
                 e.message = '网络连接失败!'
@@ -64,4 +66,4 @@ const xhr = (req = {}) => {
         });
 };
 
-export default xhr
+export default xhr;

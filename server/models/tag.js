@@ -4,4 +4,4 @@
 import mongoose from 'mongoose'
 import tagSchemas from '../schemas/tag'
 
-export default mongoose.model('Tag',tagSchemas)
+export default mongoose.model('Tag', tagSchemas)

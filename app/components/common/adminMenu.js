@@ -3,9 +3,9 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
-import {inject, observer} from 'mobx-react'
-import {NavLink} from 'react-router-dom'
+import { observable } from 'mobx'
+import { inject, observer } from 'mobx-react'
+import { NavLink } from 'react-router-dom'
 import './adminMenu.sass'
 
 @inject('UserStore') @observer
@@ -17,9 +17,9 @@ export default class AdminMenu extends React.Component {
 
     render() {
 
-        const {userInfo} = this.userStore;
+        const { userInfo } = this.userStore;
 
-        let menu = userInfo.userType == 1 ?
+        const menu = userInfo.userType == 1 ?
             [
                 {
                     text: '首页',
@@ -82,7 +82,7 @@ export default class AdminMenu extends React.Component {
                 {
                     menu.map((value) =>
                         <NavLink
-                            exact={true}
+                            exact
                             to={value.to}
                             activeClassName="active"
                             key={value.to}

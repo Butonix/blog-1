@@ -3,9 +3,9 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
-import {observer} from 'mobx-react'
-import {createPortal} from 'react-dom'
+import { observable } from 'mobx'
+import { observer } from 'mobx-react'
+import { createPortal } from 'react-dom'
 import './portal.sass'
 
 @observer
@@ -41,8 +41,9 @@ export default class Portal extends React.Component {
         window.removeEventListener('resize', this.resize)
     }
 
-    getDirection(target) {
+    getDirection(value) {
         let l = 0, t = 0, w = 0, h = 0;
+        let target = value;
 
         if (target) {
             h = target.offsetHeight;
@@ -55,21 +56,26 @@ export default class Portal extends React.Component {
             target = target.offsetParent
         }
 
-        return {left: l, top: t, width: w, height: h}
+        return {
+            left: l,
+            top: t,
+            width: w,
+            height: h,
+        }
     }
 
 
     render() {
-        let {top, left, height, width} = this.direction;
-        let {fixed} = this.props;
+        const { top, left, height, width } = this.direction;
+        const { fixed } = this.props;
 
-        return createPortal(
-            <div className="zyc-portal" style={{
-                left: left,
+        return createPortal(<div className="zyc-portal"
+            style={{
+                left,
                 top: fixed ? top + window.pageYOffset + height + 5 : top + height + 5,
-                width: width
-            }}>
-                {this.props.children}
-            </div>, this.node)
+                width,
+            }}>{this.props.children}
+        </div>, this.node)
+
     }
 }

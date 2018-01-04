@@ -2,10 +2,17 @@
  * Created by scriptchao on 2017/11/22.
  */
 
-export function splitLocation(location) {
-    let data = {};
+const splitLocation = (location) => {
+    const data = {};
+    const { search } = location;
 
-    location.search.slice(1).split('&').map((value) => data[value.split('=')[0]] = value.split('=')[1]);
+    search.slice(1).split('&').map(value => {
+        const [a, b] = value.split('=');
+        data[a] = b;
+    });
 
     return data
 }
+
+
+export default splitLocation

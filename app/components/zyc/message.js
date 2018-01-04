@@ -3,8 +3,8 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
-import {observer} from 'mobx-react'
+import { observable } from 'mobx'
+import { observer } from 'mobx-react'
 import ReactDom from 'react-dom'
 import './message.sass'
 
@@ -37,19 +37,19 @@ class Message extends React.Component {
 
     success(message) {
         this.content.push({
-            message: message,
+            message,
             icon: 'zhengque',
             type: 'success',
-            id: Math.floor(Math.random() * 10000)
+            id: Math.floor(Math.random() * 10000),
         })
     }
 
     error(message) {
         this.content.push({
-            message: message,
+            message,
             icon: 'cuowu',
             type: 'error',
-            id: Math.floor(Math.random() * 10000)
+            id: Math.floor(Math.random() * 10000),
         })
     }
 
@@ -58,14 +58,14 @@ class Message extends React.Component {
 class Item extends React.Component {
 
     componentDidMount() {
-        let timer = setTimeout(() => {
+        const timer = setTimeout(() => {
             this.props.onUpdate();
             clearTimeout(timer)
         }, 4000)
     }
 
     render() {
-        let {message, icon, type} = this.props;
+        const { message, icon, type } = this.props;
 
         return (
             <div className={`message-item ${type}`}>
@@ -94,5 +94,5 @@ function error(message) {
 
 }
 
-export default {success, error}
+export default { success, error }
 

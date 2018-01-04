@@ -3,15 +3,15 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
-import {inject, observer} from 'mobx-react'
-import {Link} from 'react-router-dom'
+import { observable } from 'mobx'
+import { inject, observer } from 'mobx-react'
+import { Link } from 'react-router-dom'
 import dateFormat from 'dateformat'
 import './articleList.sass'
 
 class ArticleList extends React.Component {
     render() {
-        let {data} = this.props;
+        const { data } = this.props;
         return (
             <div className="homepage-article">
                 {
@@ -29,7 +29,7 @@ class ArticleList extends React.Component {
 
 class ArticleCell extends React.Component {
     render() {
-        let {data, detail} = this.props;
+        const { data, detail } = this.props;
         return (
             <div className={detail ? 'homepage-article-list detail' : 'homepage-article-list'}>
                 <h1>
@@ -72,5 +72,5 @@ class ArticleCell extends React.Component {
     }
 }
 
-export {ArticleCell}
+export { ArticleCell }
 export default ArticleList

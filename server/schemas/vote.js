@@ -3,20 +3,21 @@
  */
 import mongoose from 'mongoose'
 
-const voteSchema = new mongoose.Schema({
-    userId: Number,
-    articleId: Number,
-    isVote: Boolean,
-    createTime: {
-        type: Date,
-        default: Date.now
-    },
-    updateTime: {
-        type: Date,
-        default: Date.now
-    }
-}, {
-    timestamps: {createdAt: 'createTime', updatedAt: 'updateTime'}
-});
+const voteSchema = new mongoose.Schema(
+    {
+        userId: Number,
+        articleId: Number,
+        isVote: Boolean,
+        createTime: {
+            type: Date,
+            default: Date.now
+        },
+        updateTime: {
+            type: Date,
+            default: Date.now
+        }
+    }, {
+        timestamps: { createdAt: 'createTime', updatedAt: 'updateTime' }
+    });
 
 export default voteSchema

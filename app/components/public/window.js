@@ -2,7 +2,7 @@
  * Created by scriptchao on 2017/11/27.
  */
 
-//滚动条在Y轴上的滚动距离
+// 滚动条在Y轴上的滚动距离
 export function getScrollTop() {
     let scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
     if (document.body) {
@@ -14,7 +14,7 @@ export function getScrollTop() {
     scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
     return scrollTop;
 }
-//文档的总高度
+// 文档的总高度
 export function getScrollHeight() {
     let scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
     if (document.body) {
@@ -26,10 +26,10 @@ export function getScrollHeight() {
     scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
     return scrollHeight;
 }
-//浏览器视口的高度
+// 浏览器视口的高度
 export function getWindowHeight() {
     let windowHeight = 0;
-    if (document.compatMode == "CSS1Compat") {
+    if (document.compatMode == 'CSS1Compat') {
         windowHeight = document.documentElement.clientHeight;
     } else {
         windowHeight = document.body.clientHeight;

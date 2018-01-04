@@ -5,32 +5,33 @@
 import express from 'express'
 import Article from '../models/article'
 import Id from '../models/id'
-import {responseClient, md5, MD5_SUFFIX} from '../util'
+import { responseClient, md5, MD5_SUFFIX } from '../util'
+
 const router = express.Router();
 
-router.post('/add', function (req, res) {
-    let {
+router.post('/add', (req, res) => {
+    const {
         title,
         content,
         tags,
         isPublish
     } = req.body;
 
-    let author = req.session.userInfo.username;
+    const author = req.session.userInfo.username;
 
-    Article.findOne({title})
+    Article.findOne({ title })
         .then(data => {
             if (data) {
                 responseClient(res, 200, 0, '文章已存在,请更换标题!')
             } else {
-                return Id.findOneAndUpdate({_id: 'articleId'}, {
+                return Id.findOneAndUpdate({ _id: 'articleId' }, {
                     $inc: {
                         seq: 1
                     }
-                }).then(data => {
+                }).then(data1 => {
 
-                    if (data) {
-                        let article = new Article({
+                    if (data1) {
+                        const article = new Article({
                             title,
                             content,
                             author,
@@ -39,29 +40,29 @@ router.post('/add', function (req, res) {
                             articleId: data.seq
                         });
 
-                        return article.save().then(data => {
-                            responseClient(res, 200, 1, '文章保存成功!', data);
+                        return article.save().then(data2 => {
+                            responseClient(res, 200, 1, '文章保存成功!', data2);
                         })
                     }
                 });
             }
-        }).catch(err => {
-        responseClient(res)
-    })
+        })
+        .catch(err => {
+            responseClient(res)
+        })
 });
 
-router.post('/list', function (req, res) {
-    let {
-        page,
-        size,
+router.post('/list', (req, res) => {
+    const {
         isPublish,
         tags,
         author,
         sort
     } = req.body;
-    page = parseInt(page);
-    size = parseInt(size);
-    let searchContent = {};
+    let { page, size } = req.body;
+    page = parseInt(page, 0);
+    size = parseInt(size, 0);
+    const searchContent = {};
     let searchSort = {
         createTime: -1
     };
@@ -90,7 +91,7 @@ router.post('/list', function (req, res) {
     }
 
     if (tags) {
-        searchContent.tags = {$all: tags.split(',')}
+        searchContent.tags = { $all: tags.split(',') }
     }
 
     if (isPublish) {
@@ -103,8 +104,8 @@ router.post('/list', function (req, res) {
         }
     }
 
-    let skip = (page - 1) * size;
-    let responseData = {
+    const skip = (page - 1) * size;
+    const responseData = {
         total: 0,
         list: []
     };
@@ -113,50 +114,54 @@ router.post('/list', function (req, res) {
         .then(count => {
             responseData.total = count;
             return Article.find(searchContent, 'articleId title isPublish author tags readCount voteCount createTime updateTime -_id', {
-                skip: skip,
+                skip,
                 limit: size,
                 sort: searchSort
             }).then(data => {
                 responseData.list = data;
                 responseClient(res, 200, 1, '获取文章列表成功!', responseData)
             })
-        }).catch(err => {
-        responseClient(res)
-    })
+        })
+        .catch(err => {
+            responseClient(res)
+        })
 });
 
-router.post('/delete', function (req, res) {
-    let {articleId} = req.body;
-    Article.remove({articleId}).then(data => {
+router.post('/delete', (req, res) => {
+    const { articleId } = req.body;
+    Article.remove({ articleId }).then(data => {
         if (data.result.n) {
             responseClient(res, 200, 1, '文章删除成功!');
         } else {
             responseClient(res, 200, 0, '文章删除失败!')
         }
-    }).catch(err => {
-        responseClient(res)
     })
+        .catch(err => {
+            responseClient(res)
+        })
 });
 
-router.post('/detail', function (req, res) {
-    let {articleId} = req.body;
+router.post('/detail', (req, res) => {
+    const { articleId } = req.body;
 
-    Article.findOne({articleId}, 'articleId title content tags author readCount voteCount updateTime createTime').then(data => {
-        if (data) {
-            responseClient(res, 200, 1, '文章查找成功!', data)
-        } else {
-            responseClient(res, 200, 0, '未找到该文章!')
-        }
-    }).catch(err => {
-        responseClient(res)
-    })
+    Article.findOne({ articleId }, 'articleId title content tags author readCount voteCount updateTime createTime')
+        .then(data => {
+            if (data) {
+                responseClient(res, 200, 1, '文章查找成功!', data)
+            } else {
+                responseClient(res, 200, 0, '未找到该文章!')
+            }
+        })
+        .catch(err => {
+            responseClient(res)
+        })
 });
 
-router.post('/detail/title', function (req, res) {
-    let {articleId, prev, next} = req.body;
+router.post('/detail/title', (req, res) => {
+    const { articleId, prev, next } = req.body;
 
     if (prev) {
-        Article.findOne({articleId: {$lt: articleId}}, 'articleId title', {
+        Article.findOne({ articleId: { $lt: articleId } }, 'articleId title', {
             sort: {
                 articleId: -1
             }
@@ -171,7 +176,7 @@ router.post('/detail/title', function (req, res) {
     }
 
     if (next) {
-        Article.findOne({articleId: {$gt: articleId}}, 'articleId title', {
+        Article.findOne({ articleId: { $gt: articleId } }, 'articleId title', {
             sort: {
                 articleId: 1
             }
@@ -186,11 +191,11 @@ router.post('/detail/title', function (req, res) {
     }
 });
 
-router.post('/update', function (req, res) {
-    let {articleId, title, content, tags, isPublish} = req.body;
+router.post('/update', (req, res) => {
+    const { articleId, title, content, tags, isPublish } = req.body;
     let successMessage = '文章更新成功!';
     let failMessage = '文章更新失败!';
-    let searchContent = {};
+    const searchContent = {};
     if (title) {
         searchContent.title = title;
     }
@@ -213,7 +218,7 @@ router.post('/update', function (req, res) {
     }
 
 
-    Article.update({articleId}, searchContent)
+    Article.update({ articleId }, searchContent)
         .then(data => {
             if (data.n) {
                 responseClient(res, 200, 1, successMessage, data);
@@ -222,15 +227,16 @@ router.post('/update', function (req, res) {
                 responseClient(res, 200, 0, failMessage)
             }
 
-        }).catch(err => {
-        responseClient(res)
-    })
+        })
+        .catch(err => {
+            responseClient(res)
+        })
 });
 
-router.post('/update/readCount', function (req, res) {
-    let {articleId} = req.body;
+router.post('/update/readCount', (req, res) => {
+    const { articleId } = req.body;
 
-    Article.update({articleId}, {
+    Article.update({ articleId }, {
         $inc: {
             readCount: 1
         }

@@ -3,8 +3,7 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
-import {observer} from 'mobx-react'
+import { observer } from 'mobx-react'
 import './main.sass'
 
 @observer

@@ -21,7 +21,7 @@ const proxy = httpProxy.createProxyServer({
 });
 
 app.use('/blog', (req, res) => {
-    proxy.web(req, res, {target: apiUrl})
+    proxy.web(req, res, { target: apiUrl })
 });
 
 app.use(compression());
@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === 'development') {
 
     app.use(webpackDevMiddleware(compiler, {
         noInfo: true,
-        publicPath: '/',// 虚拟目录
+        publicPath: '/', // 虚拟目录
     }));
 
     app.use(webpackHotMiddleware(compiler));

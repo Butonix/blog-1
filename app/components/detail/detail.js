@@ -3,15 +3,15 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
-import {inject, observer} from 'mobx-react'
-import {Link} from 'react-router-dom'
+import { observable } from 'mobx'
+import { inject, observer } from 'mobx-react'
+import { Link } from 'react-router-dom'
 import remark from 'remark'
 import reactRenderer from 'remark-react'
-import {ArticleCell} from '../common/articleList'
-import {splitLocation} from '../public/location'
+import { ArticleCell } from '../common/articleList'
+import splitLocation from '../public/location'
 import './detail.sass'
-import {Dialog} from '../zyc'
+import { Dialog } from '../zyc'
 
 @inject('UserStore', 'ArticleStore', 'VoteStore') @observer
 export default class Detail extends React.Component {
@@ -32,7 +32,8 @@ export default class Detail extends React.Component {
     }
 
     componentWillMount() {
-        let {articleId} = splitLocation(location);
+        const { location } = window;
+        const { articleId } = splitLocation(location);
         this.articleId = articleId
     }
 
@@ -45,7 +46,8 @@ export default class Detail extends React.Component {
 
     componentWillReceiveProps() {
         this.isRender = false;
-        let {articleId} = splitLocation(location);
+        const { location } = window;
+        const { articleId } = splitLocation(location);
         this.articleId = articleId;
         this.getArticleDetail();
         this.getTitlePrev();
@@ -56,7 +58,7 @@ export default class Detail extends React.Component {
 
     getVote() {
         if (this.userStore.userInfo.userId) {
-            let body = {};
+            const body = {};
             body.articleId = this.articleId;
             body.userId = this.userStore.userInfo.userId;
             this.voteStore.postVoteStatus(body).then(response => {
@@ -68,13 +70,13 @@ export default class Detail extends React.Component {
     }
 
     getArticleDetail() {
-        let body = {};
+        const body = {};
         body.articleId = this.articleId;
         this.articleStore.postArticleUpdateReadCount(body).then(response => {
             if (response) {
-                this.articleStore.postArticleDetail(body).then(response => {
-                    if (response) {
-                        this.voteCount = response.data.voteCount;
+                this.articleStore.postArticleDetail(body).then(response1 => {
+                    if (response1) {
+                        this.voteCount = response1.data.voteCount;
                         this.isRender = true
                     }
                 })
@@ -84,7 +86,7 @@ export default class Detail extends React.Component {
 
 
     getTitlePrev() {
-        let body = {};
+        const body = {};
         body.articleId = this.articleId;
         body.prev = true;
         this.articleStore.postArticleDetailTitle(body).then(response => {
@@ -95,7 +97,7 @@ export default class Detail extends React.Component {
     }
 
     getTitleNext() {
-        let body = {};
+        const body = {};
         body.articleId = this.articleId;
         body.next = true;
         this.articleStore.postArticleDetailTitle(body).then(response => {
@@ -108,15 +110,15 @@ export default class Detail extends React.Component {
     handleVote() {
         if (this.userStore.userInfo.userId) {
 
-            if(this.isVote) { //本地模拟点赞 防止获取重复数据
+            if (this.isVote) { // 本地模拟点赞 防止获取重复数据
                 this.voteCount--;
                 this.isVote = !this.isVote;
-            }else {
+            } else {
                 this.voteCount++;
                 this.isVote = !this.isVote;
             }
 
-            let body = {};
+            const body = {};
             body.userId = this.userStore.userInfo.userId;
             body.articleId = this.articleId;
             body.isVote = this.isVote;
@@ -142,14 +144,14 @@ export default class Detail extends React.Component {
     }
 
     render() {
-        let {articleDetail} = this.articleStore;
+        const { articleDetail } = this.articleStore;
 
         return (
             this.isRender ?
                 <div className="detail">
                     <div className="detail-header">
                         <ArticleCell
-                            detail={true}
+                            detail
                             data={articleDetail}
                         />
                     </div>
@@ -161,15 +163,11 @@ export default class Detail extends React.Component {
                     <div className="detail-title">
                         {
                             this.nextTitle.articleId ?
-                                <Link
-                                    to={`/detail?articleId=${this.nextTitle.articleId}`}>{`« ${this.nextTitle.title}`}</Link>
-                                : <span>浏览到最前面啦!</span>
+                                <Link to={`/detail?articleId=${this.nextTitle.articleId}`}>{`« ${this.nextTitle.title}`}</Link> : <span>浏览到最前面啦!</span>
                         }
                         {
                             this.prevTitle.articleId ?
-                                <Link
-                                    to={`/detail?articleId=${this.prevTitle.articleId}`}>{`${this.prevTitle.title} »`}</Link>
-                                : <span>浏览到最末尾啦!</span>
+                                <Link to={`/detail?articleId=${this.prevTitle.articleId}`}>{`${this.prevTitle.title} »`}</Link> : <span>浏览到最末尾啦!</span>
                         }
                     </div>
                     <div className="detail-vote">

@@ -3,12 +3,12 @@
  */
 
 import React from 'react'
-import {observable} from 'mobx'
-import {observer} from 'mobx-react'
-import {createPortal} from 'react-dom'
+import { observer } from 'mobx-react'
+import { createPortal } from 'react-dom'
 import './dialog.sass'
-import {Button} from './index'
+import { Button } from './index'
 
+@observer
 export default class Dialog extends React.Component {
 
     constructor(args) {
@@ -37,7 +37,8 @@ export default class Dialog extends React.Component {
     }
 
     render() {
-        let {show, title, header, width, footer} = this.props;
+        const { show, title, header, width } = this.props;
+        let { footer } = this.props;
 
         if (footer && typeof footer === 'boolean') {
             footer = [
@@ -52,15 +53,15 @@ export default class Dialog extends React.Component {
                     <div className="zyc-dialog" data-flex="main:center cross:center">
                         <div className="dialog-bg" onClick={this.handleClose.bind(this)}>{null}</div>
                         <div className="dialog-content"
-                             style={{
-                                 width: width ? width : null
-                             }}
+                            style={{
+                                width: width || null
+                            }}
                         >
                             {
                                 header ?
                                     <div className="header" data-flex="main:justify dir:right">
                                         <i className="iconfont icon-guanbi"
-                                           onClick={this.handleClose.bind(this)}>{null}</i>
+                                            onClick={this.handleClose.bind(this)}>{null}</i>
                                         {
                                             title ? <span>{title}</span> : null
                                         }
@@ -70,14 +71,14 @@ export default class Dialog extends React.Component {
                             {
                                 footer ?
                                     <div className="footer">
-                                        {footer.map((button, index) => button)}
+                                        {footer.map(button => button)}
                                     </div> : null
                             }
                         </div>
                     </div>, this.node)
             )
-        } else {
-            return null
         }
+        return null
+
     }
 }

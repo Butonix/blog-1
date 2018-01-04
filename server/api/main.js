@@ -10,10 +10,10 @@ import vote from './vote'
 
 const router = express.Router();
 
-router.use('/user',user);
-router.use('/article',article);
-router.use('/tag',tag);
-router.use('/vote',vote);
+router.use('/user', user);
+router.use('/article', article);
+router.use('/tag', tag);
+router.use('/vote', vote);
 
 
 export default router
