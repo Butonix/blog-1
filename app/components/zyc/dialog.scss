@@ -1,0 +1,81 @@
+@import "../../styles/theme";
+
+.zyc-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+
+  .dialog-bg {
+    background: $black-1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+
+  .dialog-content {
+    border: 1px solid $color204;
+    background: $white-9;
+    border-radius: 8px;
+    padding: 20px 40px;
+    animation: dialogShow 0.3s cubic-bezier(0.1, 0.1, 0.8, 1.2) 0s 1;
+    -webkit-animation: dialogShow 0.3s cubic-bezier(0.1, 0.1, 0.8, 1.2) 0s 1;
+    transform-origin: center;
+    -webkit-transform-origin: center;
+
+    .header {
+      margin-bottom: 15px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid $color204;
+
+      i {
+        cursor: pointer;
+
+        &:hover {
+          color: $red;
+        }
+      }
+    }
+
+    @keyframes dialogShow {
+      from {
+        transform: scale(0);
+      }
+
+      to {
+        transform: scale(1);
+      }
+    }
+
+    @-webkit-keyframes dialogShow {
+      from {
+        -webkit-transform: scale(0);
+      }
+
+      to {
+        -webkit-transform: scale(1);
+      }
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+
+      button {
+        & + button {
+          margin-left: 15px;
+        }
+      }
+
+      .btn {
+        height: 28px;
+        padding: 0 18px;
+      }
+    }
+  }
+}

@@ -5,7 +5,7 @@
 import React from 'react';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react';
-import './homepage.sass';
+import './homepage.scss';
 import ArticleList from '../common/articleList';
 import { getScrollHeight, getScrollTop, getWindowHeight } from '../public/window';
 

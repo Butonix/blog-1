@@ -6,7 +6,7 @@ import React from 'react';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { NavLink, Link } from 'react-router-dom';
-import './header.sass';
+import './header.scss';
 import Login from './login';
 import { Dialog, DropDown, Menu } from '../zyc';
 import history from '../../history';

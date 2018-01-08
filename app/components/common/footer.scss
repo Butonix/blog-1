@@ -1,0 +1,38 @@
+@import "../../styles/theme";
+
+.com-footer {
+  background: $color245;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & + p {
+      margin-top: 5px;
+    }
+
+    i {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      background: url("../../img/beian.png");
+      background-size: 100%;
+      margin-right: 10px;
+    }
+
+    a {
+      &:hover {
+        color: $red-9;
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@ import remark from 'remark';
 import reactRenderer from 'remark-react';
 import { ArticleCell } from '../common/articleList';
 import splitLocation from '../public/location';
-import './detail.sass';
+import './detail.scss';
 import { Dialog } from '../zyc';
 
 @inject('UserStore', 'ArticleStore', 'VoteStore') @observer

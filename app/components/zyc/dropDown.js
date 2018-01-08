@@ -6,7 +6,7 @@ import React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import Portal from './portal';
-import './dropDown.sass';
+import './dropDown.scss';
 
 
 @observer

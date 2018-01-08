@@ -6,7 +6,7 @@ import React from 'react'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import { createPortal } from 'react-dom'
-import './canvas.sass'
+import './canvas.scss'
 
 @observer
 export default class Canvas extends React.Component {

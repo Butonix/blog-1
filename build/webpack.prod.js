@@ -42,7 +42,7 @@ const prodConfig = {
                 })
             },
             {
-                test: /\.sass$/,
+                test: /\.(scss|sass)$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [

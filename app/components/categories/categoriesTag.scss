@@ -1,0 +1,48 @@
+@import "../../styles/theme";
+
+.categories-tag {
+  .no-data {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    color: $color153;
+  }
+
+  section {
+    &:before {
+      top: 25px;
+    }
+
+    h2 {
+      padding: 15px 30px;
+
+      .tip {
+        font-size: 90%;
+        font-weight: bold;
+        color: $color204;
+        margin-left: 10px;
+      }
+    }
+
+    .tag-list {
+      margin-top: 40px;
+
+      li {
+        padding: 15px 30px;
+        border-bottom: 1px dashed $color204;
+
+        &:hover {
+          border-color: $color102;
+
+          a {
+            color: $color51;
+          }
+        }
+
+        span {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

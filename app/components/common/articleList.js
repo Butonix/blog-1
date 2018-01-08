@@ -7,7 +7,7 @@ import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import dateFormat from 'dateformat';
-import './articleList.sass';
+import './articleList.scss';
 
 class ArticleList extends React.Component {
     render() {

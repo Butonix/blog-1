@@ -1,0 +1,79 @@
+@import "../../styles/theme";
+
+.detail {
+  .detail-header {}
+
+  .detail-content {
+    margin-top: 80px;
+  }
+
+  .detail-title {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid $color233;
+    padding-top: 10px;
+    margin-top: 30px;
+
+    a {
+      &:hover {
+        color: $red;
+      }
+    }
+  }
+
+  .detail-vote {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+
+    div {
+      font-size: 16px;
+      padding: 5px 20px;
+      border: 1px solid $color153;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &.vote {
+        border-color: $red-9;
+        color: $red-9;
+      }
+
+      &:hover {
+        border-color: $red-9;
+        background: $red-9;
+        color: $white-9;
+      }
+
+      i {
+        margin-right: 6px;
+      }
+    }
+  }
+}
+
+.dialog-tip {
+  text-align: center;
+
+  h2 {
+    margin-bottom: 30px;
+  }
+
+  p {
+    & + p {
+      margin-top: 20px;
+    }
+
+    &.login {
+      padding: 6px 50px;
+      border: 1px solid $color153;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:hover {
+        border-color: $red-9;
+        background: $red-9;
+        color: $white-9;
+      }
+    }
+  }
+}

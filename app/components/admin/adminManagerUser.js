@@ -7,7 +7,7 @@ import { observable, toJS } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import Table from 'rc-table';
 import Pagination from 'rc-pagination';
-import './adminManagerUser.sass';
+import './adminManagerUser.scss';
 import { Dialog, Input, Button } from '../zyc';
 
 @inject('UserStore') @observer

@@ -14,7 +14,7 @@ import {
     AdminNewArticle,
 } from '../components/admin';
 import { AdminMenu, AdminContent } from '../components/common';
-import './routeAdmin.sass';
+import './routeAdmin.scss';
 
 @observer
 export default class RouteAdmin extends React.Component {

@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { observer } from 'mobx-react';
-import './input.sass';
+import './input.scss';
 
 @observer
 export default class Input extends React.Component {

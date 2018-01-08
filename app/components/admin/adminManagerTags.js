@@ -5,7 +5,7 @@
 import React from 'react';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react';
-import './adminManagerTags.sass';
+import './adminManagerTags.scss';
 import { Button, Input, Tag, Message } from '../zyc';
 
 

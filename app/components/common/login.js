@@ -7,7 +7,7 @@ import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import md5 from 'blueimp-md5';
 import { Message } from '../zyc';
-import './login.sass';
+import './login.scss';
 import { Username, Password } from '../public/regular';
 
 

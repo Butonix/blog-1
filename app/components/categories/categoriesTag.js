@@ -8,7 +8,7 @@ import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import Pagination from 'rc-pagination';
 import dateFormat from 'dateformat';
-import './categoriesTag.sass';
+import './categoriesTag.scss';
 
 
 @inject('ArticleStore') @observer

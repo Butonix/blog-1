@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import './tag.sass';
+import './tag.scss';
 
 export default class Tag extends React.Component {
 

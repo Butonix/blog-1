@@ -7,7 +7,7 @@ import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import Pagination from 'rc-pagination';
 import dateFormat from 'dateformat';
-import './adminManagerArticle.sass';
+import './adminManagerArticle.scss';
 import { Button } from '../zyc';
 import history from '../../history';
 

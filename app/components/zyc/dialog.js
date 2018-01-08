@@ -5,7 +5,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { createPortal } from 'react-dom';
-import './dialog.sass';
+import './dialog.scss';
 import { Button } from './index';
 
 @observer
