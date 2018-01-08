@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/scriptchao/blog#readme",
   "dependencies": {
+    "autoprefixer": "^7.2.4",
     "bluebird": "^3.5.1",
     "blueimp-md5": "^2.10.0",
     "body-parser": "^1.18.2",
@@ -68,7 +69,6 @@
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
-    "autoprefixer": "^7.1.6",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.1.2",
     "babel-loader": "^7.1.2",

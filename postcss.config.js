@@ -1,6 +1,8 @@
 /**
  * Created by scriptchao on 2017/11/15.
  */
+const autoprefixer = require('autoprefixer')
+
 const options = {
     rootValue: 50,
     propList: ['*'],
@@ -8,7 +10,7 @@ const options = {
 
 module.exports = {
     plugins: [
-        require('autoprefixer')({
+        autoprefixer({
             // browsers: ['last 2 versions']
             browsers: ['last 10 Chrome versions', 'last 5 Firefox versions', 'Safari >= 6', 'ie > 8']
         }),
