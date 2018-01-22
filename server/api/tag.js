@@ -33,7 +33,7 @@ router.post('/add', (req, res) => {
 
                 const tag = new Tag({
                     name,
-                    tagId: data.seq
+                    tagId: data1.seq
                 });
 
                 return tag.save().then((data2) => {

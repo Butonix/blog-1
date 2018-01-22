@@ -10,6 +10,7 @@ import { Header, Main, Footer } from '../components/common';
 import { Homepage } from '../components/homepage';
 import { Categories, CategoriesTag } from '../components/categories';
 import { Detail } from '../components/detail';
+import { Test } from '../components/test';
 
 @observer
 export default class RouteVisitor extends React.Component {

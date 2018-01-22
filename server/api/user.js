@@ -47,7 +47,6 @@ router.post('/login', (req, res) => {
         password,
     }).then((data) => {
         if (data) {
-            console.log(data);
             if (data.isUsed) {
                 const userInfo = {};
                 userInfo.username = data.username;
@@ -124,9 +123,9 @@ router.post('/update', (req, res) => {
     let failMessage;
 
 
-    if (isUsed) {
+    if (typeof isUsed === 'boolean') {
         searchContent.isUsed = isUsed;
-        if (isUsed === 'true') {
+        if (isUsed) {
             successMessage = '启用成功!';
             failMessage = '启用失败!';
         } else {

@@ -19,6 +19,7 @@ router.post('/add', (req, res) => {
 
     const author = req.session.userInfo.username;
 
+
     Article.findOne({ title })
         .then((data) => {
             if (data) {
@@ -36,9 +37,9 @@ router.post('/add', (req, res) => {
                         title,
                         content,
                         author,
-                        tags: tags.split(','),
+                        tags,
                         isPublish,
-                        articleId: data.seq
+                        articleId: data1.seq
                     });
 
                     return article.save().then((data2) => {
@@ -94,7 +95,7 @@ router.post('/list', (req, res) => {
     }
 
     if (tags) {
-        searchContent.tags = { $all: tags.split(',') };
+        searchContent.tags = { $all: tags };
     }
 
     if (isPublish) {
@@ -207,12 +208,12 @@ router.post('/update', (req, res) => {
         searchContent.content = content;
     }
     if (tags) {
-        searchContent.tags = tags.split(',');
+        searchContent.tags = tags;
     }
-    if (isPublish) {
+    if (typeof isPublish === 'boolean') {
 
         searchContent.isPublish = isPublish;
-        if (isPublish === 'true') {
+        if (isPublish) {
             successMessage = '文章发布成功!';
             failMessage = '文章发布失败!';
         } else {

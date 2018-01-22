@@ -20,12 +20,13 @@ const xhr = (req = {}) => {
     }
 
     if (method === 'post' || method === 'POST') {
-        options.body = search;
+        options.body = JSON.stringify(body);
+        // options.body = search;
     }
 
     options.headers = {
-        'Content-Type': 'application/x-www-form-urlencoded', // body 为a&b
-        // 'Content-Type': "application/json", // body 为JSON.Stringify({}) // 文件上传和 formData 不需要 content-type
+        // 'Content-Type': 'application/x-www-form-urlencoded', // body 为a&b
+        'Content-Type': 'application/json', // body 为JSON.Stringify({}) // 文件上传和 formData 不需要 content-type // 必须用这个 传什么解析出来的就是什么
     };
     options.method = method;
     // options.mode = 'cors';
