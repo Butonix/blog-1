@@ -1,0 +1,21 @@
+@import ../../styles/theme
+
+.zyc-menu
+  .zyc-menu-item
+    display: flex
+    align-items: center
+    height: 34px
+    padding: 0 12px
+    cursor: pointer
+
+    & + .zyc-menu-item
+      border-top: 1px solid $color204
+
+    &:hover
+      background: $red-1
+
+    i
+      margin-right: 5px
+      position: relative
+      top: 2px
+      font-size: 14px

@@ -5,7 +5,7 @@
 import React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import './adminContent.scss';
+import './adminContent.sass';
 
 @observer
 export default class AdminContent extends React.Component {

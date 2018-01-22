@@ -6,7 +6,7 @@ import React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { createPortal } from 'react-dom';
-import './portal.scss';
+import './portal.sass';
 
 @observer
 export default class Portal extends React.Component {

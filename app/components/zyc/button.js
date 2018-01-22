@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { observer } from 'mobx-react';
-import './button.scss';
+import './button.sass';
 
 @observer
 export default class Button extends React.Component {

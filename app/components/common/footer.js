@@ -5,7 +5,7 @@
 import React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import './footer.scss';
+import './footer.sass';
 
 
 @observer

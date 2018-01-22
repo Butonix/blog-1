@@ -6,7 +6,7 @@ import React from 'react';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import { NavLink } from 'react-router-dom';
-import './adminMenu.scss';
+import './adminMenu.sass';
 
 @inject('UserStore') @observer
 export default class AdminMenu extends React.Component {

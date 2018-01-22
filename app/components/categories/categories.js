@@ -6,7 +6,7 @@ import React from 'react';
 import { observable } from 'mobx';
 import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import './categories.scss';
+import './categories.sass';
 
 @inject('TagStore') @observer
 export default class Categories extends React.Component {

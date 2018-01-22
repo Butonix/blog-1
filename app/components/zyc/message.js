@@ -6,7 +6,7 @@ import React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import ReactDom from 'react-dom';
-import './message.scss';
+import './message.sass';
 
 @observer
 class Message extends React.Component {

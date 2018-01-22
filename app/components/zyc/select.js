@@ -7,7 +7,7 @@ import ReactDom from 'react-dom';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import Portal from './portal';
-import './select.scss';
+import './select.sass';
 
 class SelectItem extends React.Component {
 

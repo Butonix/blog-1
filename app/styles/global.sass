@@ -1,0 +1,93 @@
+@import ./theme
+
+*
+  box-sizing: border-box
+
+html
+  height: 100%
+
+body
+  font-size: 14px
+  min-width: 1200px
+  max-width: 1920px
+  color: $color102
+  min-height: 100%
+  position: relative
+
+ul,
+li
+  list-style: none
+  margin: 0
+  padding: 0
+  outline: none
+
+p
+  margin: 0
+  padding: 0
+
+a
+  text-decoration: none
+  color: inherit
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
+  margin: 0
+  padding: 0
+  font-weight: 500
+
+input
+  background: transparent
+  border: 1px solid $color204
+  border-radius: 5px
+  outline: none
+
+  &::-webkit-input-placeholder
+    color: $color153
+
+  &:-moz-placeholder
+    color: $color153
+
+  &::-moz-placeholder
+    color: $color153
+
+  &:-ms-input-placeholder
+    color: $color153
+
+input[type="checkbox"],
+input[type="radio"]
+  position: relative
+  top: 2px
+
+textarea
+  background: transparent
+  border: 1px solid $color204
+  border-radius: 5px
+  resize: none
+  outline: none
+
+  &::-webkit-input-placeholder
+    color: $color153
+
+  &:-moz-placeholder
+    color: $color153
+
+  &::-moz-placeholder
+    color: $color153
+
+  &:-ms-input-placeholder
+    color: $color153
+
+button
+  color: inherit
+
+  &:focus
+    outline: none
+
+.zyc-pager
+  display: flex
+  justify-content: center
+  margin-top: 20px

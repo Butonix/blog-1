@@ -1,0 +1,43 @@
+@import ../../styles/theme
+
+.zyc-message
+  position: fixed
+  top: 20px
+  z-index: 1000
+  left: 50%
+  transform: translateX(-50%)
+  overflow: hidden
+
+  .message-item
+    padding: 4px 20px
+    border-radius: 4px
+    position: relative
+    animation: messageShow 0.2s ease-out, messageHidden 0.2s ease-in 3.8s
+
+    @keyframes messageShow
+      from
+        top: -30px
+
+      to
+        top: 0
+
+    @keyframes messageHidden
+      from
+        top: 0
+
+      to
+        top: -30px
+
+    & + .message-item
+      margin-top: 10px
+
+    &.success
+      color: $green
+      border: 1px solid $green
+
+    &.error
+      color: $red
+      border: 1px solid $red
+
+    i
+      margin-right: 5px

@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { observer } from 'mobx-react';
-import './menu.scss';
+import './menu.sass';
 
 @observer
 class MenuItem extends React.Component {

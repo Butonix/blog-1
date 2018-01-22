@@ -5,7 +5,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { observer } from 'mobx-react';
-import './spin.scss';
+import './spin.sass';
 
 @observer
 class Spin extends React.Component {

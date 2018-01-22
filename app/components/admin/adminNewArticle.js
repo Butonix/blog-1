@@ -7,7 +7,7 @@ import { observable, toJS } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import remark from 'remark';
 import reactRenderer from 'remark-react';
-import './adminNewArticle.scss';
+import './adminNewArticle.sass';
 import { Button, Select, Input, Dialog, Message } from '../zyc';
 import splitLocation from '../public/location';
 import history from '../../history';
