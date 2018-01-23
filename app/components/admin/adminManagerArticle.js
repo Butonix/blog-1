@@ -10,11 +10,14 @@ import dateFormat from 'dateformat';
 import './adminManagerArticle.sass';
 import { Button } from '../zyc';
 import history from '../../history';
+import DialogDelete from '../common/dialogDelete'
 
 @inject('ArticleStore') @observer
 export default class AdminManagerArticle extends React.Component {
     @observable page = 1;
     @observable size = 5;
+
+    @observable deleteShow;
 
     constructor(args) {
         super(args);
@@ -41,24 +44,39 @@ export default class AdminManagerArticle extends React.Component {
     }
 
     handleDelete(articleId) {
-        const body = {};
-        body.articleId = articleId;
-        this.articleStore.postArticleDelete(body).then((response) => {
-            if (response) {
-                this.getArticleList();
-            }
-        });
+        this.articleId = articleId;
+        this.deleteShow = true;
+
     }
+
+    handleDeleteSure = () => {
+
+        const body = {};
+        body.articleId = this.articleId;
+        this.articleStore.postArticleDelete(body)
+            .then((response) => {
+                if (response) {
+                    this.deleteShow = false;
+                    this.getArticleList();
+                }
+            });
+    };
+
+
+    handleClose = () => {
+        this.deleteShow = false
+    };
 
     handlePublish(articleId, isPublish) {
         const body = {};
         body.articleId = articleId;
         body.isPublish = isPublish;
-        this.articleStore.postArticleUpdate(body).then((response) => {
-            if (response) {
-                this.getArticleList();
-            }
-        });
+        this.articleStore.postArticleUpdate(body)
+            .then((response) => {
+                if (response) {
+                    this.getArticleList();
+                }
+            });
     }
 
     render() {
@@ -85,6 +103,11 @@ export default class AdminManagerArticle extends React.Component {
                         onChange={this.handlePageChange.bind(this)}
                     />
                 </div>
+                <DialogDelete
+                    show={this.deleteShow}
+                    onOk={this.handleDeleteSure}
+                    onClose={this.handleClose}
+                />
             </div>
         );
     }

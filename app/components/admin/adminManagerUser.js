@@ -9,12 +9,16 @@ import Table from 'rc-table';
 import Pagination from 'rc-pagination';
 import './adminManagerUser.sass';
 import { Dialog, Input, Button } from '../zyc';
+import DialogDelete from '../common/dialogDelete'
 
 @inject('UserStore') @observer
 export default class AdminManagerUser extends React.Component {
     @observable page = 1;
     @observable size = 5;
+
     @observable authorityShow;
+    @observable deleteShow;
+
     @observable userType;
     @observable userId;
 
@@ -51,31 +55,30 @@ export default class AdminManagerUser extends React.Component {
     }
 
     handleDelete(userId) {
+        this.userId = userId;
+        this.deleteShow = true;
+
+    }
+
+    handleDeleteSure = () => {
+
         const body = {};
-        body.userId = userId;
+        body.userId = this.userId;
         this.userStore.postUserDelete(body).then((response) => {
             if (response) {
+                this.deleteShow = false;
                 this.getUserList();
             }
         });
-    }
+    };
 
     handleModify(userType, userId) {
         this.userType = userType;
         this.userId = userId;
         this.authorityShow = true;
-
     }
 
-    handleChangeType(userType) {
-        this.userType = userType;
-    }
-
-    handleClose() {
-        this.authorityShow = false;
-    }
-
-    handleOk() {
+    handleModifySure = () => {
         const body = {};
         body.userId = this.userId;
         body.userType = this.userType;
@@ -85,7 +88,17 @@ export default class AdminManagerUser extends React.Component {
                 this.getUserList();
             }
         });
+    };
+
+    handleChangeType(userType) {
+        this.userType = userType;
     }
+
+    handleClose = () => {
+        this.authorityShow = false;
+        this.deleteShow = false;
+    };
+
 
     render() {
         const { userList, userCount } = this.userStore;
@@ -158,24 +171,29 @@ export default class AdminManagerUser extends React.Component {
                     title="权限修改"
                     show={this.authorityShow}
                     width={300}
-                    onOk={this.handleOk.bind(this)}
-                    onClose={this.handleClose.bind(this)}
+                    onOk={this.handleModifySure}
+                    onClose={this.handleClose}
                 >
                     <div className="dialog-authority">
                         <input
                             type="radio"
                             name="type"
-                            checked={this.userType == 2}
+                            checked={this.userType === 2}
                             onChange={this.handleChangeType.bind(this, 2)} />
                         <label className="user">用户</label>
                         <input
                             type="radio"
                             name="type"
-                            checked={this.userType == 3}
+                            checked={this.userType === 3}
                             onChange={this.handleChangeType.bind(this, 3)} />
                         <label>游客</label>
                     </div>
                 </Dialog>
+                <DialogDelete
+                    show={this.deleteShow}
+                    onOk={this.handleDeleteSure}
+                    onClose={this.handleClose}
+                />
             </div>
         );
     }

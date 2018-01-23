@@ -9,51 +9,50 @@ import { responseClient, md5, MD5_SUFFIX } from '../util';
 
 const router = express.Router();
 
-router.post('/add', (req, res) => {
+router.post('/add', async (req, res) => {
     const {
         title,
         content,
         tags,
-        isPublish
+        isPublish,
     } = req.body;
 
     const author = req.session.userInfo.username;
 
+    try {
 
-    Article.findOne({ title })
-        .then((data) => {
-            if (data) {
-                responseClient(res, 200, 0, '文章已存在,请更换标题!');
-                return false;
-            }
-            return Id.findOneAndUpdate({ _id: 'articleId' }, {
-                $inc: {
-                    seq: 1
-                }
-            }).then((data1) => {
+        const data = await Article.findOne({ title });
 
-                if (data1) {
-                    const article = new Article({
-                        title,
-                        content,
-                        author,
-                        tags,
-                        isPublish,
-                        articleId: data1.seq
-                    });
+        if (data) {
+            responseClient(res, 200, 0, '文章已存在,请更换标题!');
+            return false;
+        }
 
-                    return article.save().then((data2) => {
-                        responseClient(res, 200, 1, '文章保存成功!', data2);
-                    });
-                }
-
-                return false;
-            });
-
-        })
-        .catch((err) => {
-            responseClient(res);
+        const data1 = await Id.findOneAndUpdate({ _id: 'articleId' }, {
+            $inc: {
+                seq: 1,
+            },
         });
+
+        const article = new Article({
+            title,
+            content,
+            author,
+            tags,
+            isPublish,
+            articleId: data1.seq,
+        });
+
+        const data2 = await article.save();
+
+        responseClient(res, 200, 1, '文章保存成功!', data2);
+
+
+    } catch (e) {
+        responseClient(res);
+    }
+
+    return true
 });
 
 router.post('/list', (req, res) => {
@@ -61,35 +60,35 @@ router.post('/list', (req, res) => {
         isPublish,
         tags,
         author,
-        sort
+        sort,
     } = req.body;
     let { page, size } = req.body;
     page = parseInt(page, 0);
     size = parseInt(size, 0);
     const searchContent = {};
     let searchSort = {
-        createTime: -1
+        createTime: -1,
     };
 
     if (sort) {
-        if (sort == 'createTime,1') {
+        if (sort === 'createTime,1') {
             searchSort = {
-                createTime: 1
+                createTime: 1,
             };
         }
-        if (sort == 'createTime,-1') {
+        if (sort === 'createTime,-1') {
             searchSort = {
-                createTime: -1
+                createTime: -1,
             };
         }
-        if (sort == 'updateTime,1') {
+        if (sort === 'updateTime,1') {
             searchSort = {
-                updateTime: 1
+                updateTime: 1,
             };
         }
-        if (sort == 'updateTime,-1') {
+        if (sort === 'updateTime,-1') {
             searchSort = {
-                updateTime: -1
+                updateTime: -1,
             };
         }
     }
@@ -111,7 +110,7 @@ router.post('/list', (req, res) => {
     const skip = (page - 1) * size;
     const responseData = {
         total: 0,
-        list: []
+        list: [],
     };
 
     Article.count(searchContent)
@@ -120,11 +119,12 @@ router.post('/list', (req, res) => {
             return Article.find(searchContent, 'articleId title isPublish author tags readCount voteCount createTime updateTime -_id', {
                 skip,
                 limit: size,
-                sort: searchSort
-            }).then((data) => {
-                responseData.list = data;
-                responseClient(res, 200, 1, '获取文章列表成功!', responseData);
-            });
+                sort: searchSort,
+            })
+                .then((data) => {
+                    responseData.list = data;
+                    responseClient(res, 200, 1, '获取文章列表成功!', responseData);
+                });
         })
         .catch((err) => {
             responseClient(res);
@@ -168,35 +168,37 @@ router.post('/detail/title', (req, res) => {
     if (prev) {
         Article.findOne({ articleId: { $lt: articleId } }, 'articleId title', {
             sort: {
-                articleId: -1
-            }
-        }).then((data) => {
-            if (data) {
-                responseClient(res, 200, 1, '文章查找成功!', data);
-            } else {
-                responseClient(res, 200, 1, '未找到该文章!');
-            }
+                articleId: -1,
+            },
+        })
+            .then((data) => {
+                if (data) {
+                    responseClient(res, 200, 1, '文章查找成功!', data);
+                } else {
+                    responseClient(res, 200, 1, '未找到该文章!');
+                }
 
-        });
+            });
     }
 
     if (next) {
         Article.findOne({ articleId: { $gt: articleId } }, 'articleId title', {
             sort: {
-                articleId: 1
-            }
-        }).then((data) => {
-            if (data) {
-                responseClient(res, 200, 1, '文章查找成功!', data);
-            } else {
-                responseClient(res, 200, 1, '未找到该文章!');
-            }
+                articleId: 1,
+            },
+        })
+            .then((data) => {
+                if (data) {
+                    responseClient(res, 200, 1, '文章查找成功!', data);
+                } else {
+                    responseClient(res, 200, 1, '未找到该文章!');
+                }
 
-        });
+            });
     }
 });
 
-router.post('/update', (req, res) => {
+router.post('/update', async (req, res) => {
     const { articleId, title, content, tags, isPublish } = req.body;
     let successMessage = '文章更新成功!';
     let failMessage = '文章更新失败!';
@@ -222,20 +224,22 @@ router.post('/update', (req, res) => {
         }
     }
 
+    try {
+        const data = await Article.update({ articleId }, searchContent);
 
-    Article.update({ articleId }, searchContent)
-        .then((data) => {
-            if (data.n) {
-                responseClient(res, 200, 1, successMessage, data);
+        if (data.n) {
+            responseClient(res, 200, 1, successMessage, data);
 
-            } else {
-                responseClient(res, 200, 0, failMessage);
-            }
+        } else {
+            responseClient(res, 200, 0, failMessage);
+        }
 
-        })
-        .catch((err) => {
-            responseClient(res);
-        });
+
+    } catch (e) {
+        responseClient(res);
+    }
+
+    return true;
 });
 
 router.post('/update/readCount', (req, res) => {
@@ -243,15 +247,16 @@ router.post('/update/readCount', (req, res) => {
 
     Article.update({ articleId }, {
         $inc: {
-            readCount: 1
-        }
-    }).then((data) => {
-        if (data.n) {
-            responseClient(res, 200, 1, '阅读量更新成功!');
-        } else {
-            responseClient(res, 200, 0, '阅读量更新失败!');
-        }
-    });
+            readCount: 1,
+        },
+    })
+        .then((data) => {
+            if (data.n) {
+                responseClient(res, 200, 1, '阅读量更新成功!');
+            } else {
+                responseClient(res, 200, 0, '阅读量更新失败!');
+            }
+        });
 });
 
 export default router;
