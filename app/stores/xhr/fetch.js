@@ -47,6 +47,7 @@ const xhr = (req = {}) => {
 
     return fetch(origin + xUrl, options)
         .then((res) => {
+            console.log(res);
             if (res.ok) { // 200-299 ok的条件
 
                 return res.json();
