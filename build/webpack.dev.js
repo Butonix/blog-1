@@ -69,7 +69,7 @@ const devConfig = {
             filename: 'index.html',
             template: path.join(entryPath, 'index.html')
         }),
-    ]
+    ],
 };
 
 export default merge(baseConfig, devConfig);

@@ -2,6 +2,8 @@
  * Created by scriptchao on 2017/11/2.
  */
 import axios from 'axios'
+import NProgress from 'nprogress'
+import '../../styles/nprogress.sass'
 import { origin, expiredTime } from './config';
 import { Message } from '../../components/zyc';
 
@@ -13,6 +15,7 @@ const config = {
 };
 
 axios.interceptors.request.use((requestConfig) => {
+    NProgress.start();
 
     const { localStorage, location } = window;
 
@@ -32,6 +35,7 @@ axios.interceptors.request.use((requestConfig) => {
 });
 
 axios.interceptors.response.use((res) => {
+    NProgress.done();
 
     if (res.statusText === 'OK') {
         return res.data;
