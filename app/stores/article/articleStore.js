@@ -108,7 +108,6 @@ class ArticleStore {
             }
 
             Message.error(response.message);
-            Message.error(response.result);
 
             return false;
 

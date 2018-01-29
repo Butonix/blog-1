@@ -39,7 +39,7 @@ axios.interceptors.response.use((res) => {
 
     Message.success(res.statusText);
     Message.success(res.status);
-    if (res.statusText === 'OK') {
+    if (res.statusText === 'OK' || res.statusText === '') {
         return res.data;
     }
 
