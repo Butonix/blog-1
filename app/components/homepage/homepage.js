@@ -7,7 +7,7 @@ import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import './homepage.sass';
 import ArticleList from '../common/articleList';
-import { getScrollHeight, getScrollTop, getWindowHeight } from '../public/window';
+import { getScrollHeight, getScrollXY, getWindowHeight } from '../public/window';
 
 @inject('ArticleStore') @observer
 export default class Homepage extends React.Component {
@@ -48,10 +48,15 @@ export default class Homepage extends React.Component {
     }
 
     scroll() {
+        const data = getScrollXY();
+        if (data.type === 'y') {
 
-        if (getScrollHeight() == getScrollTop() + getWindowHeight()) {
-            this.page++;
-            this.getArticleList();
+            if (getScrollHeight() === data.distance + getWindowHeight()) {
+
+                this.page++;
+                this.getArticleList();
+            }
+
         }
     }
 

@@ -29,7 +29,7 @@ axios.interceptors.request.use((requestConfig) => {
             return false
         }
     }
-    console.log(requestConfig);
+    // console.log(requestConfig);
 
     return requestConfig
 });
@@ -40,6 +40,7 @@ axios.interceptors.response.use((res) => {
     if (res.statusText === 'OK') {
         return res.data;
     }
+
 
     Message.error(res.status);
     return false
