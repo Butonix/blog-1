@@ -37,12 +37,9 @@ axios.interceptors.request.use((requestConfig) => {
 axios.interceptors.response.use((res) => {
     NProgress.done();
 
-    Message.success(res.statusText);
-    Message.success(res.status);
     if (res.statusText === 'OK' || res.statusText === '') {
         return res.data;
     }
-
 
     Message.error(res.status);
     return false
