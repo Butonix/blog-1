@@ -100,12 +100,16 @@ class ArticleStore {
             url: this.articleListUrl,
             body,
         }).then((response) => {
+
             if (response.result) {
                 this.articleList = response.data.list;
                 this.articleCount = response.data.total;
                 return Promise.resolve(response);
             }
+
             Message.error(response.message);
+            Message.error(response.result);
+
             return false;
 
         });

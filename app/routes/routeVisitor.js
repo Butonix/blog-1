@@ -15,11 +15,6 @@ import { Test } from '../components/test';
 @observer
 export default class RouteVisitor extends React.Component {
 
-    static propTypes = {
-        match: PropTypes.object.isRequired,
-    };
-
-
     render() {
         const { url } = this.props.match;
 
