@@ -7,6 +7,7 @@ import { Provider } from 'mobx-react';
 import history from './history';
 import stores from './stores';
 import App from './routes';
+import './styles/index.sass';
 
 // window.stores = window.stores || Stores; // react-hot-loader 警告
 

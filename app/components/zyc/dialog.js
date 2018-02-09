@@ -50,7 +50,7 @@ export default class Dialog extends React.Component {
         if (show) {
             return (
                 createPortal(
-                    <div className="zyc-dialog" data-flex="main:center cross:center">
+                    <div className="zyc-dialog">
                         <div className="dialog-bg" onClick={this.handleClose.bind(this)}>{null}</div>
                         <div className="dialog-content"
                             style={{
@@ -59,7 +59,7 @@ export default class Dialog extends React.Component {
                         >
                             {
                                 header ?
-                                    <div className="header" data-flex="main:justify dir:right">
+                                    <div className="header">
                                         <i className="iconfont icon-guanbi"
                                             onClick={this.handleClose.bind(this)}>{null}</i>
                                         {

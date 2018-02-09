@@ -7,6 +7,14 @@
   "plugins": [
     "syntax-dynamic-import",
     "transform-runtime",
-    "transform-decorators-legacy"
+    "transform-decorators-legacy",
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "es",
+        "style": true
+      }
+    ]
   ]
 }

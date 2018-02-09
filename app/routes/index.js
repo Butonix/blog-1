@@ -5,7 +5,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Route, Switch } from 'react-router-dom';
-import '../styles/index.sass';
 import RouteAdmin from './routeAdmin';
 import RouteVisitor from './routeVisitor';
 import { BackTop, Canvas } from '../components/zyc';

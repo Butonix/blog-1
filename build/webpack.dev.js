@@ -9,6 +9,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import baseConfig from './webpack.base';
 import config from '../config';
+import theme from '../theme';
 
 const rootPath = path.resolve(__dirname, '..');
 const entryPath = path.join(rootPath, 'app');
@@ -51,6 +52,20 @@ const devConfig = {
                         }
                     },
                     'sass-loader',
+                ]
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'postcss-loader',
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            'modifyVars': theme
+                        }
+                    }
                 ]
             },
         ]

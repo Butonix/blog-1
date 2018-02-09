@@ -3,9 +3,10 @@
  */
 import React from 'react';
 import { Bundle } from '../zyc';
+import CategoriesTag from './categoriesTag';
 
 
 const Categories = props => <Bundle {...props} load={() => import('./categories')} />;
-const CategoriesTag = props => <Bundle {...props} load={() => import('./categoriesTag')} />;
+// const CategoriesTag = props => <Bundle {...props} load={() => import('./categoriesTag')} />;
 
 export { Categories, CategoriesTag };

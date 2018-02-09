@@ -5,8 +5,7 @@
 import React from 'react';
 import { observable, toJS } from 'mobx';
 import { inject, observer } from 'mobx-react';
-import Table from 'rc-table';
-import Pagination from 'rc-pagination';
+import { Pagination, Table } from 'antd';
 import './adminManagerUser.sass';
 import { Dialog, Input, Button } from '../zyc';
 import DialogDelete from '../common/dialogDelete'
@@ -47,11 +46,12 @@ export default class AdminManagerUser extends React.Component {
         const body = {};
         body.userId = userId;
         body.isUsed = isUsed;
-        this.userStore.postUserUpdate(body).then((response) => {
-            if (response) {
-                this.getUserList();
-            }
-        });
+        this.userStore.postUserUpdate(body)
+            .then((response) => {
+                if (response) {
+                    this.getUserList();
+                }
+            });
     }
 
     handleDelete(userId) {
@@ -64,12 +64,13 @@ export default class AdminManagerUser extends React.Component {
 
         const body = {};
         body.userId = this.userId;
-        this.userStore.postUserDelete(body).then((response) => {
-            if (response) {
-                this.deleteShow = false;
-                this.getUserList();
-            }
-        });
+        this.userStore.postUserDelete(body)
+            .then((response) => {
+                if (response) {
+                    this.deleteShow = false;
+                    this.getUserList();
+                }
+            });
     };
 
     handleModify(userType, userId) {
@@ -82,12 +83,13 @@ export default class AdminManagerUser extends React.Component {
         const body = {};
         body.userId = this.userId;
         body.userType = this.userType;
-        this.userStore.postUserUpdate(body).then((response) => {
-            if (response) {
-                this.authorityShow = false;
-                this.getUserList();
-            }
-        });
+        this.userStore.postUserUpdate(body)
+            .then((response) => {
+                if (response) {
+                    this.authorityShow = false;
+                    this.getUserList();
+                }
+            });
     };
 
     handleChangeType(userType) {
@@ -106,15 +108,15 @@ export default class AdminManagerUser extends React.Component {
         const columns = [{
             title: '姓名',
             dataIndex: 'username',
-            width: '15%'
+            width: '15%',
         }, {
             title: 'userId',
             dataIndex: 'userId',
-            width: '20%'
+            width: '20%',
         }, {
             title: '密码(加密后)',
             dataIndex: 'password',
-            width: '20%'
+            width: '20%',
         }, {
             title: '身份',
             dataIndex: 'userType',
@@ -122,7 +124,7 @@ export default class AdminManagerUser extends React.Component {
             render: (value, row) => {
                 const arr = ['未知', '管理员', '用户', '游客'];
                 return arr[value];
-            }
+            },
         }, {
             title: '操作',
             dataIndex: 'operation',
@@ -131,14 +133,17 @@ export default class AdminManagerUser extends React.Component {
                 <div>
                     {
                         row.isUsed ?
-                            <span className="zyc-text-green zyc-text-hover zyc-text-space"
+                            <span
+                                className="zyc-text-green zyc-text-hover zyc-text-space"
                                 onClick={this.handleUse.bind(this, row.userId, false)}>启用中</span> :
-                            <span className="zyc-text-red zyc-text-hover zyc-text-space"
+                            <span
+                                className="zyc-text-red zyc-text-hover zyc-text-space"
                                 onClick={this.handleUse.bind(this, row.userId, true)}>禁用中</span>
                     }
-                    <span className="zyc-text-hover zyc-text-space"
+                    <span
+                        className="zyc-text-hover zyc-text-space"
                         onClick={this.handleDelete.bind(this, row.userId)}>删除</span>
-                </div>
+                </div>,
         }, {
             title: '权限',
             dataIndex: 'authority',
@@ -146,7 +151,7 @@ export default class AdminManagerUser extends React.Component {
             render: (value, row) => (
                 row.userType !== 1 ?
                     <span className="zyc-text-hover" onClick={this.handleModify.bind(this, row.userType, row.userId)}>修改</span> : null
-            )
+            ),
         }];
 
         return (
@@ -155,8 +160,9 @@ export default class AdminManagerUser extends React.Component {
                 <section>
                     <Table
                         columns={columns}
-                        data={toJS(userList)}
+                        dataSource={toJS(userList)}
                         rowKey="userId"
+                        pagination={false}
                     />
                 </section>
                 <div className="zyc-pager">
@@ -179,13 +185,13 @@ export default class AdminManagerUser extends React.Component {
                             type="radio"
                             name="type"
                             checked={this.userType === 2}
-                            onChange={this.handleChangeType.bind(this, 2)} />
+                            onChange={this.handleChangeType.bind(this, 2)}/>
                         <label className="user">用户</label>
                         <input
                             type="radio"
                             name="type"
                             checked={this.userType === 3}
-                            onChange={this.handleChangeType.bind(this, 3)} />
+                            onChange={this.handleChangeType.bind(this, 3)}/>
                         <label>游客</label>
                     </div>
                 </Dialog>

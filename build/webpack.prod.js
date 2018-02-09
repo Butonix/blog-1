@@ -10,6 +10,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import baseConfig from './webpack.base';
+import theme from '../theme';
 
 
 const rootPath = path.resolve(__dirname, '..');
@@ -49,6 +50,22 @@ const prodConfig = {
                         'css-loader',
                         'postcss-loader',
                         'sass-loader',
+                    ]
+                })
+            },
+            {
+                test: /\.less$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        'css-loader',
+                        'postcss-loader',
+                        {
+                            loader: 'less-loader',
+                            options: {
+                                'modifyVars': theme
+                            }
+                        }
                     ]
                 })
             },

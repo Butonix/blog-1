@@ -6,8 +6,8 @@ import React from 'react';
 import { observable } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import Pagination from 'rc-pagination';
 import dateFormat from 'dateformat';
+import { Pagination } from 'antd';
 import './categoriesTag.sass';
 
 

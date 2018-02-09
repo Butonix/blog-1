@@ -6,6 +6,7 @@ import React from 'react';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import md5 from 'blueimp-md5';
+import { Button, Input, Icon } from 'antd';
 import { Message } from '../zyc';
 import './login.sass';
 import { Username, Password } from '../public/regular';
@@ -31,8 +32,8 @@ class Login extends React.Component {
                 />
                 {
                     this.type ?
-                        <LoginForm /> :
-                        <RegisterForm />
+                        <LoginForm/> :
+                        <RegisterForm/>
                 }
             </div>
         );
@@ -51,10 +52,12 @@ class LoginTab extends React.Component {
         const { type } = this.props;
         return (
             <div className="login-tab">
-                <span className={type ? '' : 'active'}
+                <span
+                    className={type ? '' : 'active'}
                     onClick={this.handleTab.bind(this, 0)}>注册</span>
                 <i>-</i>
-                <span className={type ? 'active' : ''}
+                <span
+                    className={type ? 'active' : ''}
                     onClick={this.handleTab.bind(this, 1)}>登录</span>
             </div>
         );
@@ -69,6 +72,9 @@ class LoginTab extends React.Component {
 @inject('UserStore') @observer
 class LoginForm extends React.Component {
 
+    @observable username = '';
+    @observable password = '';
+
     constructor(args) {
         super(args);
         this.userStore = this.props.UserStore;
@@ -78,44 +84,61 @@ class LoginForm extends React.Component {
         return (
             <ul className="login-form">
                 <li>
-                    <i className="iconfont icon-yonghuming">{null}</i>
-                    <input type="text" placeholder="username" ref="username" />
+                    <Input
+                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                        placeholder="username"
+                        value={this.username}
+                        onChange={(e) => {
+                            this.username = e.target.value
+                        }}
+                    />
                 </li>
                 <li>
-                    <i className="iconfont icon-mima">{null}</i>
-                    <input type="password" placeholder="password" ref="password" />
+                    <Input
+                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                        placeholder="password"
+                        value={this.password}
+                        onChange={(e) => {
+                            this.password = e.target.value
+                        }}
+                    />
                 </li>
                 <li>
-                    <span onClick={this.handleLogin.bind(this)}>登录</span>
+                    <Button
+                        type="primary"
+                        style={{ width: '100%', borderRadius: '20px' }}
+                        onClick={this.handleLogin.bind(this)}
+                    >
+                        登录
+                    </Button>
                 </li>
             </ul>
         );
     }
 
     handleLogin() {
-        const username = this.refs.username.value;
-        const password = this.refs.password.value;
 
-        if (!username) {
+        if (!this.username) {
             Message.error('用户名不能为空!');
             return false;
         }
-        if (!password) {
+        if (!this.password) {
             Message.error('密码不能为空!');
             return false;
         }
 
         const body = {};
-        body.username = username;
-        body.password = md5(password);
+        body.username = this.username;
+        body.password = md5(this.password);
 
-        this.userStore.postLogin(body).then((response) => {
-            if (response) {
-                localStorage.setItem('expired', +new Date());
-                this.userStore.getUserInfo();
+        this.userStore.postLogin(body)
+            .then((response) => {
+                if (response) {
+                    localStorage.setItem('expired', +new Date());
+                    this.userStore.getUserInfo();
 
-            }
-        });
+                }
+            });
         return true;
     }
 }
@@ -123,6 +146,9 @@ class LoginForm extends React.Component {
 
 @inject('UserStore') @observer
 class RegisterForm extends React.Component {
+    @observable username = '';
+    @observable password = '';
+    @observable passwordRe = '';
 
     constructor(args) {
         super(args);
@@ -133,19 +159,43 @@ class RegisterForm extends React.Component {
         return (
             <ul className="register-form">
                 <li>
-                    <i className="iconfont icon-yonghuming">{null}</i>
-                    <input type="text" placeholder="username" ref="username" />
+                    <Input
+                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                        placeholder="username"
+                        value={this.username}
+                        onChange={(e) => {
+                            this.username = e.target.value
+                        }}
+                    />
                 </li>
                 <li>
-                    <i className="iconfont icon-mima">{null}</i>
-                    <input type="password" placeholder="password" ref="password" />
+                    <Input
+                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                        placeholder="password"
+                        value={this.password}
+                        onChange={(e) => {
+                            this.password = e.target.value
+                        }}
+                    />
                 </li>
                 <li>
-                    <i className="iconfont icon-mima">{null}</i>
-                    <input type="password" placeholder="repeat password" ref="passwordRe" />
+                    <Input
+                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                        placeholder="repeat password"
+                        value={this.passwordRe}
+                        onChange={(e) => {
+                            this.passwordRe = e.target.value
+                        }}
+                    />
                 </li>
                 <li>
-                    <span onClick={this.handleRegister.bind(this)}>注册</span>
+                    <Button
+                        type="primary"
+                        style={{ width: '100%', borderRadius: '20px' }}
+                        onClick={this.handleRegister.bind(this)}
+                    >
+                        注册
+                    </Button>
                 </li>
             </ul>
         );
@@ -153,21 +203,17 @@ class RegisterForm extends React.Component {
 
     handleRegister() {
 
-        const username = this.refs.username.value;
-        const password = this.refs.password.value;
-        const passwordRe = this.refs.passwordRe.value;
-
-        if (!Username.test(username)) {
+        if (!Username.test(this.username)) {
             Message.error('请输入5-16位字符!');
             return false;
         }
 
-        if (!Password.test(password)) {
+        if (!Password.test(this.password)) {
             Message.error('请输入以字母开头的5-16位字符的密码!');
             return false;
         }
 
-        if (password !== passwordRe) {
+        if (this.password !== this.passwordRe) {
 
             Message.error('两次输入密码不一致!');
 
@@ -175,19 +221,21 @@ class RegisterForm extends React.Component {
         }
 
         const body = {};
-        body.username = username;
-        body.password = md5(password);
+        body.username = this.username;
+        body.password = md5(this.password);
 
-        this.userStore.postRegister(body).then((response) => {
-            if (response) {
-                this.userStore.postLogin(body).then((response1) => {
-                    if (response1) {
-                        localStorage.setItem('expired', +new Date());
-                        this.userStore.getUserInfo();
-                    }
-                });
-            }
-        });
+        this.userStore.postRegister(body)
+            .then((response) => {
+                if (response) {
+                    this.userStore.postLogin(body)
+                        .then((response1) => {
+                            if (response1) {
+                                localStorage.setItem('expired', +new Date());
+                                this.userStore.getUserInfo();
+                            }
+                        });
+                }
+            });
         return true;
     }
 }

@@ -86,7 +86,6 @@ export default class AdminMenu extends React.Component {
                             to={value.to}
                             activeClassName="active"
                             key={value.to}
-                            data-flex="cross:center"
                         >
                             <i className={`iconfont icon-${value.icon}`}>{null}</i>
                             <span>{value.text}</span>
