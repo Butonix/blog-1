@@ -6,15 +6,32 @@ import React from 'react';
 import { observable } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { NavLink, Link } from 'react-router-dom';
-import { Button, Menu, Dropdown, Icon } from 'antd';
+import { Button, Menu, Dropdown, Icon, Col, Row, Layout } from 'antd';
 import './header.sass';
 import Login from './login';
 import { Dialog } from '../zyc';
 import history from '../../history';
 
+const { Header } = Layout;
+
+const menuData = [
+    {
+        name: '首页',
+        path: '/',
+        icon: 'user'
+    },
+    {
+        name: '分类',
+        path: '/categorise',
+        icon: 'user'
+    }
+];
+
 
 @inject('UserStore') @observer
-export default class Header extends React.Component {
+export default class ComHeader extends React.Component {
+
+    @observable current = '';
 
     constructor(args) {
         super(args);
@@ -37,22 +54,27 @@ export default class Header extends React.Component {
         }
     };
 
+    handleNav = () => {
+
+    }
+
     render() {
 
         const { loginShow, userInfo, loginType } = this.userStore;
 
-        const nav = [
-            {
-                text: '首页',
-                to: '/',
-                icon: 'qiantaishouye',
-            },
-            {
-                text: '分类',
-                to: '/categories',
-                icon: 'fenlei',
-            },
-        ];
+        // const nav = [
+        //     {
+        //         text: '首页',
+        //         to: '/',
+        //         icon: 'qiantaishouye',
+        //     },
+        //     {
+        //         text: '分类',
+        //         to: '/categories',
+        //         icon: 'fenlei',
+        //     },
+        // ];
+
 
         const menu =
             <Menu onClick={this.handleClick}>
@@ -63,6 +85,10 @@ export default class Header extends React.Component {
                             <span>后台管理</span>
                         </Menu.Item> : null
                 }
+                {
+                    userInfo.userType !== 3 ?
+                        <Menu.Divider/> : null
+                }
                 <Menu.Item key="quit">
                     <Icon type="user" style={{ marginRight: 10 }}/>
                     <span>退出登录</span>
@@ -71,37 +97,71 @@ export default class Header extends React.Component {
 
 
         return (
-            <header className="com-header">
-                <div className="nav">
-                    <div className="nav-left">
-                        <div className="nav-logo">
-                            <Link to="/">
-                                <span className="line">
-                                    <i className="line-before">{null}</i>
-                                </span>
-                                <span className="title">SCRIPTCHAO</span>
-                                <span className="line">
-                                    <i className="line-after">{null}</i>
-                                </span>
+            <Header className="com-header">
+                <Row>
+                    <Col
+                        md={6}
+                        xs={0}
+                    >
+                        <span className="nav-logo" onClick={() => {
+                            history.push('/')
+                        }}>
+                            <span className="title">SCRIPTCHAO</span>
+                        </span>
+                    </Col>
+                    <Col
+                        md={0}
+                        xs={10}
+                    >
+                        111
+                    </Col>
+                    <Col
+                        md={12}
+                        xs={0}
+                    >
+                        <Menu
+                            mode="horizontal"
+                            onClick={this.handleNav}
+                            selectedKeys={[]}
+                            style={{
+                                lineHeight: '64px',
+                                borderBottom: 'none',
+                                background: 'rgb(245,245,245)',
+                            }}
+                        >
+                            <Menu.Item key="home">
+                                <Link to="/">
+                                    <Icon type="user"/>
+                                    <span>首页</span>
+                                </Link>
+                            </Menu.Item>
+                            <Menu.Item key="categories">
+                                <Link to="/categories">
+                                    <Icon type="user"/>
+                                    <span>分类</span>
+                                </Link>
+                            </Menu.Item>
+                        </Menu>
+                        {/*<div className="nav-menu">*/}
+                        {/*{*/}
+                        {/*nav.map(value =>*/}
+                        {/*<NavLink*/}
+                        {/*exact*/}
+                        {/*to={value.to}*/}
+                        {/*activeClassName="active"*/}
+                        {/*key={value.to}*/}
+                        {/*>*/}
+                        {/*<i className={`iconfont icon-${value.icon}`}>{null}</i>*/}
+                        {/*<span>{value.text}</span>*/}
+                        {/*</NavLink>)*/}
+                        {/*}*/}
+                        {/*</div>*/}
+                    </Col>
+                    <Col
+                        md={6}
+                        xs={14}
 
-                            </Link>
-                        </div>
-                        <div className="nav-menu">
-                            {
-                                nav.map(value =>
-                                    <NavLink
-                                        exact
-                                        to={value.to}
-                                        activeClassName="active"
-                                        key={value.to}
-                                    >
-                                        <i className={`iconfont icon-${value.icon}`}>{null}</i>
-                                        <span>{value.text}</span>
-                                    </NavLink>)
-                            }
-                        </div>
-                    </div>
-                    <div className="nav-right">
+                    >
                         {
                             userInfo.userId ?
                                 <Dropdown overlay={menu}>
@@ -126,8 +186,9 @@ export default class Header extends React.Component {
                                     </Button>
                                 </div>
                         }
-                    </div>
-                </div>
+
+                    </Col>
+                </Row>
                 <Dialog
                     show={loginShow}
                     header={false}
@@ -136,7 +197,7 @@ export default class Header extends React.Component {
                 >
                     <Login type={loginType}/>
                 </Dialog>
-            </header>
+            </Header>
         );
     }
 
