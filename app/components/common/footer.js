@@ -13,7 +13,7 @@ export default class Footer extends React.Component {
 
     render() {
         return (
-            <footer className="com-footer">
+            <footer className="footer">
                 <p className="copyright">© 2017-2018 scriptchao.com 版权所有 ICP证 : 浙ICP备17059730号-1</p>
                 <p>
                     <i>{null}</i>

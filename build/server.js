@@ -21,7 +21,7 @@ const proxy = httpProxy.createProxyServer({
 });
 
 app.use('/blog', (req, res) => {
-    proxy.web(req, res, { target: apiUrl });
+    proxy.web(req, res, {target: apiUrl});
 });
 
 app.use(compression());
@@ -29,6 +29,8 @@ app.use(compression());
 if (process.env.NODE_ENV === 'development') {
 
     const compiler = webpack(devConfig);
+
+    app.use('/static', express.static(path.join(__dirname, '..', 'static')));
 
     app.use('/', connectHistoryApiFallback()); // 访问任何地址时指向根目录
 

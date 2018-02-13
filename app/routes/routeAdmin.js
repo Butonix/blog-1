@@ -6,6 +6,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import { Layout } from 'antd'
 import {
     Admin,
     AdminManagerArticle,

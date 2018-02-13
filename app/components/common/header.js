@@ -3,16 +3,17 @@
  */
 
 import React from 'react';
-import { observable } from 'mobx';
-import { observer, inject } from 'mobx-react';
-import { NavLink, Link } from 'react-router-dom';
-import { Button, Menu, Dropdown, Icon, Col, Row, Layout } from 'antd';
+import {observable} from 'mobx';
+import {observer, inject} from 'mobx-react';
+import {NavLink, Link} from 'react-router-dom';
+import {Button, Menu, Dropdown, Icon, Col, Row, Layout, Avatar} from 'antd';
 import './header.sass';
 import Login from './login';
-import { Dialog } from '../zyc';
+import {Dialog} from '../zyc';
 import history from '../../history';
+import ComMenu from '../comMenu'
 
-const { Header } = Layout;
+const {Header} = Layout;
 
 const menuData = [
     {
@@ -22,7 +23,7 @@ const menuData = [
     },
     {
         name: '分类',
-        path: '/categorise',
+        path: '/categories',
         icon: 'user'
     }
 ];
@@ -30,13 +31,13 @@ const menuData = [
 
 @inject('UserStore') @observer
 export default class ComHeader extends React.Component {
-
-    @observable current = '';
+    @observable visible;
 
     constructor(args) {
         super(args);
         this.userStore = this.props.UserStore;
     }
+
 
     handleClick = (e) => {
         if (e.key === 'quit') {
@@ -48,56 +49,36 @@ export default class ComHeader extends React.Component {
                     }
                 });
         }
-
-        if (e.key === 'admin') {
-            history.push('/admin');
-        }
     };
 
-    handleNav = () => {
+    getName(menus, pathname) {
+        return menus.find((item) => {
+            if (item.children) {
+                return this.getName(item.children, pathname)
+            }
+            return pathname === item.path
+        })
 
     }
 
+    handleMenu = () => {
+        this.visible = false
+    };
+
+    handleDrop = (flag) => {
+        this.visible = flag
+    };
+
+
     render() {
 
-        const { loginShow, userInfo, loginType } = this.userStore;
+        const {loginShow, userInfo, loginType} = this.userStore;
 
-        // const nav = [
-        //     {
-        //         text: '首页',
-        //         to: '/',
-        //         icon: 'qiantaishouye',
-        //     },
-        //     {
-        //         text: '分类',
-        //         to: '/categories',
-        //         icon: 'fenlei',
-        //     },
-        // ];
-
-
-        const menu =
-            <Menu onClick={this.handleClick}>
-                {
-                    userInfo.userType !== 3 ?
-                        <Menu.Item key="admin">
-                            <Icon type="user" style={{ marginRight: 10 }}/>
-                            <span>后台管理</span>
-                        </Menu.Item> : null
-                }
-                {
-                    userInfo.userType !== 3 ?
-                        <Menu.Divider/> : null
-                }
-                <Menu.Item key="quit">
-                    <Icon type="user" style={{ marginRight: 10 }}/>
-                    <span>退出登录</span>
-                </Menu.Item>
-            </Menu>;
-
+        const {pathname} = window.location;
+        const {name} = this.getName(menuData, pathname);
 
         return (
-            <Header className="com-header">
+            <div className="header">
                 <Row>
                     <Col
                         md={6}
@@ -113,60 +94,76 @@ export default class ComHeader extends React.Component {
                         md={0}
                         xs={10}
                     >
-                        111
+                        <Dropdown
+                            overlay={
+                                <ComMenu
+                                    pathname={pathname}
+                                    defaultSelectKeys={['/']}
+                                    menus={menuData}
+                                    onClick={this.handleMenu}
+                                />
+                            }
+                            visible={this.visible}
+                            onVisibleChange={this.handleDrop}
+                            trigger={['click']}
+                        >
+                            <div className="nav-menu">
+                                <Button type="primary" ghost style={{border: 'none'}}>
+                                    <span>{name}</span>
+                                    <Icon type="caret-down"/>
+                                </Button>
+                            </div>
+                        </Dropdown>
                     </Col>
                     <Col
                         md={12}
                         xs={0}
                     >
-                        <Menu
+                        <ComMenu
+                            pathname={pathname}
                             mode="horizontal"
-                            onClick={this.handleNav}
-                            selectedKeys={[]}
+                            defaultSelectKeys={['/']}
+                            menus={menuData}
                             style={{
                                 lineHeight: '64px',
                                 borderBottom: 'none',
                                 background: 'rgb(245,245,245)',
                             }}
-                        >
-                            <Menu.Item key="home">
-                                <Link to="/">
-                                    <Icon type="user"/>
-                                    <span>首页</span>
-                                </Link>
-                            </Menu.Item>
-                            <Menu.Item key="categories">
-                                <Link to="/categories">
-                                    <Icon type="user"/>
-                                    <span>分类</span>
-                                </Link>
-                            </Menu.Item>
-                        </Menu>
-                        {/*<div className="nav-menu">*/}
-                        {/*{*/}
-                        {/*nav.map(value =>*/}
-                        {/*<NavLink*/}
-                        {/*exact*/}
-                        {/*to={value.to}*/}
-                        {/*activeClassName="active"*/}
-                        {/*key={value.to}*/}
-                        {/*>*/}
-                        {/*<i className={`iconfont icon-${value.icon}`}>{null}</i>*/}
-                        {/*<span>{value.text}</span>*/}
-                        {/*</NavLink>)*/}
-                        {/*}*/}
-                        {/*</div>*/}
+                        />
                     </Col>
                     <Col
                         md={6}
                         xs={14}
-
                     >
                         {
                             userInfo.userId ?
-                                <Dropdown overlay={menu}>
+                                <Dropdown
+                                    overlay={
+                                        <Menu onClick={this.handleClick}>
+                                            {
+                                                userInfo.userType !== 3 ?
+                                                    <Menu.Item key="admin">
+                                                        <Link to="/admin">
+                                                            <Icon type="user" style={{marginRight: 10}}/>
+                                                            <span>后台管理</span>
+                                                        </Link>
+                                                    </Menu.Item> : null
+                                            }
+                                            {
+                                                userInfo.userType !== 3 ?
+                                                    <Menu.Divider/> : null
+                                            }
+                                            <Menu.Item key="quit">
+                                                <Icon type="user" style={{marginRight: 10}}/>
+                                                <span>退出登录</span>
+                                            </Menu.Item>
+                                        </Menu>
+                                    }>
                                     <div className="login-ed">
-                                        <i className="aa">{null}</i>
+                                        <Avatar
+                                            src="/static/img/nav-user.jpg"
+                                            style={{marginRight: '10px'}}
+                                        />
                                         <span>{`欢迎! ${userInfo.username}`}</span>
                                     </div>
                                 </Dropdown> :
@@ -179,14 +176,13 @@ export default class ComHeader extends React.Component {
                                     </Button>
                                     <Button
                                         size="small"
-                                        style={{ marginLeft: 15 }}
-                                        onClick={this.handleLogin.bind(this, 0)}
+                                        style={{marginLeft: 15}}
+                                        onClick={this.handleLogin.bind(this, 1)}
                                     >
                                         登录
                                     </Button>
                                 </div>
                         }
-
                     </Col>
                 </Row>
                 <Dialog
@@ -197,18 +193,8 @@ export default class ComHeader extends React.Component {
                 >
                     <Login type={loginType}/>
                 </Dialog>
-            </Header>
+            </div>
         );
-    }
-
-    handleLoginOut() {
-        this.userStore.getLoginOut()
-            .then((response) => {
-                if (response) {
-                    localStorage.clear();
-                    this.userStore.getUserInfo();
-                }
-            });
     }
 
     handleLogin(type) {
