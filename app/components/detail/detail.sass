@@ -1,63 +1,61 @@
 @import ../../styles/theme
 
 .detail
-  .detail-header
 
-  .detail-content
-    margin-top: 80px
+    .detail-title
+        display: flex
+        justify-content: space-between
+        line-height: 30px
+        margin-top: 10px
+        padding: 0 20px
+        background: $white
+        border: 1px solid $color233
+        a
+            &:hover
+                color: $red
 
-  .detail-title
-    display: flex
-    justify-content: space-between
-    border-top: 1px solid $color233
-    padding-top: 10px
-    margin-top: 30px
+    .detail-vote
+        display: flex
+        justify-content: center
+        margin-top: 20px
 
-    a
-      &:hover
-        color: $red
+        div
+            font-size: 16px
+            padding: 5px 20px
+            border: 1px solid $color233
+            border-radius: 5px
+            cursor: pointer
+            background: $white
 
-  .detail-vote
-    display: flex
-    justify-content: center
-    margin-top: 40px
+            &.vote
+                border-color: $red-9
+                color: $red-9
 
-    div
-      font-size: 16px
-      padding: 5px 20px
-      border: 1px solid $color153
-      border-radius: 5px
-      cursor: pointer
+            &:hover
+                border-color: $red-9
+                background: $red-9
+                color: $white-9
 
-      &.vote
-        border-color: $red-9
-        color: $red-9
-
-      &:hover
-        border-color: $red-9
-        background: $red-9
-        color: $white-9
-
-      i
-        margin-right: 6px
+            i
+                margin-right: 6px
 
 .dialog-tip
-  text-align: center
+    text-align: center
 
-  h2
-    margin-bottom: 30px
+    h2
+        margin-bottom: 30px
 
-  p
-    & + p
-      margin-top: 20px
+    p
+        & + p
+            margin-top: 20px
 
-    &.login
-      padding: 6px 50px
-      border: 1px solid $color153
-      border-radius: 5px
-      cursor: pointer
+        &.login
+            padding: 6px 50px
+            border: 1px solid $color153
+            border-radius: 5px
+            cursor: pointer
 
-      &:hover
-        border-color: $red-9
-        background: $red-9
-        color: $white-9
+            &:hover
+                border-color: $red-9
+                background: $red-9
+                color: $white-9

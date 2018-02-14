@@ -6,12 +6,10 @@ import React from 'react';
 import {observable} from 'mobx';
 import {inject, observer} from 'mobx-react';
 import {Link} from 'react-router-dom';
-import remark from 'remark';
-import reactRenderer from 'remark-react';
-import {ArticleCell} from '../common/articleList';
 import splitLocation from '../public/location';
 import './detail.sass';
 import {Dialog} from '../zyc';
+import ArticleDetail from '../common/articleDetail'
 
 @inject('UserStore', 'ArticleStore', 'VoteStore') @observer
 export default class Detail extends React.Component {
@@ -149,17 +147,9 @@ export default class Detail extends React.Component {
         return (
             this.isRender ?
                 <div className="detail">
-                    <div className="detail-header">
-                        <ArticleCell
-                            detail
-                            data={articleDetail}
-                        />
-                    </div>
-                    <div className="detail-content">
-                        <div className="markdown-body">
-                            {remark().use(reactRenderer).processSync(articleDetail.content).contents}
-                        </div>
-                    </div>
+                    <ArticleDetail
+                        data={articleDetail}
+                    />
                     <div className="detail-title">
                         {
                             this.nextTitle.articleId ?
