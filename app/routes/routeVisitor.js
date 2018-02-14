@@ -33,8 +33,8 @@ export default class RouteVisitor extends React.Component {
                     <Switch>
                         <Route exact path={url} component={Homepage}/>
                         <Route exact path="/categories" component={Categories}/>
+                        <Route path="/categories/detail" component={Detail}/>
                         <Route path="/categories/:tag" component={CategoriesTag}/>
-                        <Route path="/detail" component={Detail}/>
                         <Redirect to={url}/>
                     </Switch>
                 </Content>

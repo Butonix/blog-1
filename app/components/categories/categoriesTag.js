@@ -65,7 +65,7 @@ export default class CategoriesTag extends React.Component {
                                         articleList.map((item, index) =>
                                             <li className="zyc-collection-circle-small" key={item.articleId}>
                                                 <span>{dateFormat(item.createTime, 'mm-dd')}</span>
-                                                <Link to={`/detail?articleId=${item.articleId}`}>{item.title}</Link>
+                                                <Link to={`/categories/detail?articleId=${item.articleId}`}>{item.title}</Link>
                                             </li>)
                                     }
                                 </ul>

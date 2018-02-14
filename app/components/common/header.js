@@ -130,7 +130,6 @@ export default class ComHeader extends React.Component {
                             style={{
                                 lineHeight: '64px',
                                 borderBottom: 'none',
-                                background: 'rgb(245,245,245)',
                             }}
                         />
                     </Col>

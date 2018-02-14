@@ -3,15 +3,15 @@
  */
 
 import React from 'react';
-import { observable } from 'mobx';
-import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
+import {observable} from 'mobx';
+import {inject, observer} from 'mobx-react';
+import {Link} from 'react-router-dom';
 import remark from 'remark';
 import reactRenderer from 'remark-react';
-import { ArticleCell } from '../common/articleList';
+import {ArticleCell} from '../common/articleList';
 import splitLocation from '../public/location';
 import './detail.sass';
-import { Dialog } from '../zyc';
+import {Dialog} from '../zyc';
 
 @inject('UserStore', 'ArticleStore', 'VoteStore') @observer
 export default class Detail extends React.Component {
@@ -32,8 +32,8 @@ export default class Detail extends React.Component {
     }
 
     componentWillMount() {
-        const { location } = window;
-        const { articleId } = splitLocation(location);
+        const {location} = window;
+        const {articleId} = splitLocation(location);
         this.articleId = articleId;
     }
 
@@ -46,8 +46,8 @@ export default class Detail extends React.Component {
 
     componentWillReceiveProps() {
         this.isRender = false;
-        const { location } = window;
-        const { articleId } = splitLocation(location);
+        const {location} = window;
+        const {articleId} = splitLocation(location);
         this.articleId = articleId;
         this.getArticleDetail();
         this.getTitlePrev();
@@ -144,7 +144,7 @@ export default class Detail extends React.Component {
     }
 
     render() {
-        const { articleDetail } = this.articleStore;
+        const {articleDetail} = this.articleStore;
 
         return (
             this.isRender ?
@@ -163,11 +163,15 @@ export default class Detail extends React.Component {
                     <div className="detail-title">
                         {
                             this.nextTitle.articleId ?
-                                <Link to={`/detail?articleId=${this.nextTitle.articleId}`}>{`« ${this.nextTitle.title}`}</Link> : <span>浏览到最前面啦!</span>
+                                <Link
+                                    to={`/categories/detail?articleId=${this.nextTitle.articleId}`}>{`« ${this.nextTitle.title}`}</Link> :
+                                <span>浏览到最前面啦!</span>
                         }
                         {
                             this.prevTitle.articleId ?
-                                <Link to={`/detail?articleId=${this.prevTitle.articleId}`}>{`${this.prevTitle.title} »`}</Link> : <span>浏览到最末尾啦!</span>
+                                <Link
+                                    to={`/categories/detail?articleId=${this.prevTitle.articleId}`}>{`${this.prevTitle.title} »`}</Link> :
+                                <span>浏览到最末尾啦!</span>
                         }
                     </div>
                     <div className="detail-vote">

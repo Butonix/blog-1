@@ -1,41 +1,11 @@
 @import ../../styles/theme
 
-.homepage-article
-
-.homepage-article-list
-  & + .homepage-article-list
-    margin-top: 100px
-
-  h1
-    font-size: 22px
-    font-weight: 500
-
-  .meta
-    margin: 20px 0 20px
-    font-size: 12px
-    color: $color153
-
-    i
-      font-size: 12px
-      margin-right: 5px
-
-    .tip
-      margin-right: 5px
-
-    .categories
-      a
-        border-bottom: 1px solid $color153
-
-        &:hover
-          color: $red
-          border-color: $red
-
-        & + a
-          margin-left: 5px
-
-  &.detail
-    h1
-      text-align: center
-
-    .meta
-      text-align: center
+.article-list
+    .article-list-item
+        padding: 20px
+        background: $white
+        border-radius: 5px
+        & + .article-list-item
+            margin-top: 10px
+    .ant-list-vertical .ant-list-item-meta-avatar
+        display: block

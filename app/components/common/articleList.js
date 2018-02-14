@@ -3,72 +3,67 @@
  */
 
 import React from 'react';
-import { observable } from 'mobx';
-import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
+import {observable} from 'mobx';
+import {inject, observer} from 'mobx-react';
+import {Link} from 'react-router-dom';
 import dateFormat from 'dateformat';
+import {Row, Col, List, Avatar, Tag, Icon} from 'antd'
 import './articleList.sass';
+import history from '../../history'
+import {tagColor} from '../../utils'
 
-class ArticleList extends React.Component {
+const IconText = ({type, text}) =>
+    <span>
+        <Icon type={type} style={{marginRight: 8}}/>
+        <span>{text}</span>
+    </span>;
+
+export default class ArticleList extends React.Component {
     render() {
-        const { data } = this.props;
+        const {content} = this.props;
         return (
-            <div className="homepage-article">
-                {
-                    data.map((item, index) =>
-                        <ArticleCell
-                            data={item}
-                            key={item.articleId}
-                        />)
-                }
+            <div className="article-list">
+                <List
+                    itemLayout="vertical"
+                    size="large"
+                    dataSource={content}
+                    renderItem={item => (
+                        <List.Item
+                            key={item.title}
+                            className="article-list-item"
+                            extra={<span>{dateFormat(item.createTime, 'yyyy-mm-dd')}</span>}
+                            actions={[
+                                <IconText key="user" type="user" text={item.author}/>,
+                                <IconText key="tags-o" type="tags-o" text={
+                                    item.tags.map(tag =>
+                                        <Tag
+                                            key={item.id + Math.random()}
+                                            color={tagColor[Math.floor(Math.random() * tagColor.length)]}
+                                            onClick={() => {
+                                                history.push(`/categories/${tag}`)
+                                            }}
+
+                                        >
+                                            {tag}
+                                        </Tag>)
+                                }/>,
+                                <IconText key="aa" type="user" text={item.readCount}/>
+                            ]}
+                        >
+                            <List.Item.Meta
+                                avatar={<Avatar size="small" src="/static/img/nav-user.jpg"/>}
+                                title={item.title}
+                                style={{cursor: 'pointer'}}
+                                onClick={() => {
+                                    history.push(`/categories/detail?articleId=${item.articleId}`)
+                                }}
+
+                            />
+                        </List.Item>
+                    )}
+                />
             </div>
         );
     }
 }
 
-class ArticleCell extends React.Component {
-    render() {
-        const { data, detail } = this.props;
-        return (
-            <div className={detail ? 'homepage-article-list detail' : 'homepage-article-list'}>
-                <h1>
-                    <Link to={`/detail?articleId=${data.articleId}`} className="zyc-link-hover">{data.title}</Link>
-                </h1>
-                <div className="meta">
-                    <span className="zyc-area-line">
-                        <i className="iconfont icon-riqi">{null}</i>
-                        <span className="tip">发表于</span>
-                        <span>{dateFormat(data.createTime, 'yyyy-mm-dd HH:MM:ss')}</span>
-                    </span>
-                    <span className="zyc-area-line">
-                        <i className="iconfont icon-zuozhe">{null}</i>
-                        <span className="tip">作者</span>
-                        <span>{data.author}</span>
-                    </span>
-                    <span className="zyc-area-line categories">
-                        <i className="iconfont icon-wenjianjia">{null}</i>
-                        <span className="tip">分类于</span>
-                        {
-                            data.tags && data.tags.map((tag, index) =>
-                                <Link to={`/categories/${tag}`} key={tag}>{tag}</Link>)
-                        }
-                    </span>
-                    <span>
-                        <i className="iconfont icon-yuedu">{null}</i>
-                        <span className="tip">阅读次数</span>
-                        <span>{data.readCount}</span>
-                    </span>
-                </div>
-                {
-                    !detail ?
-                        <div className="link">
-                            <Link to={`/detail?articleId=${data.articleId}`} className="zyc-link-hover">阅读全文 »</Link>
-                        </div> : null
-                }
-            </div>
-        );
-    }
-}
-
-export { ArticleCell };
-export default ArticleList;

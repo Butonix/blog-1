@@ -34,7 +34,7 @@ class App extends React.Component {
         return (
             <div className="JAVASCRIPT">
                 <BackTop visibleHeight={500} />
-                {this.props.location.pathname === '/detail' || this.props.location.pathname === '/admin/newArticle' ? null : <Canvas />}
+                {this.props.location.pathname === '/categories/detail' || this.props.location.pathname === '/admin/newArticle' ? null : <Canvas />}
                 {
                     userInfo ?
                         <Switch>

@@ -3,11 +3,14 @@
  */
 
 import React from 'react';
-import { observable } from 'mobx';
-import { inject, observer } from 'mobx-react';
+import {observable} from 'mobx';
+import {inject, observer} from 'mobx-react';
+import {Row, Col, List, Avatar, Tag, Icon} from 'antd'
 import './homepage.sass';
+import {getScrollHeight, getScrollXY, getWindowHeight} from '../public/window';
 import ArticleList from '../common/articleList';
-import { getScrollHeight, getScrollXY, getWindowHeight } from '../public/window';
+import HomeCustom from '../common/homeCustom'
+
 
 @inject('ArticleStore') @observer
 export default class Homepage extends React.Component {
@@ -56,16 +59,40 @@ export default class Homepage extends React.Component {
                 this.page++;
                 this.getArticleList();
             }
-
         }
     }
 
     render() {
         return (
             <div className="homepage">
-                <ArticleList
-                    data={this.content}
-                />
+                <Row>
+                    <Col
+                        md={15}
+                        xs={24}
+                    >
+                        <ArticleList
+                            content={this.content}
+                        />
+                    </Col>
+                    <Col
+                        md={{span: 8, offset: 1}}
+                        xs={0}
+                    >
+                        <HomeCustom
+                            content={this.content}
+                        />
+                    </Col>
+                    <Col
+                        md={0}
+                        xs={24}
+                        style={{marginTop: 20}}
+                    >
+                        <HomeCustom
+                            content={this.content}
+                        />
+                    </Col>
+                </Row>
+
             </div>
         );
     }
