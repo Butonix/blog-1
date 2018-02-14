@@ -3,13 +3,17 @@
  */
 
 import React from 'react';
-import { observable } from 'mobx';
-import { inject, observer } from 'mobx-react';
-import { NavLink } from 'react-router-dom';
+import {observable} from 'mobx';
+import {inject, observer} from 'mobx-react';
+import {NavLink} from 'react-router-dom';
+import {Menu, Icon, Row, Col, Layout} from 'antd'
 import './adminMenu.sass';
+import ComMenu from '../comMenu'
+
 
 @inject('UserStore') @observer
 export default class AdminMenu extends React.Component {
+
     constructor(args) {
         super(args);
         this.userStore = this.props.UserStore;
@@ -17,80 +21,79 @@ export default class AdminMenu extends React.Component {
 
     render() {
 
-        const { userInfo } = this.userStore;
+        const {userInfo} = this.userStore;
 
-        const menu = userInfo.userType == 1 ?
+        const {pathname} = window.location;
+
+        const menuData = userInfo.userType === 1 ?
             [
                 {
-                    text: '首页',
-                    to: '/admin',
-                    icon: 'shouye'
+                    name: '首页',
+                    path: '/admin',
+                    icon: 'user'
                 },
 
                 {
-                    text: '用户管理',
-                    to: '/admin/managerUser',
-                    icon: 'yonghuguanli'
+                    name: '用户管理',
+                    path: '/admin/managerUser',
+                    icon: 'user'
                 },
                 {
-                    text: '发布文章',
-                    to: '/admin/newArticle',
-                    icon: 'fabuwenzhang'
+                    name: '发布文章',
+                    path: '/admin/newArticle',
+                    icon: 'user'
                 },
                 {
-                    text: '标签管理',
-                    to: '/admin/managerTags',
-                    icon: 'biaoqianguanli'
+                    name: '标签管理',
+                    path: '/admin/managerTags',
+                    icon: 'user'
                 },
                 {
-                    text: '文章管理',
-                    to: '/admin/managerArticle',
-                    icon: 'wenzhangguanli'
+                    name: '文章管理',
+                    path: '/admin/managerArticle',
+                    icon: 'user'
                 },
                 {
-                    text: '主界面',
-                    to: '/',
-                    icon: 'fanhuishouye'
+                    name: '主界面',
+                    path: '/',
+                    icon: 'user'
                 },
             ] :
             [
                 {
-                    text: '首页',
-                    to: '/admin',
-                    icon: 'shouye'
+                    name: '首页',
+                    path: '/admin',
+                    icon: 'user'
                 },
                 {
-                    text: '发布文章',
-                    to: '/admin/newArticle',
-                    icon: 'fabuwenzhang'
+                    name: '发布文章',
+                    path: '/admin/newArticle',
+                    icon: 'user'
                 },
                 {
-                    text: '文章管理',
-                    to: '/admin/managerArticle',
-                    icon: 'wenzhangguanli'
+                    name: '文章管理',
+                    path: '/admin/managerArticle',
+                    icon: 'user'
                 },
                 {
-                    text: '主界面',
-                    to: '/',
-                    icon: 'fanhuishouye'
+                    name: '主界面',
+                    path: '/',
+                    icon: 'user'
                 },
             ];
 
-
         return (
-            <div className="com-admin-menu">
-                {
-                    menu.map(value =>
-                        <NavLink
-                            exact
-                            to={value.to}
-                            activeClassName="active"
-                            key={value.to}
-                        >
-                            <i className={`iconfont icon-${value.icon}`}>{null}</i>
-                            <span>{value.text}</span>
-                        </NavLink>)
-                }
+            <div className="admin-menu">
+                <ComMenu
+                    pathname={pathname}
+                    defaultSelectKeys={['/admin']}
+                    menus={menuData}
+                    theme="dark"
+                    className="admin-menu"
+                    style={{
+                        background: 'rgb(51, 51, 51)',
+                    }}
+                />
             </div>
         );
     }

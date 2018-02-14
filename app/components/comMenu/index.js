@@ -85,7 +85,7 @@ export default class ComMenu extends Component {
 
 
     render() {
-        const {pathname, defaultSelectKeys, ...props} = this.props;
+        const {pathname, defaultSelectKeys, menus, ...props} = this.props;
         let selectedKeys = this.getSelectedMenuKeys(pathname);
 
         if (!selectedKeys.length) {
@@ -99,7 +99,6 @@ export default class ComMenu extends Component {
             >
                 {this.getMenuItem(this.menus)}
             </Menu>
-
         )
     }
 }

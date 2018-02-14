@@ -56,7 +56,10 @@ export default class ComHeader extends React.Component {
             if (item.children) {
                 return this.getName(item.children, pathname)
             }
-            return pathname === item.path
+            if (item.path === '/') {
+                return item.path === pathname
+            }
+            return new RegExp(item.path).test(pathname)
         })
 
     }

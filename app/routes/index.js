@@ -34,12 +34,12 @@ class App extends React.Component {
         return (
             <div className="JAVASCRIPT">
                 <BackTop visibleHeight={500} />
-                {this.props.location.pathname == '/detail' || this.props.location.pathname == '/admin/newArticle' ? null : <Canvas />}
+                {this.props.location.pathname === '/detail' || this.props.location.pathname === '/admin/newArticle' ? null : <Canvas />}
                 {
                     userInfo ?
                         <Switch>
                             {
-                                userInfo.userType == 1 || userInfo.userType == 2 ?
+                                userInfo.userType === 1 || userInfo.userType === 2 ?
                                     <Route path="/admin" render={props => <RouteAdmin userType={userInfo.userType} {...props} />} /> : null
                             }
                             <Route path="/" component={RouteVisitor} />

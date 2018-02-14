@@ -3,10 +3,12 @@
  */
 
 import React from 'react';
-import { observer } from 'mobx-react';
+import {observer} from 'mobx-react';
+import {observable} from 'mobx'
 import PropTypes from 'prop-types';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { Layout } from 'antd'
+import {Route, Switch, Redirect} from 'react-router-dom';
+import {Layout} from 'antd'
+import {enquireScreen} from 'enquire-js'
 import {
     Admin,
     AdminManagerArticle,
@@ -14,41 +16,58 @@ import {
     AdminManagerUser,
     AdminNewArticle,
 } from '../components/admin';
-import { AdminMenu, AdminContent } from '../components/common';
+import {AdminMenu} from '../components/common';
+import DrawerMenu from '../components/common/drawerMenu'
 import './routeAdmin.sass';
+
+const {Sider, Content} = Layout;
 
 @observer
 export default class RouteAdmin extends React.Component {
+    @observable isMobile;
 
-    static propTypes = {
-        match: PropTypes.object.isRequired,
-    };
+    componentDidMount() {
+        enquireScreen((mobile) => {
+            this.isMobile = mobile
+        });
+
+    }
 
     render() {
-        const { url } = this.props.match;
+        const {url} = this.props.match;
 
         console.log('admin', url);
 
         return (
-            <div className="route-admin">
-                <Route path={url} component={AdminMenu} />
-                <AdminContent>
+            <Layout className="route-admin">
+                {
+                    this.isMobile ?
+                        <DrawerMenu
+                            width={200}
+                        >
+                            <AdminMenu/>
+                        </DrawerMenu> :
+                        <Sider className="route-admin-sider">
+                            <AdminMenu/>
+                        </Sider>
+                }
+                <Content className="route-admin-content">
                     <Switch>
-                        <Route exact path={url} component={Admin} />
+                        <Route exact path={url} component={Admin}/>
                         {
-                            this.props.userType == 1 ?
-                                <Route path={`${url}/managerUser`} component={AdminManagerUser} /> : null
+                            this.props.userType === 1 ?
+                                <Route path={`${url}/managerUser`} component={AdminManagerUser}/> : null
                         }
-                        <Route path={`${url}/newArticle`} component={AdminNewArticle} />
+                        <Route path={`${url}/newArticle`} component={AdminNewArticle}/>
                         {
-                            this.props.userType == 1 ?
-                                <Route path={`${url}/managerTags`} component={AdminManagerTags} /> : null
+                            this.props.userType === 1 ?
+                                <Route path={`${url}/managerTags`} component={AdminManagerTags}/> : null
                         }
-                        <Route path={`${url}/managerArticle`} component={AdminManagerArticle} />
-                        <Redirect to={url} />
+                        <Route path={`${url}/managerArticle`} component={AdminManagerArticle}/>
+                        <Redirect to={url}/>
                     </Switch>
-                </AdminContent>
-            </div>
+                </Content>
+            </Layout>
         );
     }
 
