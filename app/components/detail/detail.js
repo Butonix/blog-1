@@ -19,6 +19,8 @@ export default class Detail extends React.Component {
     @observable isVote;
     @observable voteCount = 0;
 
+    @observable articleData = {};
+
     @observable isRender;
 
     constructor(args) {
@@ -74,6 +76,7 @@ export default class Detail extends React.Component {
             if (response) {
                 this.articleStore.postArticleDetail(body).then((response1) => {
                     if (response1) {
+                        this.articleData = response1.data;
                         this.voteCount = response1.data.voteCount;
                         this.isRender = true;
                     }
@@ -142,13 +145,12 @@ export default class Detail extends React.Component {
     }
 
     render() {
-        const {articleDetail} = this.articleStore;
 
         return (
             this.isRender ?
                 <div className="detail">
                     <ArticleDetail
-                        data={articleDetail}
+                        data={this.articleData}
                     />
                     <div className="detail-title">
                         {

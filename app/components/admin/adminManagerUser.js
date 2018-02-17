@@ -3,11 +3,11 @@
  */
 
 import React from 'react';
-import { observable, toJS } from 'mobx';
-import { inject, observer } from 'mobx-react';
-import { Pagination, Table } from 'antd';
+import {observable, toJS} from 'mobx';
+import {inject, observer} from 'mobx-react';
+import {Pagination, Table} from 'antd';
 import './adminManagerUser.sass';
-import { Dialog, Input, Button } from '../zyc';
+import {Dialog, Input, Button} from '../zyc';
 import DialogDelete from '../common/dialogDelete'
 
 @inject('UserStore') @observer
@@ -20,6 +20,9 @@ export default class AdminManagerUser extends React.Component {
 
     @observable userType;
     @observable userId;
+
+    @observable userList = [];
+    @observable userTotal = 0;
 
     constructor(args) {
         super(args);
@@ -34,7 +37,13 @@ export default class AdminManagerUser extends React.Component {
         const body = {};
         body.page = this.page;
         body.size = this.size;
-        this.userStore.postUserList(body);
+        this.userStore.postUserList(body).then((response) => {
+            if (response) {
+                this.userList = response.data.list;
+                this.userTotal = response.data.total;
+
+            }
+        })
     }
 
     handlePageChange(current) {
@@ -103,7 +112,6 @@ export default class AdminManagerUser extends React.Component {
 
 
     render() {
-        const { userList, userCount } = this.userStore;
 
         const columns = [{
             title: '姓名',
@@ -150,7 +158,9 @@ export default class AdminManagerUser extends React.Component {
             width: '10%',
             render: (value, row) => (
                 row.userType !== 1 ?
-                    <span className="zyc-text-hover" onClick={this.handleModify.bind(this, row.userType, row.userId)}>修改</span> : null
+                    <span
+                        className="zyc-text-hover"
+                        onClick={this.handleModify.bind(this, row.userType, row.userId)}>修改</span> : null
             ),
         }];
 
@@ -160,7 +170,7 @@ export default class AdminManagerUser extends React.Component {
                 <section>
                     <Table
                         columns={columns}
-                        dataSource={toJS(userList)}
+                        dataSource={toJS(this.userList)}
                         rowKey="userId"
                         pagination={false}
                     />
@@ -169,7 +179,7 @@ export default class AdminManagerUser extends React.Component {
                     <Pagination
                         current={this.page}
                         pageSize={this.size}
-                        total={userCount}
+                        total={this.userCount}
                         onChange={this.handlePageChange.bind(this)}
                     />
                 </div>

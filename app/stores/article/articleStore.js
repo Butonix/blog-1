@@ -7,7 +7,6 @@ import xhr from '../xhr';
 import { Message } from '../../components/zyc';
 
 class ArticleStore {
-    @observable articleDetail = {};
 
     constructor() {
         this.articleAddUrl = '/article/add';
@@ -19,9 +18,6 @@ class ArticleStore {
         this.articleDetailTitleUrl = '/article/detail/title';
     }
 
-    @action clearStore() {
-        this.articleDetail = {};
-    }
 
     @action postArticleDetailTitle(body) {
 
@@ -133,7 +129,6 @@ class ArticleStore {
             body,
         }).then((response) => {
             if (response.result) {
-                this.articleDetail = response.data;
                 return Promise.resolve(response);
             }
             Message.error(response.message);

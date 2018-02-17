@@ -10,8 +10,6 @@ class UserStore {
     @observable userInfo;
     @observable loginShow;
     @observable loginType;
-    @observable userList = [];
-    @observable userCount = 0;
 
     constructor() {
         this.registerUrl = '/user/register';
@@ -21,11 +19,6 @@ class UserStore {
         this.userListUrl = '/user/list';
         this.userUpdateUrl = '/user/update';
         this.userDeleteUrl = '/user/delete';
-    }
-
-    @action clearStore() {
-        this.userList = [];
-        this.userCount = 0;
     }
 
     @action postUserDelete(body) {
@@ -70,8 +63,6 @@ class UserStore {
             body,
         }).then((response) => {
             if (response.result) {
-                this.userList = response.data.list;
-                this.userCount = response.data.total;
                 return Promise.resolve(response);
             }
             Message.error(response.message);
