@@ -6,7 +6,7 @@ import React from 'react';
 import {observable} from 'mobx';
 import {Link} from 'react-router-dom';
 import {inject, observer} from 'mobx-react';
-import {Row, Col} from 'antd'
+import {Row, Col, Card} from 'antd'
 import './categories.sass';
 import HomeCustom from '../common/homeCustom'
 
@@ -38,20 +38,23 @@ export default class Categories extends React.Component {
                         md={15}
                         xs={24}
                     >
-                        <h1>categories</h1>
-                        <div className="categories-count">{`目前共计${this.tagTotal}个分类`}</div>
-                        <ul className="categories-list">
-                            {
-                                this.tagList.map((tag, index) =>
+                        <Card
+                            title="categories"
+                            extra={`目前共计${this.tagTotal}个分类`}
+                        >
+                            <ul className="categories-list">
+                                {
+                                    this.tagList.map((tag, index) =>
 
-                                    <li key={tag.tagId}>
-                                        <Link
-                                            to={`/categories/${tag.name}`}
-                                            className="zyc-link-hover">{tag.name}</Link>
-                                        <span>{`(${tag.count})`}</span>
-                                    </li>)
-                            }
-                        </ul>
+                                        <li key={tag.tagId}>
+                                            <Link
+                                                to={`/categories/${tag.name}`}
+                                                className="zyc-link-hover">{tag.name}</Link>
+                                            <span>{`(${tag.count})`}</span>
+                                        </li>)
+                                }
+                            </ul>
+                        </Card>
                     </Col>
                     <Col
                         md={{span: 8, offset: 1}}
@@ -62,6 +65,7 @@ export default class Categories extends React.Component {
                     <Col
                         md={0}
                         xs={24}
+                        style={{marginTop: 20}}
                     >
                         <HomeCustom/>
                     </Col>

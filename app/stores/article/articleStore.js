@@ -2,11 +2,12 @@
  * Created by scriptchao on 2017/11/17.
  */
 
-import { observable, action } from 'mobx';
+import {observable, action} from 'mobx';
 import xhr from '../xhr';
-import { Message } from '../../components/zyc';
+import {Message} from '../../components/zyc';
 
 class ArticleStore {
+    @observable latestList = [];
 
     constructor() {
         this.articleAddUrl = '/article/add';
@@ -16,6 +17,22 @@ class ArticleStore {
         this.articleUpdateUrl = '/article/update';
         this.articleUpdateReadCountUrl = '/article/update/readCount';
         this.articleDetailTitleUrl = '/article/detail/title';
+    }
+
+    initStore() {
+        this.latestArticle()
+    }
+
+    latestArticle() {
+        const body = {};
+        body.page = 1;
+        body.size = 5;
+        body.isPublish = true;
+        this.postArticleList(body).then((response) => {
+            if (response) {
+                this.latestList = response.data.list;
+            }
+        })
     }
 
 

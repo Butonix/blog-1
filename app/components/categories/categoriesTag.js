@@ -7,8 +7,10 @@ import {observable} from 'mobx';
 import {inject, observer} from 'mobx-react';
 import {Link} from 'react-router-dom';
 import dateFormat from 'dateformat';
-import {Pagination} from 'antd';
+import {Pagination, List, Row, Col} from 'antd';
 import './categoriesTag.sass';
+import history from '../../history'
+import HomeCustom from '../common/homeCustom'
 
 
 @inject('ArticleStore') @observer
@@ -51,44 +53,67 @@ export default class CategoriesTag extends React.Component {
 
     render() {
         return (
-
             <div className="categories-tag">
-                {
-                    this.total ?
-                        <section className="zyc-collection-line">
-                            <h2 className="zyc-collection-circle">
-                                <span>{this.props.match.params.tag}</span>
-                                <span className="tip">分类</span>
-                            </h2>
-                            <ul className="tag-list">
-                                {
-                                    this.list.map((item, index) =>
-                                        <li className="zyc-collection-circle-small" key={item.articleId}>
-                                            <span>{dateFormat(item.createTime, 'mm-dd')}</span>
-                                            <Link
-                                                to={`/categories/detail?articleId=${item.articleId}`}>{item.title}</Link>
-                                        </li>)
-                                }
-                            </ul>
-                        </section> : null
-                }
-                {
-                    this.total === 0 ?
-                        <div className="no-data">
-                            该分类下暂无文章!
-                        </div> : null
-                }
-                {
-                    this.total ?
-                        <div className="zyc-pager">
-                            <Pagination
-                                current={this.page}
-                                pageSize={this.size}
-                                total={this.total}
-                                onChange={this.handlePageChange.bind(this)}
-                            />
-                        </div> : null
-                }
+                <Row>
+                    <Col
+                        md={15}
+                        xs={24}
+                    >
+                        {
+                            this.total ?
+                                <List
+                                    className="tag-list"
+                                    itemLayout="vertical"
+                                    header={<h2>{`${this.props.match.params.tag} 分类`}</h2>}
+                                    dataSource={this.list}
+                                    renderItem={item =>
+                                        <List.Item
+                                            key={item.articleId}
+                                            extra={<span>{dateFormat(item.createTime, 'yyyy-mm-dd')}</span>}
+                                        >
+                                            <List.Item.Meta
+                                                className="tag-content"
+                                                title={item.title}
+                                                onClick={() => {
+                                                    history.push(`/categories/detail?articleId=${item.articleId}`)
+                                                }}
+                                            />
+
+                                        </List.Item>}
+                                /> : null
+                        }
+                        {
+                            this.total === 0 ?
+                                <div className="no-data">
+                                    该分类下暂无文章!
+                                </div> : null
+                        }
+                        {
+                            this.total ?
+                                <div className="zyc-pager">
+                                    <Pagination
+                                        current={this.page}
+                                        pageSize={this.size}
+                                        total={this.total}
+                                        onChange={this.handlePageChange.bind(this)}
+                                    />
+                                </div> : null
+                        }
+                    </Col>
+                    <Col
+                        md={{span: 8, offset: 1}}
+                        xs={0}
+                    >
+                        <HomeCustom/>
+                    </Col>
+                    <Col
+                        md={0}
+                        xs={24}
+                        style={{marginTop: 20}}
+                    >
+                        <HomeCustom/>
+                    </Col>
+                </Row>
             </div>
         )
     }
