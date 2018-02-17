@@ -3,11 +3,11 @@
  */
 
 import React from 'react';
-import { observable } from 'mobx';
-import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
+import {observable} from 'mobx';
+import {inject, observer} from 'mobx-react';
+import {Link} from 'react-router-dom';
 import dateFormat from 'dateformat';
-import { Pagination } from 'antd';
+import {Pagination} from 'antd';
 import './categoriesTag.sass';
 
 
@@ -15,8 +15,8 @@ import './categoriesTag.sass';
 export default class CategoriesTag extends React.Component {
     @observable page = 1;
     @observable size = 5;
-
-    @observable isRender;
+    @observable list = [];
+    @observable total;
 
     constructor(args) {
         super(args);
@@ -37,7 +37,8 @@ export default class CategoriesTag extends React.Component {
         body.tags = this.props.match.params.tag;
         this.articleStore.postArticleList(body).then((response) => {
             if (response) {
-                this.isRender = true;
+                this.list = response.data.list;
+                this.total = response.data.total;
             }
         });
     }
@@ -49,43 +50,46 @@ export default class CategoriesTag extends React.Component {
     }
 
     render() {
-        const { articleList, articleCount } = this.articleStore;
         return (
-            this.isRender ?
-                <div className="categories-tag">
-                    {
-                        articleCount ?
-                            <section className="zyc-collection-line">
-                                <h2 className="zyc-collection-circle">
-                                    <span>{this.props.match.params.tag}</span>
-                                    <span className="tip">分类</span>
-                                </h2>
-                                <ul className="tag-list">
-                                    {
-                                        articleList.map((item, index) =>
-                                            <li className="zyc-collection-circle-small" key={item.articleId}>
-                                                <span>{dateFormat(item.createTime, 'mm-dd')}</span>
-                                                <Link to={`/categories/detail?articleId=${item.articleId}`}>{item.title}</Link>
-                                            </li>)
-                                    }
-                                </ul>
-                            </section> :
-                            <div className="no-data">
-                                该分类下暂无文章!
-                            </div>
-                    }
-                    {
-                        articleCount ?
-                            <div className="zyc-pager">
-                                <Pagination
-                                    current={this.page}
-                                    pageSize={this.size}
-                                    total={articleCount}
-                                    onChange={this.handlePageChange.bind(this)}
-                                />
-                            </div> : null
-                    }
-                </div> : null
-        );
+
+            <div className="categories-tag">
+                {
+                    this.total ?
+                        <section className="zyc-collection-line">
+                            <h2 className="zyc-collection-circle">
+                                <span>{this.props.match.params.tag}</span>
+                                <span className="tip">分类</span>
+                            </h2>
+                            <ul className="tag-list">
+                                {
+                                    this.list.map((item, index) =>
+                                        <li className="zyc-collection-circle-small" key={item.articleId}>
+                                            <span>{dateFormat(item.createTime, 'mm-dd')}</span>
+                                            <Link
+                                                to={`/categories/detail?articleId=${item.articleId}`}>{item.title}</Link>
+                                        </li>)
+                                }
+                            </ul>
+                        </section> : null
+                }
+                {
+                    this.total === 0 ?
+                        <div className="no-data">
+                            该分类下暂无文章!
+                        </div> : null
+                }
+                {
+                    this.total ?
+                        <div className="zyc-pager">
+                            <Pagination
+                                current={this.page}
+                                pageSize={this.size}
+                                total={this.total}
+                                onChange={this.handlePageChange.bind(this)}
+                            />
+                        </div> : null
+                }
+            </div>
+        )
     }
 }

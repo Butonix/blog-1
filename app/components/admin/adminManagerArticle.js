@@ -3,12 +3,12 @@
  */
 
 import React from 'react';
-import { observable } from 'mobx';
-import { inject, observer } from 'mobx-react';
-import { Pagination } from 'antd';
+import {observable} from 'mobx';
+import {inject, observer} from 'mobx-react';
+import {Pagination} from 'antd';
 import dateFormat from 'dateformat';
 import './adminManagerArticle.sass';
-import { Button } from '../zyc';
+import {Button} from '../zyc';
 import history from '../../history';
 import DialogDelete from '../common/dialogDelete'
 
@@ -16,6 +16,8 @@ import DialogDelete from '../common/dialogDelete'
 export default class AdminManagerArticle extends React.Component {
     @observable page = 1;
     @observable size = 5;
+    @observable list = [];
+    @observable total;
 
     @observable deleteShow;
 
@@ -34,7 +36,12 @@ export default class AdminManagerArticle extends React.Component {
         body.page = this.page;
         body.size = this.size;
         body.author = true;
-        this.articleStore.postArticleList(body);
+        this.articleStore.postArticleList(body).then((response) => {
+            if (response) {
+                this.list = response.data.list;
+                this.total = response.data.total;
+            }
+        })
     }
 
     handlePageChange(current) {
@@ -80,13 +87,12 @@ export default class AdminManagerArticle extends React.Component {
     }
 
     render() {
-        const { articleList, articleCount } = this.articleStore;
         return (
             <div className="admin-managerArticle">
                 <h2>文章管理</h2>
                 <section>
                     {
-                        articleList.map((item, index) =>
+                        this.list.map((item, index) =>
                             <ArticleCell
                                 data={item}
                                 key={item.articleId}
@@ -99,7 +105,7 @@ export default class AdminManagerArticle extends React.Component {
                     <Pagination
                         current={this.page}
                         pageSize={this.size}
-                        total={articleCount}
+                        total={this.total}
                         onChange={this.handlePageChange.bind(this)}
                     />
                 </div>
@@ -116,7 +122,7 @@ export default class AdminManagerArticle extends React.Component {
 class ArticleCell extends React.Component {
 
     render() {
-        const { data } = this.props;
+        const {data} = this.props;
 
         return (
             <div className="article-cell">

@@ -3,12 +3,12 @@
  */
 
 import React from 'react';
-import { observable, toJS } from 'mobx';
-import { inject, observer } from 'mobx-react';
+import {observable, toJS} from 'mobx';
+import {inject, observer} from 'mobx-react';
 import remark from 'remark';
 import reactRenderer from 'remark-react';
 import './adminNewArticle.sass';
-import { Button, Select, Input, Dialog, Message } from '../zyc';
+import {Button, Select, Input, Dialog, Message} from '../zyc';
 import splitLocation from '../public/location';
 import history from '../../history';
 
@@ -21,6 +21,8 @@ export default class AdminNewArticle extends React.Component {
     @observable tags = [];
     @observable viewShow;
 
+    @observable tagList = [];
+
     constructor(args) {
         super(args);
 
@@ -29,14 +31,18 @@ export default class AdminNewArticle extends React.Component {
     }
 
     componentWillMount() {
-        const { location } = window;
-        const { articleId } = splitLocation(location);
+        const {location} = window;
+        const {articleId} = splitLocation(location);
 
         this.articleId = articleId;
     }
 
     componentDidMount() {
-        this.tagStore.getTagList();
+        this.tagStore.getTagList().then((response) => {
+            if (response) {
+                this.tagList = response.data.list;
+            }
+        });
 
         if (this.articleId) {
             const body = {};
@@ -53,7 +59,6 @@ export default class AdminNewArticle extends React.Component {
 
 
     render() {
-        const { tagList } = this.tagStore;
         return (
 
             <div className="admin-newArticle">
@@ -79,7 +84,7 @@ export default class AdminNewArticle extends React.Component {
                         value={this.tags}
                     >
                         {
-                            tagList.map(tag =>
+                            this.tagList.map(tag =>
                                 <Select.Item
                                     key={tag.tagId}
                                 >{tag.name}
@@ -87,11 +92,13 @@ export default class AdminNewArticle extends React.Component {
                         }
                     </Select>
                     <div className="button">
-                        <Button onClick={this.handleArticle.bind(this)}
+                        <Button
+                            onClick={this.handleArticle.bind(this)}
                             className="btn"
                             type="primary"
                         >{this.articleId ? '更新' : '保存'}</Button>
-                        <Button onClick={this.handlePreView.bind(this)}
+                        <Button
+                            onClick={this.handlePreView.bind(this)}
                             className="btn"
                             type="primary"
                         >预览</Button>

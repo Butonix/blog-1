@@ -15,6 +15,8 @@ export default class AdminManagerTags extends React.Component {
     @observable inputShow;
     @observable inputValue = '';
 
+    @observable tagList = [];
+
     constructor(args) {
         super(args);
         this.tagStore = this.props.TagStore;
@@ -22,16 +24,24 @@ export default class AdminManagerTags extends React.Component {
     }
 
     componentDidMount() {
-        this.tagStore.getTagList();
+        this.getTagList();
+    }
+
+    getTagList() {
+        this.tagStore.getTagList().then((response) => {
+            if (response) {
+                this.tagList = response.data.list;
+            }
+        })
     }
 
     render() {
-        const { tagList } = this.tagStore;
+
         return (
             <div className="admin-managerTags">
                 <h2>标签管理</h2>
                 {
-                    tagList.map((tag, index) =>
+                    this.tagList.map((tag, index) =>
                         <Tag
                             key={tag.tagId}
                             className="tag"
@@ -65,7 +75,7 @@ export default class AdminManagerTags extends React.Component {
         body.name = tag.name;
         this.tagStore.postTagDelete(body).then((response) => {
             if (response) {
-                this.tagStore.getTagList();
+                this.getTagList();
             }
         });
     }
@@ -92,7 +102,7 @@ export default class AdminManagerTags extends React.Component {
             if (response) {
                 this.inputShow = false;
                 this.inputValue = '';
-                this.tagStore.getTagList();
+                this.getTagList();
             }
         });
     }

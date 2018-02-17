@@ -7,8 +7,6 @@ import xhr from '../xhr';
 import { Message } from '../../components/zyc';
 
 class ArticleStore {
-    @observable articleList = [];
-    @observable articleCount = 0;
     @observable articleDetail = {};
 
     constructor() {
@@ -22,8 +20,6 @@ class ArticleStore {
     }
 
     @action clearStore() {
-        this.articleList = [];
-        this.articleCount = 0;
         this.articleDetail = {};
     }
 
@@ -102,8 +98,6 @@ class ArticleStore {
         }).then((response) => {
 
             if (response.result) {
-                this.articleList = response.data.list;
-                this.articleCount = response.data.total;
                 return Promise.resolve(response);
             }
 

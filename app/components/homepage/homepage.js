@@ -45,7 +45,7 @@ export default class Homepage extends React.Component {
 
         this.articleStore.postArticleList(body).then((response) => {
             if (response) {
-                this.content = this.content.concat(this.articleStore.articleList);
+                this.content = this.content.concat(response.data.list);
             }
         });
     }
@@ -78,21 +78,16 @@ export default class Homepage extends React.Component {
                         md={{span: 8, offset: 1}}
                         xs={0}
                     >
-                        <HomeCustom
-                            content={this.content}
-                        />
+                        <HomeCustom/>
                     </Col>
                     <Col
                         md={0}
                         xs={24}
                         style={{marginTop: 20}}
                     >
-                        <HomeCustom
-                            content={this.content}
-                        />
+                        <HomeCustom/>
                     </Col>
                 </Row>
-
             </div>
         );
     }

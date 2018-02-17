@@ -8,18 +8,10 @@ import { Message } from '../../components/zyc';
 
 class TagStore {
 
-    @observable tagList = [];
-    @observable tagCount = 0;
-
     constructor() {
         this.tagAddUrl = '/tag/add';
         this.tagListUrl = '/tag/list';
         this.tagDeleteUrl = '/tag/delete';
-    }
-
-    @action clearStore() {
-        this.tagList = [];
-        this.tagCount = 0;
     }
 
     @action postTagDelete(body) {
@@ -63,8 +55,6 @@ class TagStore {
             url: this.tagListUrl,
         }).then((response) => {
             if (response.result) {
-                this.tagList = response.data.list;
-                this.tagCount = response.data.total;
                 return Promise.resolve(response);
             }
             Message.error(response.message);
