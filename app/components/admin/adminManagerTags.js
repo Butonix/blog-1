@@ -3,10 +3,12 @@
  */
 
 import React from 'react';
-import { observable } from 'mobx';
-import { inject, observer } from 'mobx-react';
+import {observable} from 'mobx';
+import {inject, observer} from 'mobx-react';
+import {Button, Input, Tag} from 'antd'
 import './adminManagerTags.sass';
-import { Button, Input, Tag, Message } from '../zyc';
+import {Message} from '../zyc';
+import {tagColor} from '../../utils'
 
 
 @inject('TagStore') @observer
@@ -43,16 +45,19 @@ export default class AdminManagerTags extends React.Component {
                 {
                     this.tagList.map((tag, index) =>
                         <Tag
+                            closable
                             key={tag.tagId}
                             className="tag"
+                            color={tagColor[Math.floor(Math.random() * tagColor.length)]}
                             onClose={this.handleCloseTag.bind(this, tag)}
                         >{tag.name}</Tag>)
                 }
+                <br/>
                 {
                     this.inputShow ?
                         <Input
                             className="ipt"
-                            style={{ width: 120 }}
+                            style={{width: 120}}
                             placeholder="请输入新标签"
                             value={this.inputValue} // 给默认值 不然会有警告
                             onChange={this.handleInputChange.bind(this)}
@@ -60,7 +65,7 @@ export default class AdminManagerTags extends React.Component {
                         /> :
                         <Button
                             className="btn"
-                            type="dashed"
+                            type="primary"
                             onClick={this.handleShowInput.bind(this)}
                         >
                             <span>+ New Tag</span>
