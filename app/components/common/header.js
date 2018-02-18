@@ -84,7 +84,7 @@ export default class ComHeader extends React.Component {
             <div className="header">
                 <Row>
                     <Col
-                        md={6}
+                        md={{offset: 2, span: 4}}
                         xs={0}
                     >
                         <span className="nav-logo" onClick={() => {
