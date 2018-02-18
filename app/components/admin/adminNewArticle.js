@@ -7,8 +7,9 @@ import {observable, toJS} from 'mobx';
 import {inject, observer} from 'mobx-react';
 import remark from 'remark';
 import reactRenderer from 'remark-react';
+import {Button, Input, Select} from 'antd'
 import './adminNewArticle.sass';
-import {Button, Select, Input, Dialog, Message} from '../zyc';
+import {Dialog, Message} from '../zyc';
 import splitLocation from '../public/location';
 import history from '../../history';
 
@@ -64,31 +65,36 @@ export default class AdminNewArticle extends React.Component {
             <div className="admin-newArticle">
                 <h2>发布文章</h2>
                 <section>
-                    <span>标题</span>
+                    <label>标题</label>
                     <Input
                         className="ipt"
                         placeholder="请输入文章标题"
                         value={this.title}
                         onChange={this.handleInputChange.bind(this)}
                     />
-                    <span>正文</span>
-                    <textarea
+                    <label>正文</label>
+                    <Input.TextArea
                         placeholder="请输入正文内容"
+                        className="area"
+                        autosize
                         value={this.content}
                         onChange={this.handleTextAreaChange.bind(this)}
-                    >{null}</textarea>
-                    <span>分类</span>
+                    />
+                    <label>分类</label>
                     <Select
                         className="select"
-                        onSelectTags={this.handleSelectTags.bind(this)}
-                        value={this.tags}
+                        mode="multiple"
+                        placeholder="请选择分类"
+                        onChange={this.handleSelectTags.bind(this)}
+                        value={toJS(this.tags)}
                     >
                         {
                             this.tagList.map(tag =>
-                                <Select.Item
+                                <Select.Option
                                     key={tag.tagId}
+                                    value={tag.name}
                                 >{tag.name}
-                                </Select.Item>)
+                                </Select.Option>)
                         }
                     </Select>
                     <div className="button">
@@ -131,6 +137,7 @@ export default class AdminNewArticle extends React.Component {
     }
 
     handleSelectTags(tags) {
+        console.log(tags)
         this.tags = tags;
 
     }
