@@ -18,16 +18,18 @@ export default class Homepage extends React.Component {
     @observable size = 10;
     @observable content = [];
 
+    @observable hasMore = true;
+
     constructor(args) {
         super(args);
         this.articleStore = this.props.ArticleStore;
 
-        this.scroll = this.scroll.bind(this);
+        // this.scroll = this.scroll.bind(this);
     }
 
-    componentWillMount() {
-        window.addEventListener('scroll', this.scroll);
-    }
+    // componentWillMount() {
+    //     window.addEventListener('scroll', this.scroll);
+    // }
 
     componentDidMount() {
         this.articleStore.initStore();
@@ -35,9 +37,9 @@ export default class Homepage extends React.Component {
 
     }
 
-    componentWillUnmount() {
-        window.removeEventListener('scroll', this.scroll);
-    }
+    // componentWillUnmount() {
+    //     window.removeEventListener('scroll', this.scroll);
+    // }
 
     getArticleList() {
         const body = {};
@@ -48,6 +50,9 @@ export default class Homepage extends React.Component {
         this.articleStore.postArticleList(body).then((response) => {
             if (response) {
                 this.content = this.content.concat(response.data.list);
+                if (this.page * this.size >= response.data.total) {
+                    this.hasMore = false
+                }
             }
         });
     }
@@ -64,6 +69,11 @@ export default class Homepage extends React.Component {
         }
     }
 
+    handleMore = () => {
+        this.page++;
+        this.getArticleList()
+    };
+
     render() {
         return (
             <div className="homepage">
@@ -75,6 +85,12 @@ export default class Homepage extends React.Component {
                         <ArticleList
                             content={this.content}
                         />
+                        {
+                            this.hasMore ?
+                                <div className="more" onClick={this.handleMore}>
+                                    <span>加载更多</span>
+                                </div> : null
+                        }
                     </Col>
                     <Col
                         md={{span: 8, offset: 1}}

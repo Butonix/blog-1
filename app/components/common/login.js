@@ -97,6 +97,7 @@ class LoginForm extends React.Component {
                     <Input
                         prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }}/>}
                         placeholder="password"
+                        type="password"
                         value={this.password}
                         onChange={(e) => {
                             this.password = e.target.value
@@ -171,6 +172,7 @@ class RegisterForm extends React.Component {
                 <li>
                     <Input
                         prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                        type="password"
                         placeholder="password"
                         value={this.password}
                         onChange={(e) => {
@@ -182,6 +184,7 @@ class RegisterForm extends React.Component {
                     <Input
                         prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }}/>}
                         placeholder="repeat password"
+                        type="password"
                         value={this.passwordRe}
                         onChange={(e) => {
                             this.passwordRe = e.target.value
