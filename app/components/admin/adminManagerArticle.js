@@ -11,6 +11,7 @@ import './adminManagerArticle.sass';
 import {Button} from '../zyc';
 import history from '../../history';
 import DialogDelete from '../common/dialogDelete'
+import ArticleManagerList from '../common/articleManagerList'
 
 @inject('ArticleStore') @observer
 export default class AdminManagerArticle extends React.Component {
@@ -36,12 +37,13 @@ export default class AdminManagerArticle extends React.Component {
         body.page = this.page;
         body.size = this.size;
         body.author = true;
-        this.articleStore.postArticleList(body).then((response) => {
-            if (response) {
-                this.list = response.data.list;
-                this.total = response.data.total;
-            }
-        })
+        this.articleStore.postArticleList(body)
+            .then((response) => {
+                if (response) {
+                    this.list = response.data.list;
+                    this.total = response.data.total;
+                }
+            })
     }
 
     handlePageChange(current) {
@@ -50,7 +52,7 @@ export default class AdminManagerArticle extends React.Component {
 
     }
 
-    handleDelete(articleId) {
+    handleDelete = (articleId) => {
         this.articleId = articleId;
         this.deleteShow = true;
 
@@ -74,7 +76,7 @@ export default class AdminManagerArticle extends React.Component {
         this.deleteShow = false
     };
 
-    handlePublish(articleId, isPublish) {
+    handlePublish = (articleId, isPublish) => {
         const body = {};
         body.articleId = articleId;
         body.isPublish = isPublish;
@@ -86,20 +88,30 @@ export default class AdminManagerArticle extends React.Component {
             });
     }
 
+    handleEdit = (articleId) => {
+        history.push(`/admin/newArticle?articleId=${articleId}`);
+    };
+
     render() {
         return (
             <div className="admin-managerArticle">
                 <h2>文章管理</h2>
                 <section>
-                    {
-                        this.list.map((item, index) =>
-                            <ArticleCell
-                                data={item}
-                                key={item.articleId}
-                                onDelete={this.handleDelete.bind(this)}
-                                onPublish={this.handlePublish.bind(this)}
-                            />)
-                    }
+                    <ArticleManagerList
+                        content={this.list}
+                        onEdit={this.handleEdit}
+                        onDelete={this.handleDelete}
+                        onPublish={this.handlePublish}
+                    />
+                    {/*{*/}
+                    {/*this.list.map((item, index) =>*/}
+                    {/*<ArticleCell*/}
+                    {/*data={item}*/}
+                    {/*key={item.articleId}*/}
+                    {/*onDelete={this.handleDelete.bind(this)}*/}
+                    {/*onPublish={this.handlePublish.bind(this)}*/}
+                    {/*/>)*/}
+                    {/*}*/}
                 </section>
                 <div className="zyc-pager">
                     <Pagination
@@ -122,7 +134,7 @@ export default class AdminManagerArticle extends React.Component {
 class ArticleCell extends React.Component {
 
     render() {
-        const {data} = this.props;
+        const { data } = this.props;
 
         return (
             <div className="article-cell">
