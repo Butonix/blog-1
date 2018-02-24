@@ -3,13 +3,12 @@
  */
 
 import React from 'react';
-import { observable } from 'mobx';
-import { observer, inject } from 'mobx-react';
+import {observable} from 'mobx';
+import {observer, inject} from 'mobx-react';
 import md5 from 'blueimp-md5';
-import { Button, Input, Icon } from 'antd';
-import { Message } from '../zyc';
+import {Button, Input, Icon, message} from 'antd';
 import './login.sass';
-import { Username, Password } from '../public/regular';
+import {Username, Password} from '../public/regular';
 
 
 @observer
@@ -120,11 +119,11 @@ class LoginForm extends React.Component {
     handleLogin() {
 
         if (!this.username) {
-            Message.error('用户名不能为空!');
+            message.error('用户名不能为空!');
             return false;
         }
         if (!this.password) {
-            Message.error('密码不能为空!');
+            message.error('密码不能为空!');
             return false;
         }
 
@@ -207,18 +206,18 @@ class RegisterForm extends React.Component {
     handleRegister() {
 
         if (!Username.test(this.username)) {
-            Message.error('请输入5-16位字符!');
+            message.error('请输入5-16位字符!');
             return false;
         }
 
         if (!Password.test(this.password)) {
-            Message.error('请输入以字母开头的5-16位字符的密码!');
+            message.error('请输入以字母开头的5-16位字符的密码!');
             return false;
         }
 
         if (this.password !== this.passwordRe) {
 
-            Message.error('两次输入密码不一致!');
+            message.error('两次输入密码不一致!');
 
             return false;
         }

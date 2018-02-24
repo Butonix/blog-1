@@ -7,9 +7,9 @@ import {observable, toJS} from 'mobx';
 import {inject, observer} from 'mobx-react';
 import remark from 'remark';
 import reactRenderer from 'remark-react';
-import {Button, Input, Select} from 'antd'
+import {Button, Input, Select, message} from 'antd'
 import './adminNewArticle.sass';
-import {Dialog, Message} from '../zyc';
+import {Dialog} from '../zyc';
 import splitLocation from '../public/location';
 import history from '../../history';
 
@@ -32,29 +32,31 @@ export default class AdminNewArticle extends React.Component {
     }
 
     componentWillMount() {
-        const {location} = window;
-        const {articleId} = splitLocation(location);
+        const { location } = window;
+        const { articleId } = splitLocation(location);
 
         this.articleId = articleId;
     }
 
     componentDidMount() {
-        this.tagStore.getTagList().then((response) => {
-            if (response) {
-                this.tagList = response.data.list;
-            }
-        });
+        this.tagStore.getTagList()
+            .then((response) => {
+                if (response) {
+                    this.tagList = response.data.list;
+                }
+            });
 
         if (this.articleId) {
             const body = {};
             body.articleId = this.articleId;
-            this.articleStore.postArticleDetail(body).then((response) => {
-                if (response) {
-                    this.title = response.data.title;
-                    this.content = response.data.content;
-                    this.tags = response.data.tags;
-                }
-            });
+            this.articleStore.postArticleDetail(body)
+                .then((response) => {
+                    if (response) {
+                        this.title = response.data.title;
+                        this.content = response.data.content;
+                        this.tags = response.data.tags;
+                    }
+                });
         }
     }
 
@@ -119,7 +121,9 @@ export default class AdminNewArticle extends React.Component {
                 >
                     <div className="dialog-view">
                         <div className="markdown-body">
-                            {remark().use(reactRenderer).processSync(this.content).contents}
+                            {remark()
+                                .use(reactRenderer)
+                                .processSync(this.content).contents}
                         </div>
                     </div>
                 </Dialog>
@@ -144,17 +148,17 @@ export default class AdminNewArticle extends React.Component {
 
     handleArticle() {
         if (!this.title) {
-            Message.error('请输入文章标题!');
+            message.error('请输入文章标题!');
             return;
         }
 
         if (!this.content) {
-            Message.error('请输入文章内容!');
+            message.error('请输入文章内容!');
             return;
         }
 
         if (!this.tags.length) {
-            Message.error('请选择分类!');
+            message.error('请选择分类!');
             return;
         }
 
@@ -172,12 +176,13 @@ export default class AdminNewArticle extends React.Component {
         body.tags = toJS(this.tags);
         body.articleId = this.articleId;
 
-        this.articleStore.postArticleUpdate(body).then((response) => {
-            if (response) {
-                history.push('/admin/managerArticle');
+        this.articleStore.postArticleUpdate(body)
+            .then((response) => {
+                if (response) {
+                    history.push('/admin/managerArticle');
 
-            }
-        });
+                }
+            });
     }
 
     saveArticle() {
@@ -187,11 +192,12 @@ export default class AdminNewArticle extends React.Component {
         body.tags = toJS(this.tags);
         body.isPublish = false;
 
-        this.articleStore.postArticleAdd(body).then((response) => {
-            if (response) {
-                history.push('/admin/managerArticle');
-            }
-        });
+        this.articleStore.postArticleAdd(body)
+            .then((response) => {
+                if (response) {
+                    history.push('/admin/managerArticle');
+                }
+            });
     }
 
     handlePreView() {

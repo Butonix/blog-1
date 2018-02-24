@@ -5,10 +5,9 @@
 import React, {Fragment} from 'react';
 import {observable, toJS} from 'mobx';
 import {inject, observer} from 'mobx-react';
-import {Pagination, Table, Divider} from 'antd';
+import {Pagination, Table, Divider, Popconfirm} from 'antd';
 import './adminManagerUser.sass';
 import {Dialog, Input, Button} from '../zyc';
-import DialogDelete from '../common/dialogDelete'
 
 const { Column } = Table;
 
@@ -18,7 +17,6 @@ export default class AdminManagerUser extends React.Component {
     @observable size = 5;
 
     @observable authorityShow;
-    @observable deleteShow;
 
     @observable userType;
     @observable userId;
@@ -66,20 +64,13 @@ export default class AdminManagerUser extends React.Component {
             });
     }
 
-    handleDelete(userId) {
-        this.userId = userId;
-        this.deleteShow = true;
-
-    }
-
-    handleDeleteSure = () => {
+    handleDeleteSure = (userId) => {
 
         const body = {};
-        body.userId = this.userId;
+        body.userId = userId;
         this.userStore.postUserDelete(body)
             .then((response) => {
                 if (response) {
-                    this.deleteShow = false;
                     this.getUserList();
                 }
             });
@@ -110,7 +101,6 @@ export default class AdminManagerUser extends React.Component {
 
     handleClose = () => {
         this.authorityShow = false;
-        this.deleteShow = false;
     };
 
 
@@ -158,7 +148,14 @@ export default class AdminManagerUser extends React.Component {
                                                 onClick={this.handleUse.bind(this, row.userId, true)}>禁用中</a>
                                     }
                                     <Divider type="vertical"/>
-                                    <a onClick={this.handleDelete.bind(this, row.userId)}>删除</a>
+                                    <Popconfirm
+                                        title="是否确认删除?"
+                                        okText="确认"
+                                        cancelText="取消"
+                                        onConfirm={this.handleDeleteSure.bind(this, row.userId)}
+                                    >
+                                        <a>删除</a>
+                                    </Popconfirm>
                                 </Fragment>
                             }
                         />
@@ -167,9 +164,7 @@ export default class AdminManagerUser extends React.Component {
                             dataIndex="authority"
                             render={(value, row) => (
                                 row.userType !== 1 ?
-                                    <span
-                                        className="zyc-text-hover"
-                                        onClick={this.handleModify.bind(this, row.userType, row.userId)}>修改</span> : null
+                                    <a onClick={this.handleModify.bind(this, row.userType, row.userId)}>修改</a> : null
                             )}
                         />
                     </Table>
@@ -204,11 +199,6 @@ export default class AdminManagerUser extends React.Component {
                         <label>游客</label>
                     </div>
                 </Dialog>
-                <DialogDelete
-                    show={this.deleteShow}
-                    onOk={this.handleDeleteSure}
-                    onClose={this.handleClose}
-                />
             </div>
         );
     }

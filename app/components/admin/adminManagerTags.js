@@ -5,9 +5,8 @@
 import React from 'react';
 import {observable} from 'mobx';
 import {inject, observer} from 'mobx-react';
-import {Button, Input, Tag} from 'antd'
+import {Button, Input, Tag, message} from 'antd'
 import './adminManagerTags.sass';
-import {Message} from '../zyc';
 import {tagColor} from '../../utils'
 
 
@@ -30,11 +29,12 @@ export default class AdminManagerTags extends React.Component {
     }
 
     getTagList() {
-        this.tagStore.getTagList().then((response) => {
-            if (response) {
-                this.tagList = response.data.list;
-            }
-        })
+        this.tagStore.getTagList()
+            .then((response) => {
+                if (response) {
+                    this.tagList = response.data.list;
+                }
+            })
     }
 
     render() {
@@ -57,7 +57,7 @@ export default class AdminManagerTags extends React.Component {
                     this.inputShow ?
                         <Input
                             className="ipt"
-                            style={{width: 120}}
+                            style={{ width: 120 }}
                             placeholder="请输入新标签"
                             value={this.inputValue} // 给默认值 不然会有警告
                             onChange={this.handleInputChange.bind(this)}
@@ -78,11 +78,12 @@ export default class AdminManagerTags extends React.Component {
     handleCloseTag(tag) {
         const body = {};
         body.name = tag.name;
-        this.tagStore.postTagDelete(body).then((response) => {
-            if (response) {
-                this.getTagList();
-            }
-        });
+        this.tagStore.postTagDelete(body)
+            .then((response) => {
+                if (response) {
+                    this.getTagList();
+                }
+            });
     }
 
     handleShowInput() {
@@ -96,19 +97,20 @@ export default class AdminManagerTags extends React.Component {
 
     handleInputConfirm() {
         if (!this.inputValue) {
-            Message.error('标签名不能为空!');
+            message.error('标签名不能为空!');
             this.inputShow = false;
             return;
         }
 
         const body = {};
         body.name = this.inputValue;
-        this.tagStore.postTagAdd(body).then((response) => {
-            if (response) {
-                this.inputShow = false;
-                this.inputValue = '';
-                this.getTagList();
-            }
-        });
+        this.tagStore.postTagAdd(body)
+            .then((response) => {
+                if (response) {
+                    this.inputShow = false;
+                    this.inputValue = '';
+                    this.getTagList();
+                }
+            });
     }
 }

@@ -1,8 +1,8 @@
 /**
  * Created by scriptchao on 2017/11/2.
  */
+import {message} from 'antd'
 import { origin, expiredTime } from './config';
-import { Message } from '../../components/zyc';
 
 const xhr = (req = {}) => {
     const { method, url, body = {} } = req;
@@ -64,7 +64,7 @@ const xhr = (req = {}) => {
                 e.message = '网络连接失败!';
             }
 
-            Message.error(e.message);
+            message.error(e.message);
         });
 };
 

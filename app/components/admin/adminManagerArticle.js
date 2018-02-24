@@ -10,7 +10,6 @@ import dateFormat from 'dateformat';
 import './adminManagerArticle.sass';
 import {Button} from '../zyc';
 import history from '../../history';
-import DialogDelete from '../common/dialogDelete'
 import ArticleManagerList from '../common/articleManagerList'
 
 @inject('ArticleStore') @observer
@@ -19,8 +18,6 @@ export default class AdminManagerArticle extends React.Component {
     @observable size = 5;
     @observable list = [];
     @observable total;
-
-    @observable deleteShow;
 
     constructor(args) {
         super(args);
@@ -52,29 +49,19 @@ export default class AdminManagerArticle extends React.Component {
 
     }
 
-    handleDelete = (articleId) => {
-        this.articleId = articleId;
-        this.deleteShow = true;
-
-    }
-
-    handleDeleteSure = () => {
+    handleDeleteSure = (articleId) => {
 
         const body = {};
-        body.articleId = this.articleId;
+        body.articleId = articleId;
         this.articleStore.postArticleDelete(body)
             .then((response) => {
                 if (response) {
-                    this.deleteShow = false;
                     this.getArticleList();
                 }
             });
+
     };
 
-
-    handleClose = () => {
-        this.deleteShow = false
-    };
 
     handlePublish = (articleId, isPublish) => {
         const body = {};
@@ -86,7 +73,7 @@ export default class AdminManagerArticle extends React.Component {
                     this.getArticleList();
                 }
             });
-    }
+    };
 
     handleEdit = (articleId) => {
         history.push(`/admin/newArticle?articleId=${articleId}`);
@@ -100,18 +87,9 @@ export default class AdminManagerArticle extends React.Component {
                     <ArticleManagerList
                         content={this.list}
                         onEdit={this.handleEdit}
-                        onDelete={this.handleDelete}
+                        onDelete={this.handleDeleteSure}
                         onPublish={this.handlePublish}
                     />
-                    {/*{*/}
-                    {/*this.list.map((item, index) =>*/}
-                    {/*<ArticleCell*/}
-                    {/*data={item}*/}
-                    {/*key={item.articleId}*/}
-                    {/*onDelete={this.handleDelete.bind(this)}*/}
-                    {/*onPublish={this.handlePublish.bind(this)}*/}
-                    {/*/>)*/}
-                    {/*}*/}
                 </section>
                 <div className="zyc-pager">
                     <Pagination
@@ -121,82 +99,7 @@ export default class AdminManagerArticle extends React.Component {
                         onChange={this.handlePageChange.bind(this)}
                     />
                 </div>
-                <DialogDelete
-                    show={this.deleteShow}
-                    onOk={this.handleDeleteSure}
-                    onClose={this.handleClose}
-                />
             </div>
-        );
-    }
-}
-
-class ArticleCell extends React.Component {
-
-    render() {
-        const { data } = this.props;
-
-        return (
-            <div className="article-cell">
-                <div className="aboutArticle">
-                    <p className="title">{data.title}</p>
-                    <p className="info">
-                        <span className="zyc-area-line">
-                            <i className="iconfont icon-riqi">{null}</i>
-                            <span className="tip">创作时间</span>
-                            <span>{dateFormat(data.createTime, 'yyyy-mm-dd HH:MM:ss')}</span>
-                        </span>
-                        <span className="zyc-area-line">
-                            <i className="iconfont icon-zuozhe">{null}</i>
-                            <span className="tip">作者</span>
-                            <span>{data.author}</span>
-                        </span>
-                        <span className="zyc-area-line">
-                            <i className="iconfont icon-yuedu">{null}</i>
-                            <span className="tip">阅读数</span>
-                            <span>{data.readCount}</span>
-                        </span>
-                        <span>
-                            <i className="iconfont icon-dianzanshu">{null}</i>
-                            <span className="tip">点赞数</span>
-                            <span>{data.voteCount}</span>
-                        </span>
-                    </p>
-                </div>
-                <div className="state">
-                    {
-                        data.isPublish ?
-                            <span className="zyc-text-green">已发布</span> :
-                            <span>草稿</span>
-                    }
-                </div>
-                <div className="operation">
-                    <Button
-                        className="btn"
-                        onClick={() => {
-                            history.push(`/admin/newArticle?articleId=${data.articleId}`);
-                        }}>编辑</Button>
-                    <Button
-                        className="btn"
-                        onClick={() => {
-                            this.props.onDelete(data.articleId);
-                        }}>删除</Button>
-                    {
-                        data.isPublish ?
-                            <Button
-                                className="btn"
-                                onClick={() => {
-                                    this.props.onPublish(data.articleId, false);
-                                }}>撤回</Button> :
-                            <Button
-                                className="btn"
-                                onClick={() => {
-                                    this.props.onPublish(data.articleId, true);
-                                }}>发布</Button>
-                    }
-                </div>
-            </div>
-
         );
     }
 }

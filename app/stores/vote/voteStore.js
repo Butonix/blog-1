@@ -2,9 +2,10 @@
  * Created by scriptchao on 2017/12/1.
  */
 
-import { action } from 'mobx';
+import {action} from 'mobx';
+import {message} from 'antd'
 import xhr from '../xhr';
-import { Message, Spin } from '../../components/zyc';
+import {Spin} from '../../components/zyc';
 
 class VoteStore {
     constructor() {
@@ -19,17 +20,18 @@ class VoteStore {
             method: 'post',
             url: this.voteUpdateUrl,
             body,
-        }).then((response) => {
-            Spin.close();
+        })
+            .then((response) => {
+                Spin.close();
 
-            if (response.result) {
-                return Promise.resolve(response);
-            }
+                if (response.result) {
+                    return Promise.resolve(response);
+                }
 
-            Message.error(response.message);
-            return false;
+                message.error(response.message);
+                return false;
 
-        });
+            });
     }
 
     @action postVoteStatus(body) {
@@ -38,14 +40,15 @@ class VoteStore {
             method: 'post',
             url: this.voteStatusUrl,
             body,
-        }).then((response) => {
-            if (response.result) {
-                return Promise.resolve(response);
-            }
-            Message.error(response.message);
-            return false;
+        })
+            .then((response) => {
+                if (response.result) {
+                    return Promise.resolve(response);
+                }
+                message.error(response.message);
+                return false;
 
-        });
+            });
     }
 }
 

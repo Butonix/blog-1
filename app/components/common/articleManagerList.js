@@ -7,7 +7,7 @@ import {observable} from 'mobx';
 import {inject, observer} from 'mobx-react';
 import {Link} from 'react-router-dom';
 import dateFormat from 'dateformat';
-import {Row, Col, List, Avatar, Tag, Icon, Button, Divider} from 'antd'
+import {Row, Col, List, Avatar, Tag, Icon, Button, Divider, Popconfirm} from 'antd'
 import './articleManagerList.sass';
 import history from '../../history'
 import {tagColor} from '../../utils'
@@ -122,9 +122,14 @@ class ArticleCell extends React.Component {
                                 this.props.onEdit(data.articleId)
                             }}>编辑</a>
                             <Divider type="vertical"/>
-                            <a onClick={() => {
-                                this.props.onDelete(data.articleId);
-                            }}>删除</a>
+                            <Popconfirm
+                                title="是否确认删除?"
+                                okText="确认"
+                                cancelText="取消"
+                                onConfirm={this.props.onDelete.bind(this, data.articleId)}
+                            >
+                                <a>删除</a>
+                            </Popconfirm>
                             <Divider type="vertical"/>
                             {
                                 data.isPublish ?
