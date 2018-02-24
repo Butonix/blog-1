@@ -6,10 +6,12 @@ import React from 'react';
 import {observable} from 'mobx';
 import {inject, observer} from 'mobx-react';
 import {Link} from 'react-router-dom';
+import {Modal} from 'antd'
 import splitLocation from '../public/location';
 import './detail.sass';
-import {Dialog} from '../zyc';
 import ArticleDetail from '../common/articleDetail'
+import Login from '../login'
+import Register from '../register'
 
 @inject('UserStore', 'ArticleStore', 'VoteStore') @observer
 export default class Detail extends React.Component {
@@ -23,6 +25,9 @@ export default class Detail extends React.Component {
 
     @observable isRender;
 
+    @observable loginShow;
+    @observable registerShow;
+
     constructor(args) {
         super(args);
 
@@ -32,8 +37,8 @@ export default class Detail extends React.Component {
     }
 
     componentWillMount() {
-        const {location} = window;
-        const {articleId} = splitLocation(location);
+        const { location } = window;
+        const { articleId } = splitLocation(location);
         this.articleId = articleId;
     }
 
@@ -46,8 +51,8 @@ export default class Detail extends React.Component {
 
     componentWillReceiveProps() {
         this.isRender = false;
-        const {location} = window;
-        const {articleId} = splitLocation(location);
+        const { location } = window;
+        const { articleId } = splitLocation(location);
         this.articleId = articleId;
         this.getArticleDetail();
         this.getTitlePrev();
@@ -61,28 +66,31 @@ export default class Detail extends React.Component {
             const body = {};
             body.articleId = this.articleId;
             body.userId = this.userStore.userInfo.userId;
-            this.voteStore.postVoteStatus(body).then((response) => {
-                if (response) {
-                    this.isVote = response.data.isVote;
-                }
-            });
+            this.voteStore.postVoteStatus(body)
+                .then((response) => {
+                    if (response) {
+                        this.isVote = response.data.isVote;
+                    }
+                });
         }
     }
 
     getArticleDetail() {
         const body = {};
         body.articleId = this.articleId;
-        this.articleStore.postArticleUpdateReadCount(body).then((response) => {
-            if (response) {
-                this.articleStore.postArticleDetail(body).then((response1) => {
-                    if (response1) {
-                        this.articleData = response1.data;
-                        this.voteCount = response1.data.voteCount;
-                        this.isRender = true;
-                    }
-                });
-            }
-        });
+        this.articleStore.postArticleUpdateReadCount(body)
+            .then((response) => {
+                if (response) {
+                    this.articleStore.postArticleDetail(body)
+                        .then((response1) => {
+                            if (response1) {
+                                this.articleData = response1.data;
+                                this.voteCount = response1.data.voteCount;
+                                this.isRender = true;
+                            }
+                        });
+                }
+            });
     }
 
 
@@ -90,22 +98,24 @@ export default class Detail extends React.Component {
         const body = {};
         body.articleId = this.articleId;
         body.prev = true;
-        this.articleStore.postArticleDetailTitle(body).then((response) => {
-            if (response) {
-                this.prevTitle = response.data;
-            }
-        });
+        this.articleStore.postArticleDetailTitle(body)
+            .then((response) => {
+                if (response) {
+                    this.prevTitle = response.data;
+                }
+            });
     }
 
     getTitleNext() {
         const body = {};
         body.articleId = this.articleId;
         body.next = true;
-        this.articleStore.postArticleDetailTitle(body).then((response) => {
-            if (response) {
-                this.nextTitle = response.data;
-            }
-        });
+        this.articleStore.postArticleDetailTitle(body)
+            .then((response) => {
+                if (response) {
+                    this.nextTitle = response.data;
+                }
+            });
     }
 
     handleVote() {
@@ -134,14 +144,19 @@ export default class Detail extends React.Component {
 
     handleClose() {
         this.tipShow = false;
+        this.loginShow = false;
+        this.registerShow = false;
 
     }
 
-    handleLogin(type) {
+    handleLogin() {
         this.tipShow = false;
-        this.userStore.loginType = type;
-        this.userStore.loginShow = true;
+        this.loginShow = true;
+    }
 
+    handleRegister() {
+        this.tipShow = false;
+        this.registerShow = true;
     }
 
     render() {
@@ -172,24 +187,33 @@ export default class Detail extends React.Component {
                             <span>{this.voteCount}</span>
                         </div>
                     </div>
-                    <Dialog
-                        show={this.tipShow}
-                        header={false}
-                        footer={false}
-                        onClose={this.handleClose.bind(this)}
+                    <Modal
+                        visible={this.tipShow}
+                        header={null}
+                        footer={null}
+                        closable={null}
+                        onCancel={this.handleClose.bind(this)}
                     >
                         <div className="dialog-tip">
                             <h2>请登录</h2>
                             <div className="content">
-                                <p className="login" onClick={this.handleLogin.bind(this, 1)}>
+                                <p className="login" onClick={this.handleLogin.bind(this)}>
                                     <span>账号登录</span>
                                 </p>
-                                <p onClick={this.handleLogin.bind(this, 0)}>
+                                <p onClick={this.handleRegister.bind(this)}>
                                     <span className="zyc-link-hover">没有账号? 前往注册 »</span>
                                 </p>
                             </div>
                         </div>
-                    </Dialog>
+                    </Modal>
+                    <Login
+                        visible={this.loginShow}
+                        onCancel={this.handleClose.bind(this)}
+                    />
+                    <Register
+                        visible={this.registerShow}
+                        onCancel={this.handleClose.bind(this)}
+                    />
                 </div> : null
         );
     }

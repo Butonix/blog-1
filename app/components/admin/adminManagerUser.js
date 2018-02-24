@@ -5,9 +5,8 @@
 import React, {Fragment} from 'react';
 import {observable, toJS} from 'mobx';
 import {inject, observer} from 'mobx-react';
-import {Pagination, Table, Divider, Popconfirm} from 'antd';
+import {Pagination, Table, Divider, Popconfirm, Modal} from 'antd';
 import './adminManagerUser.sass';
-import {Dialog, Input, Button} from '../zyc';
 
 const { Column } = Table;
 
@@ -177,12 +176,14 @@ export default class AdminManagerUser extends React.Component {
                         onChange={this.handlePageChange.bind(this)}
                     />
                 </div>
-                <Dialog
+                <Modal
                     title="权限修改"
-                    show={this.authorityShow}
+                    visible={this.authorityShow}
                     width={300}
+                    okText="确认"
+                    cancelText="取消"
                     onOk={this.handleModifySure}
-                    onClose={this.handleClose}
+                    onCancel={this.handleClose}
                 >
                     <div className="dialog-authority">
                         <input
@@ -198,7 +199,7 @@ export default class AdminManagerUser extends React.Component {
                             onChange={this.handleChangeType.bind(this, 3)}/>
                         <label>游客</label>
                     </div>
-                </Dialog>
+                </Modal>
             </div>
         );
     }

@@ -8,30 +8,31 @@ import {observer, inject} from 'mobx-react';
 import {NavLink, Link} from 'react-router-dom';
 import {Button, Menu, Dropdown, Icon, Col, Row, Layout, Avatar} from 'antd';
 import './header.sass';
-import Login from './login';
-import {Dialog} from '../zyc';
 import history from '../../history';
 import ComMenu from '../comMenu'
-
-const {Header} = Layout;
+import Login from '../login'
+import Register from '../register'
 
 const menuData = [
     {
         name: '首页',
         path: '/',
-        icon: 'user'
+        icon: 'user',
     },
     {
         name: '分类',
         path: '/categories',
-        icon: 'user'
-    }
+        icon: 'user',
+    },
 ];
 
 
 @inject('UserStore') @observer
 export default class ComHeader extends React.Component {
     @observable visible;
+
+    @observable loginShow;
+    @observable registerShow;
 
     constructor(args) {
         super(args);
@@ -75,16 +76,16 @@ export default class ComHeader extends React.Component {
 
     render() {
 
-        const {loginShow, userInfo, loginType} = this.userStore;
+        const { userInfo } = this.userStore;
 
-        const {pathname} = window.location;
-        const {name} = this.getName(menuData, pathname);
+        const { pathname } = window.location;
+        const { name } = this.getName(menuData, pathname);
 
         return (
             <div className="header">
                 <Row>
                     <Col
-                        md={{offset: 2, span: 4}}
+                        md={{ offset: 2, span: 4 }}
                         xs={0}
                     >
                         <span className="nav-logo" onClick={() => {
@@ -111,7 +112,7 @@ export default class ComHeader extends React.Component {
                             trigger={['click']}
                         >
                             <div className="nav-menu">
-                                <Button type="primary" ghost style={{border: 'none'}}>
+                                <Button type="primary" ghost style={{ border: 'none' }}>
                                     <span>{name}</span>
                                     <Icon type="caret-down"/>
                                 </Button>
@@ -146,7 +147,7 @@ export default class ComHeader extends React.Component {
                                                 userInfo.userType !== 3 ?
                                                     <Menu.Item key="admin">
                                                         <Link to="/admin">
-                                                            <Icon type="user" style={{marginRight: 10}}/>
+                                                            <Icon type="user" style={{ marginRight: 10 }}/>
                                                             <span>后台管理</span>
                                                         </Link>
                                                     </Menu.Item> : null
@@ -156,7 +157,7 @@ export default class ComHeader extends React.Component {
                                                     <Menu.Divider/> : null
                                             }
                                             <Menu.Item key="quit">
-                                                <Icon type="user" style={{marginRight: 10}}/>
+                                                <Icon type="user" style={{ marginRight: 10 }}/>
                                                 <span>退出登录</span>
                                             </Menu.Item>
                                         </Menu>
@@ -164,7 +165,7 @@ export default class ComHeader extends React.Component {
                                     <div className="login-ed">
                                         <Avatar
                                             src="/static/img/nav-user.jpg"
-                                            style={{marginRight: '10px'}}
+                                            style={{ marginRight: '10px' }}
                                         />
                                         <span>{`欢迎! ${userInfo.username}`}</span>
                                     </div>
@@ -172,14 +173,14 @@ export default class ComHeader extends React.Component {
                                 <div className="login">
                                     <Button
                                         size="small"
-                                        onClick={this.handleLogin.bind(this, 0)}
+                                        onClick={this.handleRegister.bind(this)}
                                     >
                                         注册
                                     </Button>
                                     <Button
                                         size="small"
-                                        style={{marginLeft: 15}}
-                                        onClick={this.handleLogin.bind(this, 1)}
+                                        style={{ marginLeft: 15 }}
+                                        onClick={this.handleLogin.bind(this)}
                                     >
                                         登录
                                     </Button>
@@ -187,24 +188,28 @@ export default class ComHeader extends React.Component {
                         }
                     </Col>
                 </Row>
-                <Dialog
-                    show={loginShow}
-                    header={false}
-                    footer={false}
-                    onClose={this.handleClose.bind(this)}
-                >
-                    <Login type={loginType}/>
-                </Dialog>
+                <Login
+                    visible={this.loginShow}
+                    onCancel={this.handleClose.bind(this)}
+                />
+                <Register
+                    visible={this.registerShow}
+                    onCancel={this.handleClose.bind(this)}
+                />
             </div>
         );
     }
 
-    handleLogin(type) {
-        this.userStore.loginType = type;
-        this.userStore.loginShow = true;
+    handleLogin() {
+        this.loginShow = true
+    }
+
+    handleRegister() {
+        this.registerShow = true
     }
 
     handleClose() {
-        this.userStore.loginShow = false;
+        this.loginShow = false;
+        this.registerShow = false;
     }
 }

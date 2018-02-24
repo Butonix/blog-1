@@ -7,9 +7,8 @@ import {observable, toJS} from 'mobx';
 import {inject, observer} from 'mobx-react';
 import remark from 'remark';
 import reactRenderer from 'remark-react';
-import {Button, Input, Select, message} from 'antd'
+import {Button, Input, Select, message, Modal} from 'antd'
 import './adminNewArticle.sass';
-import {Dialog} from '../zyc';
 import splitLocation from '../public/location';
 import history from '../../history';
 
@@ -112,12 +111,12 @@ export default class AdminNewArticle extends React.Component {
                         >预览</Button>
                     </div>
                 </section>
-                <Dialog
+                <Modal
                     title="文章预览"
-                    show={this.viewShow}
+                    visible={this.viewShow}
                     width={800}
-                    footer={false}
-                    onClose={this.handleViewClose.bind(this)}
+                    footer={null}
+                    onCancel={this.handleViewClose.bind(this)}
                 >
                     <div className="dialog-view">
                         <div className="markdown-body">
@@ -126,7 +125,7 @@ export default class AdminNewArticle extends React.Component {
                                 .processSync(this.content).contents}
                         </div>
                     </div>
-                </Dialog>
+                </Modal>
             </div>
         );
     }
