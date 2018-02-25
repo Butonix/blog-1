@@ -36,7 +36,7 @@ export default class ArticleDetail extends React.Component {
                     <div className="tag">
                         <span>{dateFormat(data.createTime, 'yyyy-mm-dd')}</span>
                         <span>
-                            <IconText key="tags-o" type="tags-o" text={
+                            <IconText key="biaoqian" type="biaoqian" text={
                                 data.tags.map(tag =>
                                     <Tag
                                         key={data.id + Math.random()}

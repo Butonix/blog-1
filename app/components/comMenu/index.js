@@ -57,7 +57,7 @@ export default class ComMenu extends Component {
                     title={
                         item.icon ? (
                             <span>
-                                <Icon type={item.icon}/>
+                                <Icon type={item.icon} style={{marginRight: 10}}/>
                                 <span>{item.name}</span>
                             </span>
                         ) : <span>{item.name}</span>
@@ -72,7 +72,7 @@ export default class ComMenu extends Component {
                 {
                     item.icon ?
                         <Link to={item.path}>
-                            <Icon type={item.icon}/>
+                            <Icon type={item.icon} style={{marginRight: 10}}/>
                             <span>{item.name}</span>
                         </Link> :
                         <Link to={item.path}>

@@ -17,20 +17,20 @@ const menuData = [
     {
         name: '首页',
         path: '/',
-        icon: 'home'
+        icon: 'shouye'
     },
     {
         name: '分类',
         path: '/categories',
-        icon: 'appstore-o'
+        icon: 'fenlei'
     }
 ];
 
 
 @inject('UserStore') @observer
 export default class ComHeader extends React.Component {
-    @observable visible;
 
+    @observable visible;
     @observable loginShow;
     @observable registerShow;
 
@@ -114,7 +114,7 @@ export default class ComHeader extends React.Component {
                             <div className="nav-menu">
                                 <Button type="primary" ghost style={{ border: 'none' }}>
                                     <span>{name}</span>
-                                    <Icon type="caret-down"/>
+                                    <Icon type="xiangxia"/>
                                 </Button>
                             </div>
                         </Dropdown>
@@ -147,7 +147,7 @@ export default class ComHeader extends React.Component {
                                                 userInfo.userType !== 3 ?
                                                     <Menu.Item key="admin">
                                                         <Link to="/admin">
-                                                            <Icon type="setting" style={{marginRight: 10}}/>
+                                                            <Icon type="houtaiguanli" style={{marginRight: 10}}/>
                                                             <span>后台管理</span>
                                                         </Link>
                                                     </Menu.Item> : null
@@ -157,7 +157,7 @@ export default class ComHeader extends React.Component {
                                                     <Menu.Divider/> : null
                                             }
                                             <Menu.Item key="quit">
-                                                <Icon type="logout" style={{marginRight: 10}}/>
+                                                <Icon type="tuichudenglu" style={{marginRight: 10}}/>
                                                 <span>退出登录</span>
                                             </Menu.Item>
                                         </Menu>
@@ -165,7 +165,7 @@ export default class ComHeader extends React.Component {
                                     <div className="login-ed">
                                         <Avatar
                                             src="/static/img/nav-user.jpg"
-                                            style={{ marginRight: '10px' }}
+                                            style={{ marginRight: 10 }}
                                         />
                                         <span>{`欢迎! ${userInfo.username}`}</span>
                                     </div>

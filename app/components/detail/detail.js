@@ -6,7 +6,7 @@ import React from 'react';
 import {observable} from 'mobx';
 import {inject, observer} from 'mobx-react';
 import {Link} from 'react-router-dom';
-import {Modal} from 'antd'
+import {Modal, Icon, Button} from 'antd'
 import splitLocation from '../public/location';
 import './detail.sass';
 import ArticleDetail from '../common/articleDetail'
@@ -37,8 +37,8 @@ export default class Detail extends React.Component {
     }
 
     componentWillMount() {
-        const { location } = window;
-        const { articleId } = splitLocation(location);
+        const {location} = window;
+        const {articleId} = splitLocation(location);
         this.articleId = articleId;
     }
 
@@ -51,8 +51,8 @@ export default class Detail extends React.Component {
 
     componentWillReceiveProps() {
         this.isRender = false;
-        const { location } = window;
-        const { articleId } = splitLocation(location);
+        const {location} = window;
+        const {articleId} = splitLocation(location);
         this.articleId = articleId;
         this.getArticleDetail();
         this.getTitlePrev();
@@ -183,7 +183,7 @@ export default class Detail extends React.Component {
                     </div>
                     <div className="detail-vote">
                         <div className={this.isVote ? 'vote' : null} onClick={this.handleVote.bind(this)}>
-                            <i className="iconfont icon-dianzan">{null}</i>
+                            <Icon type="dianzan" style={{marginRight: 10}}/>
                             <span>{this.voteCount}</span>
                         </div>
                     </div>
@@ -197,9 +197,12 @@ export default class Detail extends React.Component {
                         <div className="dialog-tip">
                             <h2>请登录</h2>
                             <div className="content">
-                                <p className="login" onClick={this.handleLogin.bind(this)}>
-                                    <span>账号登录</span>
-                                </p>
+                                <Button
+                                    className="btn"
+                                    onClick={this.handleLogin.bind(this)}
+                                >
+                                    账号登录
+                                </Button>
                                 <p onClick={this.handleRegister.bind(this)}>
                                     <span className="zyc-link-hover">没有账号? 前往注册 »</span>
                                 </p>

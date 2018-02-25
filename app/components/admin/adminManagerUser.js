@@ -5,10 +5,10 @@
 import React, {Fragment} from 'react';
 import {observable, toJS} from 'mobx';
 import {inject, observer} from 'mobx-react';
-import {Pagination, Table, Divider, Popconfirm, Modal} from 'antd';
+import {Pagination, Table, Divider, Popconfirm, Modal, Input, Radio} from 'antd';
 import './adminManagerUser.sass';
 
-const { Column } = Table;
+const {Column} = Table;
 
 @inject('UserStore') @observer
 export default class AdminManagerUser extends React.Component {
@@ -94,8 +94,8 @@ export default class AdminManagerUser extends React.Component {
             });
     };
 
-    handleChangeType(userType) {
-        this.userType = userType;
+    handleChangeType(e) {
+        this.userType = e.target.value;
     }
 
     handleClose = () => {
@@ -113,7 +113,7 @@ export default class AdminManagerUser extends React.Component {
                         dataSource={toJS(this.userList)}
                         rowKey="userId"
                         pagination={false}
-                        scroll={{ x: 450 }}
+                        scroll={{x: 450}}
                         rowClassName="row"
                     >
                         <Column
@@ -186,18 +186,14 @@ export default class AdminManagerUser extends React.Component {
                     onCancel={this.handleClose}
                 >
                     <div className="dialog-authority">
-                        <input
-                            type="radio"
-                            name="type"
-                            checked={this.userType === 2}
-                            onChange={this.handleChangeType.bind(this, 2)}/>
-                        <label className="user">用户</label>
-                        <input
-                            type="radio"
-                            name="type"
-                            checked={this.userType === 3}
-                            onChange={this.handleChangeType.bind(this, 3)}/>
-                        <label>游客</label>
+                        <Radio.Group
+                            value={this.userType}
+                            onChange={this.handleChangeType.bind(this)}
+
+                        >
+                            <Radio value={2}>用户</Radio>
+                            <Radio value={3}>游客</Radio>
+                        </Radio.Group>
                     </div>
                 </Modal>
             </div>

@@ -11,7 +11,6 @@ import {GlobalHeader, GlobalFooter} from '../components/common';
 import {Homepage} from '../components/homepage';
 import {Categories, CategoriesTag} from '../components/categories';
 import {Detail} from '../components/detail';
-import {Test} from '../components/test';
 import './routeVisitor.sass'
 
 const {Header, Content, Footer} = Layout;

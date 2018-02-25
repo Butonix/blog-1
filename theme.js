@@ -5,6 +5,5 @@
 const theme = {
     'primary-color': '#EA6F5A',
     'link-color': 'inherit',
-    'btn-default-border': '#999'
 };
 export default theme

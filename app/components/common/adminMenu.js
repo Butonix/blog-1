@@ -30,33 +30,33 @@ export default class AdminMenu extends React.Component {
                 {
                     name: '首页',
                     path: '/admin',
-                    icon: 'guanbi'
+                    icon: 'shouye'
                 },
 
                 {
                     name: '用户管理',
                     path: '/admin/managerUser',
-                    icon: 'user'
+                    icon: 'yonghuguanli'
                 },
                 {
                     name: '发布文章',
                     path: '/admin/newArticle',
-                    icon: 'user'
+                    icon: 'fabuwenzhang'
                 },
                 {
                     name: '标签管理',
                     path: '/admin/managerTags',
-                    icon: 'user'
+                    icon: 'biaoqianguanli'
                 },
                 {
                     name: '文章管理',
                     path: '/admin/managerArticle',
-                    icon: 'user'
+                    icon: 'wenzhangguanli'
                 },
                 {
                     name: '主界面',
                     path: '/',
-                    icon: 'user'
+                    icon: 'fanhuishouye'
                 },
             ] :
             [

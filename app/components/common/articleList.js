@@ -32,8 +32,8 @@ export default class ArticleList extends React.Component {
                             className="article-list-item"
                             extra={<p className="article-list-extra">{dateFormat(item.createTime, 'yyyy-mm-dd')}</p>}
                             actions={[
-                                <IconText key="eye-o" type="eye-o" text={item.readCount}/>,
-                                <IconText key="tags-o" type="tags-o" text={
+                                <IconText key="yuedu" type="yuedu" text={item.readCount}/>,
+                                <IconText key="biaoqian" type="biaoqian" text={
                                     item.tags.map(tag =>
                                         <Tag
                                             key={item.id + Math.random()}

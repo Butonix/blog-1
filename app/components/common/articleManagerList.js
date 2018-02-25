@@ -57,16 +57,16 @@ class ArticleCell extends React.Component {
                         <p className="title">{data.title}</p>
                         <div className="info">
                             <IconText
-                                type="user"
+                                type="riqi"
                                 text={dateFormat(data.createTime, 'yyyy-mm-dd')}
                             />
                             <Divider type="vertical"/>
                             <IconText
-                                type="user" text={data.readCount}
+                                type="yuedu" text={data.readCount}
                             />
                             <Divider type="vertical"/>
                             <IconText
-                                type="user" text={data.voteCount}
+                                type="dianzanshu" text={data.voteCount}
                             />
                         </div>
                     </Col>
@@ -103,12 +103,12 @@ class ArticleCell extends React.Component {
                     >
                         <div className="info">
                             <IconText
-                                type="user"
+                                type="yuedu"
                                 text={data.readCount}
                             />
                             <Divider type="vertical"/>
                             <IconText
-                                type="user"
+                                type="dianzanshu"
                                 text={data.voteCount}
                             />
                         </div>

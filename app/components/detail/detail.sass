@@ -9,7 +9,7 @@
         margin-top: 10px
         padding: 0 20px
         background: $white
-        border: 1px solid $color233
+        border: 1px solid $color232
         a
             &:hover
                 color: $red
@@ -22,40 +22,24 @@
         div
             font-size: 16px
             padding: 5px 20px
-            border: 1px solid $color233
+            border: 1px solid $color232
             border-radius: 5px
             cursor: pointer
             background: $white
 
             &.vote
-                border-color: $red-9
-                color: $red-9
+                border-color: $red
+                color: $red
 
             &:hover
-                border-color: $red-9
-                background: $red-9
-                color: $white-9
-
-            i
-                margin-right: 6px
+                border-color: $red
+                background: $red
+                color: $white
 
 .dialog-tip
     text-align: center
-
+    .btn
+        width: 100%
+        margin-bottom: 20px
     h2
         margin-bottom: 30px
-
-    p
-        & + p
-            margin-top: 20px
-
-        &.login
-            padding: 6px 50px
-            border: 1px solid $color153
-            border-radius: 5px
-            cursor: pointer
-
-            &:hover
-                border-color: $red-9
-                background: $red-9
-                color: $white-9
