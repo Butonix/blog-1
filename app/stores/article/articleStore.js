@@ -3,8 +3,8 @@
  */
 
 import {observable, action} from 'mobx';
+import {message} from 'antd'
 import xhr from '../xhr';
-import {Message} from '../../components/zyc';
 
 class ArticleStore {
     @observable latestList = [];
@@ -46,7 +46,7 @@ class ArticleStore {
             if (response.result) {
                 return Promise.resolve(response);
             }
-            Message.error(response.message);
+            message.error(response.message);
             return false;
 
         });
@@ -62,7 +62,7 @@ class ArticleStore {
             if (response.result) {
                 return Promise.resolve(response);
             }
-            Message.error(response.message);
+            message.error(response.message);
             return false;
 
         });
@@ -76,10 +76,10 @@ class ArticleStore {
             body,
         }).then((response) => {
             if (response.result) {
-                Message.success(response.message);
+                message.success(response.message);
                 return Promise.resolve(response);
             }
-            Message.error(response.message);
+            message.error(response.message);
             return false;
 
         });
@@ -93,10 +93,10 @@ class ArticleStore {
             body,
         }).then((response) => {
             if (response.result) {
-                Message.success(response.message);
+                message.success(response.message);
                 return Promise.resolve(response);
             }
-            Message.error(response.message);
+            message.error(response.message);
             return false;
 
         });
@@ -114,7 +114,7 @@ class ArticleStore {
                 return Promise.resolve(response);
             }
 
-            Message.error(response.message);
+            message.error(response.message);
 
             return false;
 
@@ -129,10 +129,10 @@ class ArticleStore {
             body,
         }).then((response) => {
             if (response.result) {
-                Message.success(response.message);
+                message.success(response.message);
                 return Promise.resolve(response);
             }
-            Message.error(response.message);
+            message.error(response.message);
             return false;
 
         });
@@ -148,7 +148,7 @@ class ArticleStore {
             if (response.result) {
                 return Promise.resolve(response);
             }
-            Message.error(response.message);
+            message.error(response.message);
             return false;
 
 

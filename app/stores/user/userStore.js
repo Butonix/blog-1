@@ -2,8 +2,8 @@
  * Created by scriptchao on 2017/11/2.
  */
 import { observable, action } from 'mobx';
+import {message} from 'antd'
 import xhr from '../xhr';
-import { Message } from '../../components/zyc';
 
 class UserStore {
 
@@ -29,10 +29,10 @@ class UserStore {
             body,
         }).then((response) => {
             if (response.result) {
-                Message.success(response.message);
+                message.success(response.message);
                 return Promise.resolve(response);
             }
-            Message.error(response.message);
+            message.error(response.message);
             return false;
 
         });
@@ -46,10 +46,10 @@ class UserStore {
             body,
         }).then((response) => {
             if (response.result) {
-                Message.success(response.message);
+                message.success(response.message);
                 return Promise.resolve(response);
             }
-            Message.error(response.message);
+            message.error(response.message);
             return false;
 
         });
@@ -65,7 +65,7 @@ class UserStore {
             if (response.result) {
                 return Promise.resolve(response);
             }
-            Message.error(response.message);
+            message.error(response.message);
             return false;
 
         });
@@ -77,10 +77,10 @@ class UserStore {
             url: this.loginOutUrl,
         }).then((response) => {
             if (response.result) {
-                Message.success(response.message);
+                message.success(response.message);
                 return Promise.resolve(response);
             }
-            Message.error(response.message);
+            message.error(response.message);
             return false;
 
         });
@@ -97,10 +97,10 @@ class UserStore {
         }).then((response) => {
             if (response.result) {
 
-                Message.success(response.message);
+                message.success(response.message);
                 return Promise.resolve(response);
             }
-            Message.error(response.message);
+            message.error(response.message);
             return false;
 
         });
@@ -115,10 +115,10 @@ class UserStore {
         }).then((response) => {
             if (response.result) {
                 this.loginShow = false;
-                Message.success(response.message);
+                message.success(response.message);
                 return Promise.resolve(response);
             }
-            Message.error(response.message);
+            message.error(response.message);
             return false;
 
         });

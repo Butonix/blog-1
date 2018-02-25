@@ -2,10 +2,10 @@
  * Created by scriptchao on 2017/11/2.
  */
 import axios from 'axios'
+import {message} from 'antd'
 import NProgress from 'nprogress'
 import '../../styles/nprogress.sass'
 import { origin, expiredTime } from './config';
-import { Message } from '../../components/zyc';
 
 const config = {
     baseURL: origin,
@@ -41,7 +41,7 @@ axios.interceptors.response.use((res) => {
         return res.data;
     }
 
-    Message.error(res.status);
+    message.error(res.status);
     return false
 });
 

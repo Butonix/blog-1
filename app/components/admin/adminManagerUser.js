@@ -2,13 +2,13 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react';
+import React, {Fragment} from 'react';
 import {observable, toJS} from 'mobx';
 import {inject, observer} from 'mobx-react';
-import {Pagination, Table} from 'antd';
+import {Pagination, Table, Divider, Popconfirm, Modal} from 'antd';
 import './adminManagerUser.sass';
-import {Dialog, Input, Button} from '../zyc';
-import DialogDelete from '../common/dialogDelete'
+
+const { Column } = Table;
 
 @inject('UserStore') @observer
 export default class AdminManagerUser extends React.Component {
@@ -16,7 +16,6 @@ export default class AdminManagerUser extends React.Component {
     @observable size = 5;
 
     @observable authorityShow;
-    @observable deleteShow;
 
     @observable userType;
     @observable userId;
@@ -37,13 +36,14 @@ export default class AdminManagerUser extends React.Component {
         const body = {};
         body.page = this.page;
         body.size = this.size;
-        this.userStore.postUserList(body).then((response) => {
-            if (response) {
-                this.userList = response.data.list;
-                this.userTotal = response.data.total;
+        this.userStore.postUserList(body)
+            .then((response) => {
+                if (response) {
+                    this.userList = response.data.list;
+                    this.userTotal = response.data.total;
 
-            }
-        })
+                }
+            })
     }
 
     handlePageChange(current) {
@@ -63,20 +63,13 @@ export default class AdminManagerUser extends React.Component {
             });
     }
 
-    handleDelete(userId) {
-        this.userId = userId;
-        this.deleteShow = true;
-
-    }
-
-    handleDeleteSure = () => {
+    handleDeleteSure = (userId) => {
 
         const body = {};
-        body.userId = this.userId;
+        body.userId = userId;
         this.userStore.postUserDelete(body)
             .then((response) => {
                 if (response) {
-                    this.deleteShow = false;
                     this.getUserList();
                 }
             });
@@ -107,88 +100,90 @@ export default class AdminManagerUser extends React.Component {
 
     handleClose = () => {
         this.authorityShow = false;
-        this.deleteShow = false;
     };
 
 
     render() {
-
-        const columns = [{
-            title: '姓名',
-            dataIndex: 'username',
-            width: '15%',
-        }, {
-            title: 'userId',
-            dataIndex: 'userId',
-            width: '20%',
-        }, {
-            title: '密码(加密后)',
-            dataIndex: 'password',
-            width: '20%',
-        }, {
-            title: '身份',
-            dataIndex: 'userType',
-            width: '15%',
-            render: (value, row) => {
-                const arr = ['未知', '管理员', '用户', '游客'];
-                return arr[value];
-            },
-        }, {
-            title: '操作',
-            dataIndex: 'operation',
-            width: '20%',
-            render: (value, row) =>
-                <div>
-                    {
-                        row.isUsed ?
-                            <span
-                                className="zyc-text-green zyc-text-hover zyc-text-space"
-                                onClick={this.handleUse.bind(this, row.userId, false)}>启用中</span> :
-                            <span
-                                className="zyc-text-red zyc-text-hover zyc-text-space"
-                                onClick={this.handleUse.bind(this, row.userId, true)}>禁用中</span>
-                    }
-                    <span
-                        className="zyc-text-hover zyc-text-space"
-                        onClick={this.handleDelete.bind(this, row.userId)}>删除</span>
-                </div>,
-        }, {
-            title: '权限',
-            dataIndex: 'authority',
-            width: '10%',
-            render: (value, row) => (
-                row.userType !== 1 ?
-                    <span
-                        className="zyc-text-hover"
-                        onClick={this.handleModify.bind(this, row.userType, row.userId)}>修改</span> : null
-            ),
-        }];
 
         return (
             <div className="admin-managerUser">
                 <h2>用户管理</h2>
                 <section>
                     <Table
-                        columns={columns}
                         dataSource={toJS(this.userList)}
                         rowKey="userId"
                         pagination={false}
-                    />
+                        scroll={{ x: 450 }}
+                        rowClassName="row"
+                    >
+                        <Column
+                            title="姓名"
+                            dataIndex="username"
+                        />
+                        <Column
+                            title="userId"
+                            dataIndex="userId"
+                        />
+                        <Column
+                            title="身份"
+                            dataIndex="userType"
+                            render={(value, row) => {
+                                const arr = ['未知', '管理员', '用户', '游客'];
+                                return arr[value];
+                            }}
+                        />
+                        <Column
+                            title="操作"
+                            dataIndex="operation"
+                            render={(value, row) =>
+                                <Fragment>
+                                    {
+                                        row.isUsed ?
+                                            <a
+                                                className="zyc-text-green"
+                                                onClick={this.handleUse.bind(this, row.userId, false)}>启用中</a> :
+                                            <a
+                                                className="zyc-text-red"
+                                                onClick={this.handleUse.bind(this, row.userId, true)}>禁用中</a>
+                                    }
+                                    <Divider type="vertical"/>
+                                    <Popconfirm
+                                        title="是否确认删除?"
+                                        okText="确认"
+                                        cancelText="取消"
+                                        onConfirm={this.handleDeleteSure.bind(this, row.userId)}
+                                    >
+                                        <a>删除</a>
+                                    </Popconfirm>
+                                </Fragment>
+                            }
+                        />
+                        <Column
+                            title="权限"
+                            dataIndex="authority"
+                            render={(value, row) => (
+                                row.userType !== 1 ?
+                                    <a onClick={this.handleModify.bind(this, row.userType, row.userId)}>修改</a> : null
+                            )}
+                        />
+                    </Table>
                 </section>
                 <div className="zyc-pager">
                     <Pagination
                         current={this.page}
                         pageSize={this.size}
-                        total={this.userCount}
+                        total={this.userTotal}
                         onChange={this.handlePageChange.bind(this)}
                     />
                 </div>
-                <Dialog
+                <Modal
                     title="权限修改"
-                    show={this.authorityShow}
+                    visible={this.authorityShow}
                     width={300}
+                    okText="确认"
+                    cancelText="取消"
                     onOk={this.handleModifySure}
-                    onClose={this.handleClose}
+                    onCancel={this.handleClose}
                 >
                     <div className="dialog-authority">
                         <input
@@ -204,12 +199,7 @@ export default class AdminManagerUser extends React.Component {
                             onChange={this.handleChangeType.bind(this, 3)}/>
                         <label>游客</label>
                     </div>
-                </Dialog>
-                <DialogDelete
-                    show={this.deleteShow}
-                    onOk={this.handleDeleteSure}
-                    onClose={this.handleClose}
-                />
+                </Modal>
             </div>
         );
     }

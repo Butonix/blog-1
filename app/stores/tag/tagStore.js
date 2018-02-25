@@ -2,9 +2,9 @@
  * Created by scriptchao on 2017/11/17.
  */
 
-import { observable, action } from 'mobx';
+import {observable, action} from 'mobx';
+import {message} from 'antd'
 import xhr from '../xhr';
-import { Message } from '../../components/zyc';
 
 class TagStore {
 
@@ -20,15 +20,16 @@ class TagStore {
             method: 'post',
             url: this.tagDeleteUrl,
             body,
-        }).then((response) => {
-            if (response.result) {
-                Message.success(response.message);
-                return Promise.resolve(response);
-            }
-            Message.error(response.message);
-            return false;
+        })
+            .then((response) => {
+                if (response.result) {
+                    message.success(response.message);
+                    return Promise.resolve(response);
+                }
+                message.error(response.message);
+                return false;
 
-        });
+            });
     }
 
     @action postTagAdd(body) {
@@ -37,15 +38,16 @@ class TagStore {
             method: 'post',
             url: this.tagAddUrl,
             body,
-        }).then((response) => {
-            if (response.result) {
-                Message.success(response.message);
-                return Promise.resolve(response);
-            }
-            Message.error(response.message);
-            return false;
+        })
+            .then((response) => {
+                if (response.result) {
+                    message.success(response.message);
+                    return Promise.resolve(response);
+                }
+                message.error(response.message);
+                return false;
 
-        });
+            });
     }
 
     @action getTagList() {
@@ -53,15 +55,16 @@ class TagStore {
         return xhr({
             method: 'get',
             url: this.tagListUrl,
-        }).then((response) => {
-            if (response.result) {
-                return Promise.resolve(response);
-            }
-            Message.error(response.message);
-            return false;
+        })
+            .then((response) => {
+                if (response.result) {
+                    return Promise.resolve(response);
+                }
+                message.error(response.message);
+                return false;
 
 
-        });
+            });
     }
 
 }
