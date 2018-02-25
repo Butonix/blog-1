@@ -13,18 +13,16 @@ import {Dialog} from '../zyc';
 import history from '../../history';
 import ComMenu from '../comMenu'
 
-const {Header} = Layout;
-
 const menuData = [
     {
         name: '首页',
         path: '/',
-        icon: 'user'
+        icon: 'home'
     },
     {
         name: '分类',
         path: '/categories',
-        icon: 'user'
+        icon: 'appstore-o'
     }
 ];
 
@@ -146,7 +144,7 @@ export default class ComHeader extends React.Component {
                                                 userInfo.userType !== 3 ?
                                                     <Menu.Item key="admin">
                                                         <Link to="/admin">
-                                                            <Icon type="user" style={{marginRight: 10}}/>
+                                                            <Icon type="setting" style={{marginRight: 10}}/>
                                                             <span>后台管理</span>
                                                         </Link>
                                                     </Menu.Item> : null
@@ -156,7 +154,7 @@ export default class ComHeader extends React.Component {
                                                     <Menu.Divider/> : null
                                             }
                                             <Menu.Item key="quit">
-                                                <Icon type="user" style={{marginRight: 10}}/>
+                                                <Icon type="logout" style={{marginRight: 10}}/>
                                                 <span>退出登录</span>
                                             </Menu.Item>
                                         </Menu>

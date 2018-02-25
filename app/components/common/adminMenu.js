@@ -30,7 +30,7 @@ export default class AdminMenu extends React.Component {
                 {
                     name: '首页',
                     path: '/admin',
-                    icon: 'user'
+                    icon: 'guanbi'
                 },
 
                 {

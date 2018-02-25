@@ -25,15 +25,14 @@ export default class ArticleList extends React.Component {
             <div className="article-list">
                 <List
                     itemLayout="vertical"
-                    size="large"
                     dataSource={content}
                     renderItem={item => (
                         <List.Item
                             key={item.title}
                             className="article-list-item"
-                            extra={<span>{dateFormat(item.createTime, 'yyyy-mm-dd')}</span>}
+                            extra={<p className="article-list-extra">{dateFormat(item.createTime, 'yyyy-mm-dd')}</p>}
                             actions={[
-                                <IconText key="user" type="user" text={item.author}/>,
+                                <IconText key="eye-o" type="eye-o" text={item.readCount}/>,
                                 <IconText key="tags-o" type="tags-o" text={
                                     item.tags.map(tag =>
                                         <Tag
@@ -42,23 +41,23 @@ export default class ArticleList extends React.Component {
                                             onClick={() => {
                                                 history.push(`/categories/${tag}`)
                                             }}
-
                                         >
                                             {tag}
                                         </Tag>)
                                 }/>,
-                                <IconText key="aa" type="user" text={item.readCount}/>
                             ]}
                         >
                             <List.Item.Meta
                                 avatar={<Avatar size="small" src="/static/img/nav-user.jpg"/>}
-                                title={item.title}
-                                style={{cursor: 'pointer'}}
+                                title={item.author}
+                            />
+                            <div
+                                className="article-list-content"
                                 onClick={() => {
                                     history.push(`/categories/detail?articleId=${item.articleId}`)
-                                }}
-
-                            />
+                                }}>
+                                <span className="zyc-link-hover">{item.title}</span>
+                            </div>
                         </List.Item>
                     )}
                 />
