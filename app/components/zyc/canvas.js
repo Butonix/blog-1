@@ -79,7 +79,7 @@ export default class Canvas extends React.Component {
                             ratio = (line.max - dis) / line.max;
 
                             ctx.beginPath();
-                            ctx.lineWidth = ratio / 3;
+                            ctx.lineWidth = ratio / 6;
                             ctx.strokeStyle = `hsla(0,30%,0,${ratio - 0.1})`;
                             ctx.moveTo(dot.x, dot.y);
                             ctx.lineTo(line.x, line.y);

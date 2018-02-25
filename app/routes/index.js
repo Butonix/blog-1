@@ -5,8 +5,8 @@
 import React from 'react';
 import {inject, observer} from 'mobx-react';
 import {Route, Switch} from 'react-router-dom';
-import RouteAdmin from './routeAdmin';
 import RouteVisitor from './routeVisitor';
+import RouteAdmin from './routeAdmin';
 import {BackTop, Canvas} from '../components/zyc';
 
 @inject('UserStore') @observer
