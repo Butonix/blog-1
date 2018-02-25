@@ -27,7 +27,7 @@ const menuData = [
 ];
 
 
-@inject('UserStore') @observer
+@inject('UserStore','ArticleStore') @observer
 export default class ComHeader extends React.Component {
 
     @observable visible;
@@ -37,6 +37,12 @@ export default class ComHeader extends React.Component {
     constructor(args) {
         super(args);
         this.userStore = this.props.UserStore;
+        this.articleStore = this.props.ArticleStore;
+    }
+
+
+    componentDidMount() {
+        this.articleStore.initStore();
     }
 
 

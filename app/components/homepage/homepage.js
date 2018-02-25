@@ -32,7 +32,6 @@ export default class Homepage extends React.Component {
     // }
 
     componentDidMount() {
-        this.articleStore.initStore();
         this.getArticleList();
 
     }
