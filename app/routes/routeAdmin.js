@@ -8,7 +8,6 @@ import {observable} from 'mobx'
 import PropTypes from 'prop-types';
 import {Route, Switch, Redirect} from 'react-router-dom';
 import {Layout} from 'antd'
-import {enquireScreen} from 'enquire-js'
 import {
     Admin,
     AdminManagerArticle,
@@ -24,14 +23,6 @@ const {Sider, Content} = Layout;
 
 @observer
 export default class RouteAdmin extends React.Component {
-    @observable isMobile;
-
-    componentDidMount() {
-        enquireScreen((mobile) => {
-            this.isMobile = mobile
-        });
-
-    }
 
     render() {
         const {url} = this.props.match;
@@ -41,7 +32,7 @@ export default class RouteAdmin extends React.Component {
         return (
             <Layout className="route-admin">
                 {
-                    this.isMobile ?
+                    this.props.isMobile ?
                         <DrawerMenu
                             width={200}
                         >

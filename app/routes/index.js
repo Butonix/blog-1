@@ -3,14 +3,18 @@
  */
 
 import React from 'react';
+import {observable} from 'mobx'
 import {inject, observer} from 'mobx-react';
 import {Route, Switch} from 'react-router-dom';
+import {enquireScreen} from 'enquire-js'
 import RouteVisitor from './routeVisitor';
 import RouteAdmin from './routeAdmin';
 import {BackTop, Canvas} from '../components/zyc';
 
 @inject('UserStore') @observer
 class App extends React.Component {
+
+    @observable isMobile;
 
     constructor(args) {
         super(args);
@@ -20,6 +24,13 @@ class App extends React.Component {
     componentWillMount() {
 
         this.userStore.getUserInfo();
+    }
+
+    componentDidMount() {
+        enquireScreen((mobile) => {
+            this.isMobile = mobile
+        });
+
     }
 
 
@@ -35,7 +46,7 @@ class App extends React.Component {
             <div className="JAVASCRIPT">
                 <BackTop visibleHeight={500}/>
                 {
-                    ['/categories/detail', '/admin/newArticle'].includes(window.location.pathname) ?
+                    this.isMobile || ['/categories/detail', '/admin/newArticle'].includes(window.location.pathname) ?
                         null : <Canvas />
                 }
                 {
@@ -43,8 +54,13 @@ class App extends React.Component {
                         <Switch>
                             {
                                 userInfo.userType === 1 || userInfo.userType === 2 ?
-                                    <Route path="/admin" render={props => <RouteAdmin
-                                        userType={userInfo.userType} {...props} />}/> : null
+                                    <Route path="/admin" render={props =>
+                                        <RouteAdmin
+                                            userType={userInfo.userType}
+                                            isMobile={this.isMobile}
+                                            {...props}
+                                        />}
+                                    /> : null
                             }
                             <Route path="/" component={RouteVisitor}/>
                         </Switch> : null
