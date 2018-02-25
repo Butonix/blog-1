@@ -3,8 +3,9 @@
  */
 
 import React from 'react';
-import { observable } from 'mobx';
-import { observer } from 'mobx-react';
+import {observable} from 'mobx';
+import {observer} from 'mobx-react';
+import {Icon} from 'antd'
 import './backTop.sass';
 import './animation';
 import './tween';
@@ -53,7 +54,7 @@ export default class BackTop extends React.Component {
         return (
             this.needBack ?
                 <div className="zyc-backTop" onClick={this.handleBackTop.bind(this)}>
-                    <i className="iconfont icon-fanhuidingbu">{null}</i>
+                    <Icon type="fanhuidingbu"/>
                 </div> : null
         );
     }

@@ -27,9 +27,9 @@ export default class Register extends React.Component {
     handleRegister() {
 
         if (!Username.test(this.username)) {
-            message.error('请输入5-16位字符!');
+            message.error('请输入5-16位不含中文的字符!');
         } else if (!Password.test(this.password)) {
-            message.error('请输入以字母开头的5-16位字符的密码!');
+            message.error('请输入以字母开头的5-16位不含中文的字符!');
         } else if (this.password !== this.passwordRe) {
 
             message.error('两次输入密码不一致!');

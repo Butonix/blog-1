@@ -6,9 +6,7 @@ import React from 'react';
 import {observable} from 'mobx';
 import {inject, observer} from 'mobx-react';
 import {Pagination} from 'antd';
-import dateFormat from 'dateformat';
 import './adminManagerArticle.sass';
-import {Button} from '../zyc';
 import history from '../../history';
 import ArticleManagerList from '../common/articleManagerList'
 
@@ -91,14 +89,17 @@ export default class AdminManagerArticle extends React.Component {
                         onPublish={this.handlePublish}
                     />
                 </section>
-                <div className="zyc-pager">
-                    <Pagination
-                        current={this.page}
-                        pageSize={this.size}
-                        total={this.total}
-                        onChange={this.handlePageChange.bind(this)}
-                    />
-                </div>
+                {
+                    this.list.length ?
+                        <div className="zyc-pager">
+                            <Pagination
+                                current={this.page}
+                                pageSize={this.size}
+                                total={this.total}
+                                onChange={this.handlePageChange.bind(this)}
+                            />
+                        </div> : null
+                }
             </div>
         );
     }

@@ -7,7 +7,7 @@ import {observable} from 'mobx';
 import {inject, observer} from 'mobx-react';
 import {Link} from 'react-router-dom';
 import dateFormat from 'dateformat';
-import {Row, Col, List, Avatar, Tag, Icon} from 'antd'
+import {Row, Col, List, Avatar, Tag, Icon, Divider} from 'antd'
 import './articleList.sass';
 import history from '../../history'
 import {tagColor} from '../../utils'
@@ -23,45 +23,65 @@ export default class ArticleList extends React.Component {
         const {content} = this.props;
         return (
             <div className="article-list">
-                <List
-                    itemLayout="vertical"
-                    dataSource={content}
-                    renderItem={item => (
-                        <List.Item
-                            key={item.title}
-                            className="article-list-item"
-                            extra={<p className="article-list-extra">{dateFormat(item.createTime, 'yyyy-mm-dd')}</p>}
-                            actions={[
-                                <IconText key="yuedu" type="yuedu" text={item.readCount}/>,
-                                <IconText key="biaoqian" type="biaoqian" text={
-                                    item.tags.map(tag =>
-                                        <Tag
-                                            key={item.id + Math.random()}
-                                            color={tagColor[Math.floor(Math.random() * tagColor.length)]}
-                                            onClick={() => {
-                                                history.push(`/categories/${tag}`)
-                                            }}
-                                        >
-                                            {tag}
-                                        </Tag>)
-                                }/>,
-                            ]}
-                        >
-                            <List.Item.Meta
-                                avatar={<Avatar size="small" src="/static/img/nav-user.jpg"/>}
-                                title={item.author}
-                            />
-                            <div
-                                className="article-list-content"
-                                onClick={() => {
-                                    history.push(`/categories/detail?articleId=${item.articleId}`)
-                                }}>
-                                <span className="zyc-link-hover">{item.title}</span>
-                            </div>
-                        </List.Item>
-                    )}
-                />
+                {
+                    content.map(item =>
+                        <ArticleCell
+                            key={item.articleId}
+                            data={item}
+                        />)
+                }
             </div>
+        );
+    }
+}
+
+class ArticleCell extends React.Component {
+
+    handleSkip = (articleId) => {
+        history.push(`/categories/detail?articleId=${articleId}`)
+    };
+
+    render() {
+        const {data} = this.props;
+
+        return (
+            <div className="article-list-item">
+                <div className="author" onClick={this.handleSkip.bind(this, data.articleId)}>
+                    <span>
+                        <Avatar size="small" src="/static/img/nav-user.jpg" style={{marginRight: 6}}/>
+                        <span>{data.author}</span>
+                    </span>
+                    <span>{dateFormat(data.createTime, 'yyyy-mm-dd')}</span>
+                </div>
+                <div className="title" onClick={this.handleSkip.bind(this, data.articleId)}>
+                    <span className="zyc-link-hover">{data.title}</span>
+                </div>
+                <div className="tip">
+                    <IconText
+                        type="dianzanshu"
+                        text={data.voteCount}
+                    />
+                    <Divider type="vertical"/>
+                    <IconText
+                        type="yuedu"
+                        text={data.readCount}
+                    />
+                    <Divider type="vertical"/>
+                    <IconText key="biaoqian" type="biaoqian" text={
+                        data.tags.map(tag =>
+                            <Tag
+                                key={data.id + Math.random()}
+                                color={tagColor[Math.floor(Math.random() * tagColor.length)]}
+                                onClick={() => {
+                                    history.push(`/categories/${tag}`)
+                                }}
+                            >
+                                {tag}
+                            </Tag>)
+                    }/>
+                </div>
+            </div>
+
         );
     }
 }
