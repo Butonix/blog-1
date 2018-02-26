@@ -64,7 +64,7 @@ export default class CategoriesTag extends React.Component {
                                 <List
                                     className="tag-list"
                                     itemLayout="vertical"
-                                    header={<h2>{`${this.props.match.params.tag} 分类`}</h2>}
+                                    header={<h3>{`${this.props.match.params.tag} 分类`}</h3>}
                                     dataSource={this.list}
                                     renderItem={item =>
                                         <List.Item

@@ -17,20 +17,21 @@ const menuData = [
     {
         name: '首页',
         path: '/',
-        icon: 'shouye'
+        icon: 'shouye',
     },
     {
         name: '分类',
         path: '/categories',
-        icon: 'fenlei'
-    }
+        icon: 'fenlei',
+    },
 ];
 
 
-@inject('UserStore','ArticleStore') @observer
+@inject('UserStore', 'ArticleStore') @observer
 export default class ComHeader extends React.Component {
 
     @observable visible;
+    @observable isHover;
     @observable loginShow;
     @observable registerShow;
 
@@ -56,6 +57,8 @@ export default class ComHeader extends React.Component {
                     }
                 });
         }
+
+        this.isHover = false;
     };
 
     getName(menus, pathname) {
@@ -77,6 +80,11 @@ export default class ComHeader extends React.Component {
 
     handleDrop = (flag) => {
         this.visible = flag
+    };
+
+    handleHover = (flag) => {
+        this.isHover = flag;
+
     };
 
 
@@ -147,13 +155,18 @@ export default class ComHeader extends React.Component {
                         {
                             userInfo.userId ?
                                 <Dropdown
+                                    onVisibleChange={this.handleHover}
+                                    visible={this.isHover}
+                                    trigger={['hover', 'click']}
                                     overlay={
-                                        <Menu onClick={this.handleClick}>
+                                        <Menu
+                                            onClick={this.handleClick}
+                                        >
                                             {
                                                 userInfo.userType !== 3 ?
                                                     <Menu.Item key="admin">
                                                         <Link to="/admin">
-                                                            <Icon type="houtaiguanli" style={{marginRight: 10}}/>
+                                                            <Icon type="houtaiguanli" style={{ marginRight: 10 }}/>
                                                             <span>后台管理</span>
                                                         </Link>
                                                     </Menu.Item> : null
@@ -163,7 +176,7 @@ export default class ComHeader extends React.Component {
                                                     <Menu.Divider/> : null
                                             }
                                             <Menu.Item key="quit">
-                                                <Icon type="tuichudenglu" style={{marginRight: 10}}/>
+                                                <Icon type="tuichudenglu" style={{ marginRight: 10 }}/>
                                                 <span>退出登录</span>
                                             </Menu.Item>
                                         </Menu>
