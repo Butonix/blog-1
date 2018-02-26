@@ -9,6 +9,7 @@ import marked from 'marked';
 import highlight from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css'
 import 'github-markdown-css/github-markdown.css'
+import './index.sass'
 
 export default class Markdown extends React.Component {
 

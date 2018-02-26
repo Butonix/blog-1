@@ -171,12 +171,14 @@ export default class Detail extends React.Component {
                         {
                             this.nextTitle.articleId ?
                                 <Link
+                                    className="zyc-text-ellipsis"
                                     to={`/categories/detail?articleId=${this.nextTitle.articleId}`}>{`« ${this.nextTitle.title}`}</Link> :
                                 <span>浏览到最前面啦!</span>
                         }
                         {
                             this.prevTitle.articleId ?
                                 <Link
+                                    className="zyc-text-ellipsis"
                                     to={`/categories/detail?articleId=${this.prevTitle.articleId}`}>{`${this.prevTitle.title} »`}</Link> :
                                 <span>浏览到最末尾啦!</span>
                         }
