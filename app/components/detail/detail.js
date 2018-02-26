@@ -2,7 +2,7 @@
  * Created by scriptchao on 2017/10/30.
  */
 
-import React from 'react';
+import React, {Fragment} from 'react';
 import {observable} from 'mobx';
 import {inject, observer} from 'mobx-react';
 import {Link} from 'react-router-dom';
@@ -37,8 +37,8 @@ export default class Detail extends React.Component {
     }
 
     componentWillMount() {
-        const {location} = window;
-        const {articleId} = splitLocation(location);
+        const { location } = window;
+        const { articleId } = splitLocation(location);
         this.articleId = articleId;
     }
 
@@ -51,8 +51,8 @@ export default class Detail extends React.Component {
 
     componentWillReceiveProps() {
         this.isRender = false;
-        const {location} = window;
-        const {articleId} = splitLocation(location);
+        const { location } = window;
+        const { articleId } = splitLocation(location);
         this.articleId = articleId;
         this.getArticleDetail();
         this.getTitlePrev();
@@ -171,21 +171,28 @@ export default class Detail extends React.Component {
                         {
                             this.nextTitle.articleId ?
                                 <Link
-                                    className="zyc-text-ellipsis"
-                                    to={`/categories/detail?articleId=${this.nextTitle.articleId}`}>{`« ${this.nextTitle.title}`}</Link> :
+                                    className="title"
+                                    to={`/categories/detail?articleId=${this.nextTitle.articleId}`}>
+                                    <span style={{marginRight: 8}}>«</span>
+                                    <span className="zyc-text-ellipsis">{`${this.nextTitle.title}`}</span>
+                                </Link> :
                                 <span>浏览到最前面啦!</span>
                         }
                         {
                             this.prevTitle.articleId ?
                                 <Link
-                                    className="zyc-text-ellipsis"
-                                    to={`/categories/detail?articleId=${this.prevTitle.articleId}`}>{`${this.prevTitle.title} »`}</Link> :
+                                    className="title"
+                                    to={`/categories/detail?articleId=${this.prevTitle.articleId}`}
+                                >
+                                    <span className="zyc-text-ellipsis">{`${this.prevTitle.title}`}</span>
+                                    <span style={{marginLeft: 8}}>»</span>
+                                </Link> :
                                 <span>浏览到最末尾啦!</span>
                         }
                     </div>
                     <div className="detail-vote">
                         <div className={this.isVote ? 'vote' : null} onClick={this.handleVote.bind(this)}>
-                            <Icon type="dianzan" style={{marginRight: 10}}/>
+                            <Icon type="dianzan" style={{ marginRight: 10 }}/>
                             <span>{this.voteCount}</span>
                         </div>
                     </div>

@@ -54,7 +54,7 @@ class ArticleCell extends React.Component {
                             <Avatar size="small" src="/static/img/nav-user.jpg" style={{ marginRight: 6 }}/>
                             <span>{data.author}</span>
                         </div>
-                        <p className="title">{data.title}</p>
+                        <div className="title">{data.title}</div>
                         <div className="info">
                             <IconText
                                 type="riqi"
