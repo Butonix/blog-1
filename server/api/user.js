@@ -26,7 +26,7 @@ router.post('/register', (req, res) => {
                 const user = new User({
                     username,
                     password,
-                    userType: 3,
+                    userType: 2,
                     userId: data1.seq
                 });
 
