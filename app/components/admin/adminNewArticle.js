@@ -5,12 +5,11 @@
 import React from 'react';
 import {observable, toJS} from 'mobx';
 import {inject, observer} from 'mobx-react';
-import remark from 'remark';
-import reactRenderer from 'remark-react';
 import {Button, Input, Select, message, Modal} from 'antd'
 import './adminNewArticle.sass';
 import splitLocation from '../public/location';
 import history from '../../history';
+import Markdown from '../markdown'
 
 
 @inject('TagStore', 'ArticleStore') @observer
@@ -119,11 +118,9 @@ export default class AdminNewArticle extends React.Component {
                     onCancel={this.handleViewClose.bind(this)}
                 >
                     <div className="dialog-view">
-                        <div className="markdown-body">
-                            {remark()
-                                .use(reactRenderer)
-                                .processSync(this.content).contents}
-                        </div>
+                        <Markdown
+                            content={this.content}
+                        />
                     </div>
                 </Modal>
             </div>
