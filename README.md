@@ -26,7 +26,7 @@ yarn @1.3.2(或者直接使用node自带的npm)
 ```
 # 运行 
 ```
-git clone https://github.com/scriptchao/blog.git
+git clone https://github.com/scriptchao/blog.git && cd blog
 yarn install (npm install)
 yarn start (npm start)
 ```
