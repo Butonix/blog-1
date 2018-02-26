@@ -24,6 +24,11 @@ const menuData = [
         path: '/categories',
         icon: 'fenlei',
     },
+    {
+        name: '关于',
+        path: '/about',
+        icon: 'guanyuwo'
+    }
 ];
 
 
