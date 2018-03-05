@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { Bundle } from '../zyc';
+import Bundle from '../../routes/bundle'
 
 const Admin = props => <Bundle {...props} load={() => import('./admin')} />;
 const AdminManagerArticle = props => <Bundle {...props} load={() => import('./adminManagerArticle')} />;

@@ -12,6 +12,7 @@ import {Homepage} from '../components/homepage';
 import {Categories, CategoriesTag} from '../components/categories';
 import {Detail} from '../components/detail';
 import {About} from '../components/about'
+import {Resume} from '../components/resume'
 import './routeVisitor.sass'
 
 const {Header, Content, Footer} = Layout;
@@ -36,6 +37,7 @@ export default class RouteVisitor extends React.Component {
                         <Route path="/categories/detail" component={Detail}/>
                         <Route path="/categories/:tag" component={CategoriesTag}/>
                         <Route path="/about" component={About}/>
+                        <Route path="/resume" render={Resume}/>
                         <Redirect to={url}/>
                     </Switch>
                 </Content>

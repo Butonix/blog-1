@@ -5,7 +5,7 @@ import axios from 'axios'
 import {message} from 'antd'
 import NProgress from 'nprogress'
 import '../../styles/nprogress.sass'
-import { origin, expiredTime } from './config';
+import {origin, expiredTime} from './config';
 
 const config = {
     baseURL: origin,
@@ -37,23 +37,20 @@ axios.interceptors.request.use((requestConfig) => {
 axios.interceptors.response.use((res) => {
     NProgress.done();
 
-    if (res.statusText === 'OK' || res.statusText === '') {
-        return res.data;
-    }
-
-    message.error(res.status);
-    return false
+    return res.data;
 });
 
 const xhr = (req = {}) => {
     const { method, url, body = {} } = req;
 
     if (method === 'get' || method === 'GET') {
+        config.body = {};
         config.params = body
 
     }
 
     if (method === 'post' || method === 'POST') {
+        config.params = {};
         config.data = body
     }
 

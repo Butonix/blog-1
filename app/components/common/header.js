@@ -28,6 +28,11 @@ const menuData = [
         name: '关于',
         path: '/about',
         icon: 'guanyuwo'
+    },
+    {
+        name: '简历',
+        path: '/resume',
+        icon: 'jianli'
     }
 ];
 

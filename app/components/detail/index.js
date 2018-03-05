@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { Bundle } from '../zyc';
+import Bundle from '../../routes/bundle'
 
 const Detail = props => <Bundle {...props} load={() => import('./detail')} />;
 

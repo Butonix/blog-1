@@ -3,7 +3,6 @@
  */
 
 import React from 'react';
-import { Bundle } from '../zyc';
 import Homepage from './homepage'
 
 export {

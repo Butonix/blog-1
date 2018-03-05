@@ -13,7 +13,6 @@ import Input from './input';
 import Tag from './tag';
 import BackTop from './backTop';
 import Spin from './spin';
-import Bundle from './bundle';
 
 export {
     Dialog,
@@ -27,5 +26,4 @@ export {
     Tag,
     BackTop,
     Spin,
-    Bundle
 };

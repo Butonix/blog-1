@@ -4,7 +4,7 @@
 
 
 import React from 'react';
-import { Bundle } from '../zyc';
+import Bundle from '../../routes/bundle'
 
 const GlobalHeader = props => <Bundle {...props} load={() => import('./header')} />;
 const GlobalFooter = props => <Bundle {...props} load={() => import('./footer')} />;
