@@ -5,8 +5,8 @@
 import express from 'express';
 import Tag from '../models/tag';
 import Id from '../models/id';
-import { getCount } from './util';
-import { responseClient, md5, MD5_SUFFIX } from '../util';
+import {getCount} from './util';
+import {responseClient, md5, MD5_SUFFIX} from '../util';
 
 const router = express.Router();
 
@@ -23,24 +23,26 @@ router.post('/add', (req, res) => {
 
             return Id.findOneAndUpdate({ _id: 'tagId' }, {
                 $inc: {
-                    seq: 1
-                }
-            }).then((data1) => {
+                    seq: 1,
+                },
+            })
+                .then((data1) => {
 
-                if (!data1) {
-                    return false;
-                }
+                    if (!data1) {
+                        return false;
+                    }
 
-                const tag = new Tag({
-                    name,
-                    tagId: data1.seq
+                    const tag = new Tag({
+                        name,
+                        tagId: data1.seq,
+                    });
+
+                    return tag.save()
+                        .then((data2) => {
+                            responseClient(res, 200, 1, '标签添加成功!', data2);
+                        });
+
                 });
-
-                return tag.save().then((data2) => {
-                    responseClient(res, 200, 1, '标签添加成功!', data2);
-                });
-
-            });
         })
         .catch((err) => {
             responseClient(res);
@@ -68,21 +70,22 @@ router.get('/list', (req, res) => {
         .then((data) => {
             const responseData = {
                 total: 0,
-                list: []
+                list: [],
             };
 
-            return Tag.count({}).then((count) => {
-                responseData.total = count;
-                return Tag.find({}, 'name tagId count -_id')
-                    .then((data1) => {
-                        if (data1) {
-                            responseData.list = data1;
-                            responseClient(res, 200, 1, '获取标签成功!', responseData);
-                        } else {
-                            responseClient(res, 200, 0, '获取标签失败!');
-                        }
-                    });
-            });
+            return Tag.count({ count: { $gt: 0 } })
+                .then((count) => {
+                    responseData.total = count;
+                    return Tag.find({ count: { $gt: 0 } }, 'name tagId count -_id')
+                        .then((data1) => {
+                            if (data1) {
+                                responseData.list = data1;
+                                responseClient(res, 200, 1, '获取标签成功!', responseData);
+                            } else {
+                                responseClient(res, 200, 0, '获取标签失败!');
+                            }
+                        });
+                });
         })
         .catch((err) => {
             responseClient(res);

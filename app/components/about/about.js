@@ -37,7 +37,7 @@ export default class About extends React.Component {
                             <p><Icon type="dianhua" style={{ marginRight: 8 }}/> <span>15757123303</span></p>
                             <p><Icon type="youxiang" style={{ marginRight: 8 }}/> <span>1154806236@qq.com</span></p>
                             <p>
-                                <Icon type="github" style={{ marginRight: 8 }}/>
+                                <Icon type="github" style={{ marginRight: 12 }}/>
                                 <a
                                     href="https://github.com/scriptchao" target="_blank"
                                     className="zyc-text-blue">scriptchao
