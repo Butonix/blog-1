@@ -73,10 +73,10 @@ router.get('/list', (req, res) => {
                 list: [],
             };
 
-            return Tag.count({ count: { $gt: 0 } })
+            return Tag.count({})
                 .then((count) => {
                     responseData.total = count;
-                    return Tag.find({ count: { $gt: 0 } }, 'name tagId count -_id')
+                    return Tag.find({}, 'name tagId count -_id')
                         .then((data1) => {
                             if (data1) {
                                 responseData.list = data1;

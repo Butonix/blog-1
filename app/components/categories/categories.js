@@ -24,8 +24,8 @@ export default class Categories extends React.Component {
     componentDidMount() {
         this.tagStore.getTagList().then((response) => {
             if (response) {
-                this.tagList = response.data.list;
-                this.tagTotal = response.data.total;
+                this.tagList = response.data.list.filter(tag => tag.count > 0);
+                this.tagTotal = this.tagList.length;
             }
         });
     }
