@@ -15,13 +15,13 @@ import {About} from '../components/about'
 import {Resume} from '../components/resume'
 import './routeVisitor.sass'
 
-const {Header, Content, Footer} = Layout;
+const { Header, Content, Footer } = Layout;
 
 @observer
 export default class RouteVisitor extends React.Component {
 
     render() {
-        const {url} = this.props.match;
+        const { url } = this.props.match;
 
         console.log('visitor', url);
 
@@ -37,7 +37,11 @@ export default class RouteVisitor extends React.Component {
                         <Route path="/categories/detail" component={Detail}/>
                         <Route path="/categories/:tag" component={CategoriesTag}/>
                         <Route path="/about" component={About}/>
-                        <Route path="/resume" render={Resume}/>
+                        <Route path="/resume" render={props =>
+                            <Resume
+                                userType={this.props.userType}
+                                {...props}
+                            />}/>
                         <Redirect to={url}/>
                     </Switch>
                 </Content>

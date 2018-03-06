@@ -8,8 +8,6 @@ import xhr from '../xhr';
 class UserStore {
 
     @observable userInfo;
-    @observable loginShow;
-    @observable loginType;
 
     constructor() {
         this.registerUrl = '/user/register';
@@ -114,7 +112,6 @@ class UserStore {
             body,
         }).then((response) => {
             if (response.result) {
-                this.loginShow = false;
                 message.success(response.message);
                 return Promise.resolve(response);
             }

@@ -40,14 +40,14 @@ class App extends React.Component {
     }
 
     render() {
-        const {userInfo} = this.userStore;
+        const { userInfo } = this.userStore;
 
         return (
             <div className="JAVASCRIPT">
                 <BackTop visibleHeight={500}/>
                 {
                     this.isMobile || ['/categories/detail', '/admin/newArticle'].includes(window.location.pathname) ?
-                        null : <Canvas />
+                        null : <Canvas/>
                 }
                 {
                     userInfo ?
@@ -62,7 +62,12 @@ class App extends React.Component {
                                         />}
                                     /> : null
                             }
-                            <Route path="/" component={RouteVisitor}/>
+                            <Route path="/" render={props =>
+                                <RouteVisitor
+                                    userType={userInfo.userType}
+                                    {...props}
+                                />
+                            }/>
                         </Switch> : null
                 }
             </div>
