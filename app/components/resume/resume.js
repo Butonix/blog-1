@@ -19,7 +19,7 @@ const SkillItem = ({ title, percent }) =>
     <Fragment>
         <div className="skill-item">
             <span className="skill-item-percent">{`${percent}%`}</span>
-            <span>{title}</span>
+            <span className="skill-item-title">{title}</span>
         </div>
         <Progress percent={percent} showInfo={false} status="active"/>
     </Fragment>;
@@ -160,9 +160,9 @@ export default class Resume extends React.Component {
                                                     md={12}
                                                     xs={24}
                                                 >
-                                                    <p>2016.10 —— 至今</p>
-                                                    <p>浙江薪福多网络科技有限公司</p>
-                                                    <p>前端工程师</p>
+                                                    <p className="time">2016.10 —— 至今</p>
+                                                    <p className="company">浙江薪福多网络科技有限公司</p>
+                                                    <p className="job">前端工程师</p>
                                                 </Col>
                                                 <Col
                                                     md={12}
@@ -178,9 +178,9 @@ export default class Resume extends React.Component {
                                                     md={12}
                                                     xs={24}
                                                 >
-                                                    <p>2016.06 —— 2016.10</p>
-                                                    <p>杭州摆摆网络科技有限公司</p>
-                                                    <p>前端开发</p>
+                                                    <p className="time">2016.06 —— 2016.10</p>
+                                                    <p className="company">杭州摆摆网络科技有限公司</p>
+                                                    <p className="job">前端开发</p>
                                                 </Col>
                                                 <Col
                                                     md={12}
@@ -208,9 +208,9 @@ export default class Resume extends React.Component {
                                                             md={12}
                                                             xs={24}
                                                         >
-                                                            <p>2017.09 —— 至今</p>
-                                                            <p>个人博客</p>
-                                                            <p>全栈开发</p>
+                                                            <p className="time">2017.09 —— 至今</p>
+                                                            <p className="item">个人博客</p>
+                                                            <p className="job">全栈开发</p>
                                                         </Col>
                                                         <Col
                                                             md={12}
@@ -237,9 +237,9 @@ export default class Resume extends React.Component {
                                                             md={12}
                                                             xs={24}
                                                         >
-                                                            <p>2016.10 —— 至今</p>
-                                                            <p>薪福多薪酬发放系统</p>
-                                                            <p>前端开发</p>
+                                                            <p className="time">2016.10 —— 至今</p>
+                                                            <p className="item">薪福多薪酬发放系统</p>
+                                                            <p className="job">前端开发</p>
                                                         </Col>
                                                         <Col
                                                             md={12}
@@ -269,9 +269,9 @@ export default class Resume extends React.Component {
                                                             md={12}
                                                             xs={24}
                                                         >
-                                                            <p>2018.02 —— 2018.02</p>
-                                                            <p>薪福多邀请分享h5页面</p>
-                                                            <p>前端开发</p>
+                                                            <p className="time">2018.02 —— 2018.02</p>
+                                                            <p className="item">薪福多邀请分享h5页面</p>
+                                                            <p className="job">前端开发</p>
                                                         </Col>
                                                         <Col
                                                             md={12}
@@ -295,9 +295,9 @@ export default class Resume extends React.Component {
                                                             md={12}
                                                             xs={24}
                                                         >
-                                                            <p>2017.05 —— 2017.06</p>
-                                                            <p>薪福多官网</p>
-                                                            <p>前端开发</p>
+                                                            <p className="time">2017.05 —— 2017.06</p>
+                                                            <p className="item">薪福多官网</p>
+                                                            <p className="job">前端开发</p>
                                                         </Col>
                                                         <Col
                                                             md={12}

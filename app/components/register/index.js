@@ -58,7 +58,7 @@ export default class Register extends React.Component {
         const { ...props } = this.props;
         return (
             <Modal
-                title="登录"
+                title="注册"
                 footer={null}
                 width={400}
                 {...props}
