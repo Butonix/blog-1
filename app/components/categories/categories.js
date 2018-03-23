@@ -18,6 +18,7 @@ export default class Categories extends React.Component {
 
     constructor(args) {
         super(args);
+        
         this.tagStore = this.props.TagStore;
     }
 
