@@ -46,14 +46,15 @@ export default class Homepage extends React.Component {
         body.page = this.page;
         body.size = this.size;
 
-        this.articleStore.postArticleList(body).then((response) => {
-            if (response) {
-                this.content = this.content.concat(response.data.list);
-                if (this.page * this.size >= response.data.total) {
-                    this.hasMore = false
+        this.articleStore.postArticleList(body)
+            .then((response) => {
+                if (response) {
+                    this.content = this.content.concat(response.data.list);
+                    if (this.page * this.size >= response.data.total) {
+                        this.hasMore = false
+                    }
                 }
-            }
-        });
+            });
     }
 
     scroll() {

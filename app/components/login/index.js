@@ -11,7 +11,6 @@ import {observable} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import md5 from 'blueimp-md5';
 import {Button, Input, Icon, message, Modal} from 'antd';
-import {Username, Password} from '../public/regular';
 import './index.sass'
 
 
@@ -50,7 +49,7 @@ export default class Login extends React.Component {
     }
 
     render() {
-        const { ...props } = this.props;
+        const {...props} = this.props;
         return (
             <Modal
                 title="登录"
@@ -60,7 +59,7 @@ export default class Login extends React.Component {
             >
                 <div className="dialog-login">
                     <Input
-                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                        prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                         placeholder="username"
                         className="ipt"
                         value={this.username}
@@ -69,7 +68,7 @@ export default class Login extends React.Component {
                         }}
                     />
                     <Input
-                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                        prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                         placeholder="password"
                         type="password"
                         className="ipt"
@@ -80,7 +79,7 @@ export default class Login extends React.Component {
                     />
                     <Button
                         type="primary"
-                        style={{ width: '100%', borderRadius: '20px' }}
+                        style={{width: '100%', borderRadius: '20px'}}
                         onClick={this.handleLogin.bind(this)}
                     >
                         登录

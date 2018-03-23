@@ -41,7 +41,8 @@ export default class RouteVisitor extends React.Component {
                             <Resume
                                 userType={this.props.userType}
                                 {...props}
-                            />}/>
+                            />}
+                        />
                         <Redirect to={url}/>
                     </Switch>
                 </Content>
